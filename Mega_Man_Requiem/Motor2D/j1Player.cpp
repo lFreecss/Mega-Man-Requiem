@@ -24,12 +24,12 @@ j1Player::j1Player() : j1Module() {
 	right.PushBack({ 188, 10, 24, 24 });
 	right.PushBack({ 218, 10, 21, 24 });
 	right.PushBack({ 239, 10, 21, 24 });
-	right.speed = 0.04f;
+	right.speed = 0.08f;
 
 	left.PushBack({ 281, 86, 24, 24 });
 	left.PushBack({ 259, 86, 21, 24 });
 	left.PushBack({ 233, 86, 21, 24 });
-	left.speed = 0.04f;
+	left.speed = 0.08f;
 
 	jumpR.PushBack({ 265, 4, 27, 30 });
 	jumpR.speed = 0.001f;
@@ -39,7 +39,7 @@ j1Player::j1Player() : j1Module() {
 	sJump.PushBack({ 266, 209, 26, 30 });
 	sJump.PushBack({ 297, 209, 26, 30 });
 	sJump.PushBack({ 206, 209, 26, 30 });
-	sJump.speed = 0.04f;
+	sJump.speed = 0.1f;
 
 }
 

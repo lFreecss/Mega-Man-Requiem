@@ -90,13 +90,14 @@ bool j1Scene::Update(float dt)
 
 	App->win->SetTitle(title.GetString());
 
-	//Scroll, TODO Valdivia
-	if (App->player->pos.x < 560)
-		App->render->camera.x = -(2 * App->player->pos.x);
+	// Scroll, TODO Valdivia
+	//App->player->pos.x < 560
+	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - 64)
+		App->render->camera.x = -(2.5 * App->player->pos.x);
 
 	//Debug
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		App->player->pos.x = 540;
+		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 130;
 	/*if (App->player->pos.x > App->render->camera.x + 200 && App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && App->render->camera.x != -1070) {
 
 	App->render->camera.x -= 1;
