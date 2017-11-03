@@ -11,6 +11,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Player.h"
+#include "j1Enemies.h"
 #include "j1App.h"
 
 // Constructor
@@ -30,6 +31,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	player = new j1Player();
+	enemies = new j1Enemies();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -40,6 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(scene);
 	AddModule(player);
+	AddModule(enemies);
 
 	// render last to swap buffer
 	AddModule(render);

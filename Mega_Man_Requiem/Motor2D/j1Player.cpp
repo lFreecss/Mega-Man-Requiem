@@ -46,6 +46,11 @@ j1Player::j1Player() : j1Module() {
 j1Player::~j1Player()
 {}
 
+bool j1Player::Awake(pugi::xml_node&) {
+	bool ret = true;
+
+	return ret;
+}
 
 bool j1Player::Start() {
 	bool ret = true;

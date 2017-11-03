@@ -15,6 +15,7 @@ public:
 	j1Player();
 	~j1Player();
 
+	bool Awake(pugi::xml_node&);
 	bool Start();
 	void Init();
 	bool Update(float dt);

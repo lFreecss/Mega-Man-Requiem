@@ -29,4 +29,13 @@
 	  <file name="rock_level" loaded="1"/>a	  
   </map>
 
+<scene>
+</scene>
+
+<player>
+</player>
+
+<enemies>
+</enemies>
+
 </config>
