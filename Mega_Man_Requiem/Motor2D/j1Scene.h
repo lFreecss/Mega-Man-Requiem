@@ -15,7 +15,7 @@ public:
 	virtual ~j1Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
@@ -50,8 +50,13 @@ public:
 
 private:
 	p2SString first_map;
-	p2SString current_map;
+	const char* current_map;
 	int map_num;
+	const char* music_path;
+	float scroll_speed;
+
+	const char* rock_level;
+	const char* jail_level;
 };
 
 #endif // __j1SCENE_H__

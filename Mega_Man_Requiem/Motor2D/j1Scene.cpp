@@ -21,10 +21,15 @@ j1Scene::~j1Scene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake()
+bool j1Scene::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Scene");
 	bool ret = true;
+	LOG("Loading Scene");
+
+	music_path = config.child("file").attribute("music_name").as_string();
+	scroll_speed = config.child("scroll").attribute("speed").as_float();
+	rock_level = config.child("level").attribute("rock").value();
+	jail_level = config.child("level").attribute("jail").value();
 
 	return ret;
 }
@@ -34,7 +39,7 @@ bool j1Scene::Start()
 {
 	first_map = ("%s%s", App->map_name.GetString(), ".tmx");
 	App->map->Load(first_map.GetString());
-	current_map = first_map;
+	current_map = first_map.GetString();
 	InitializeMap();
 	App->audio->PlayMusic("audio/music/Armored Armadillo.ogg");
 	return true;
@@ -98,18 +103,7 @@ bool j1Scene::Update(float dt)
 	//Debug
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 130;
-	/*if (App->player->pos.x > App->render->camera.x + 200 && App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && App->render->camera.x != -1070) {
 
-	App->render->camera.x -= 1;
-	gate = false;
-	}
-
-	if (App->player->pos.x > App->render->camera.x - 200 && App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && App->render->camera.x != 0) {
-
-	App->render->camera.x += 1;
-	gate = false;
-	}
-	}*/
 	//When player gets at the end of the level, change to the next, TODO Valdivia
 	if (App->player->pos.x >= App->map->data.tile_width*App->map->data.width - 30) {
 		if (current_map == "rock_level.tmx") {
@@ -176,6 +170,7 @@ void j1Scene::InitializeMap() {
 }
 //To Start form the very first level, TODO Varela
 void j1Scene::Restart() {
+	//first_map.GetString()
 	ChangeMaps("rock_level.tmx");
 	MapStart();
 	map_num = 0;

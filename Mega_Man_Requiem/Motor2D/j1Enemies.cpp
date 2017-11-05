@@ -21,14 +21,14 @@ j1Enemies::~j1Enemies() {
 
 bool j1Enemies::Awake(pugi::xml_node& config) {
 	bool ret = true;
-
+	path = config.child("file").attribute("name").as_string();
 	return ret;
 }
 
 bool j1Enemies::Start() {
 	bool ret = true;
 
-	sprites = App->tex->Load("textures/enemies.png");
+	sprites = App->tex->Load(path);
 
 	return ret;
 }

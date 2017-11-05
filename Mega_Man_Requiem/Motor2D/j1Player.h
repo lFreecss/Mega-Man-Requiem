@@ -20,7 +20,6 @@ public:
 	void Init();
 	bool Update(float dt);
 
-	bool LoadPlayer();
 	void jump(float dt);
 	void move(float dt);
 
@@ -31,10 +30,6 @@ public:
 	fPoint startPos;
 	fPoint pos;
 
-	// Collisions
-	iPoint size;
-	iPoint sizeJump;
-
 private:
 	
 	Animation* current_animation;
@@ -44,17 +39,17 @@ private:
 	Animation jumpR;
 	Animation sJump;
 	SDL_Texture* graphics = nullptr;
+	const char* path;
 
-	int floor;
 	fPoint vel;
 	float gravity;
 
 	int jumping;
 	uint jumpframes;
 	uint actualJumpframes;
+	iPoint size;
 
-	pugi::xml_document	player_file;
-
+	
 };
 
 #endif

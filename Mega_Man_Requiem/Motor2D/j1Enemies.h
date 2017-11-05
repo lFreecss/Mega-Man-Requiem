@@ -42,8 +42,8 @@ private:
 private:
 
 	SDL_Texture* sprites;
+	const char* path;
 	EnemyInfo queue[MAX_ENEMIES];
-
 };
 
 #endif

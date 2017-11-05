@@ -26,16 +26,24 @@
   <map>
     <folder>maps/</folder>
     <file name="JAIL" loaded="0"/>
-	  <file name="rock_level" loaded="1"/>a	  
+    <file name="rock_level" loaded="1"/>	
   </map>
 
 <scene>
+  <file music_name = "audio/music/Armored Armadillo.ogg"/>
+  <scroll speed = "2.5" />
+  <level rock = "rock_level.tmx" jail = "JAIL.tmx" />
 </scene>
 
 <player>
+  <file name = "textures/8bitmegaman.png" />
+  <physics velocityx = " 150.0" velocityy = "480.0" gravity = "200.0"/>
+  <movement jumpframes= "15"/>
+  <size x= "22" y= "22" />
 </player>
 
 <enemies>
+  <file name = "textures/enemies.png" />
 </enemies>
 
 </config>

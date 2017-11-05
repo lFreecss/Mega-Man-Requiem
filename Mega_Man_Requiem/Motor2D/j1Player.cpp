@@ -46,18 +46,29 @@ j1Player::j1Player() : j1Module() {
 j1Player::~j1Player()
 {}
 
-bool j1Player::Awake(pugi::xml_node&) {
+bool j1Player::Awake(pugi::xml_node& config) {
 	bool ret = true;
+	LOG("Loading Player");
+
+	path = config.child("file").attribute("name").as_string();
+
+	vel.x = config.child("physics").attribute("velocityx").as_float();
+	vel.y = config.child("physics").attribute("velocityy").as_float();
+	gravity = config.child("physics").attribute("gravity").as_float();
+
+	jumpframes = config.child("movement").attribute("jumpframes").as_uint();
+
+	size.x = config.child("size").attribute("x").as_int();
+	size.y = config.child("size").attribute("y").as_int();
+
 
 	return ret;
 }
 
 bool j1Player::Start() {
 	bool ret = true;
-
-	//graphics = App->tex->Load("textures/mmx_xsheet.png");
-	graphics = App->tex->Load("textures/8bitmegaman.png");
-	if (LoadPlayer() == false)
+	graphics = App->tex->Load(path);
+	if (graphics == nullptr)
 		ret = false;
 
 	Init();
@@ -94,35 +105,7 @@ bool j1Player::Update(float dt) {
 	
 	return ret;
 }
-//Method that loads the XML for the player, TODO Valdivia
-bool j1Player::LoadPlayer() {
-	bool ret = true;
-	pugi::xml_parse_result result = player_file.load_file("player.xml");
-	if (result == NULL)
-	{
-		LOG("Error parsing map xml file: Cannot find 'player_file' file.");
-		ret = false;
-	}
-	pugi::xml_node player = player_file.child("player");
-	if (player == NULL)
-	{
-		LOG("Error parsing map xml file: Cannot find 'player' tag.");
-		ret = false;
-	}
-	else {
 
-		vel.x = player.child("physics").attribute("velocityx").as_float();
-		vel.y = player.child("physics").attribute("velocityy").as_float();
-		gravity = player.child("physics").attribute("gravity").as_float();
-
-		jumpframes = player.child("movement").attribute("jumpframes").as_uint();
-
-		size.x = 22;
-		size.y = 22;
-	}
-
-	return ret;
-}
 //Method for the jump (Valdivia) and the double jump (Varela)
 void j1Player::jump(float dt) {
 		
