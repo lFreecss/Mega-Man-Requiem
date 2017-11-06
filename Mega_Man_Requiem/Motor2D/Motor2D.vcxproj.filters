@@ -46,6 +46,12 @@
     <ClCompile Include="Blader.cpp">
       <Filter>Desenvolupament  ========\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Collision.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -113,6 +119,12 @@
     </ClInclude>
     <ClInclude Include="Blader.h">
       <Filter>Desenvolupament  ========\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Collision.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

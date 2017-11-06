@@ -9,9 +9,8 @@
 #include "p2SString.h"
 #include "PugiXml\src\pugixml.hpp"
 
-
-
 class j1App;
+struct Collider;
 
 class j1Module
 {
@@ -73,31 +72,13 @@ public:
 		return true;
 	}
 
-	//Enabling/disabling modules
-	bool IsEnabled() const { return enabled; }
-
-	void Enable()
-	{
-		if (enabled == false)
-		{
-			enabled = true;
-			Start();
-		}
-	}
-
-	void Disable()
-	{
-		if (enabled == true)
-		{
-			enabled = false;
-			CleanUp();
-		}
-	}
+	// Callbacks ---
+	virtual void OnCollision(Collider*, Collider*) {}
+	
 public:
 
 	p2SString	name;
 	bool		active;
-	bool enabled = true;
 
 };
 
