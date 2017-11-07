@@ -12,6 +12,7 @@ private:
 public:
 	Blader(int x, int y);
 	void Move();
+	void OnCollision(Collider* collider);
 };
 
 

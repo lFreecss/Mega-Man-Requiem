@@ -29,17 +29,18 @@ public:
 
 	bool Awake(pugi::xml_node&);
 	bool Start();
+	bool PreUpdate();
 	bool Update(float dt);
+	bool PostUpdate();
 	bool CleanUp();
 
+	void OnCollision(Collider* c1, Collider* c2);
 	bool AddEnemy(ENEMY_TYPES type, int x, int y);
 
 	Enemy* enemies[MAX_ENEMIES];
 private:
 
 	void SpawnEnemy(const EnemyInfo&);
-
-private:
 
 	SDL_Texture* sprites;
 	const char* path;

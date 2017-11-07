@@ -12,3 +12,9 @@ void Blader::Move() {
 
 
 }
+
+void OnCollision(Collider* collider) {
+
+
+
+}

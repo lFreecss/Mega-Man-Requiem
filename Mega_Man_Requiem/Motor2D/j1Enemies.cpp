@@ -33,6 +33,23 @@ bool j1Enemies::Start() {
 	return ret;
 }
 
+bool j1Enemies::PreUpdate() {
+	bool ret = true;
+	/*for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (queue[i].type != ENEMY_TYPES::NO_TYPE)
+		{
+			if (queue[i].y >(abs(App->render->camera.y) / SCREEN_SIZE) - SPAWN_MARGIN)
+			{
+				SpawnEnemy(queue[i]);
+				queue[i].type = ENEMY_TYPES::NO_TYPE;
+				LOG("Spawning enemy at %d", queue[i].y);
+			}
+		}
+	}*/
+	return ret;
+}
+
 bool j1Enemies::Update(float dt) {
 	bool ret = true;
 
@@ -42,6 +59,24 @@ bool j1Enemies::Update(float dt) {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 		if (enemies[i] != nullptr) enemies[i]->Draw(sprites);
 
+	return ret;
+}
+
+bool j1Enemies::PostUpdate() {
+	bool ret = true;
+	/*for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+		{
+			if (enemies[i]->pos.y >((abs(App->render->camera.y) + SCREEN_WIDTH) / SCREEN_SIZE) + 240)
+			{
+				LOG("DeSpawning enemy at %d", enemies[i]->pos.y);
+				delete enemies[i];
+				enemies[i] = nullptr;
+			}
+		}
+	}
+*/
 	return ret;
 }
 
@@ -95,5 +130,12 @@ void j1Enemies::SpawnEnemy(const EnemyInfo& info) {
 			enemies[i] = new Blader(info.x, info.y);
 			enemies[i]->type = ENEMY_TYPES::AIR;
 		}
+	}
+}
+
+void j1Enemies::OnCollision(Collider* c1, Collider* c2)
+{
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
 	}
 }

@@ -32,7 +32,9 @@
 <scene>
   <file music_name = "audio/music/Armored Armadillo.ogg"/>
   <scroll speed = "2.5" />
-  <level rock = "rock_level.tmx" jail = "JAIL.tmx" />
+  <level id="1" rock = "rock_level.tmx"/>
+  <level id="2" jail = "JAIL.tmx"/>
+  
 </scene>
 
 <player>

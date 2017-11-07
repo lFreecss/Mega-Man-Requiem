@@ -28,6 +28,11 @@ bool j1Scene::Awake(pugi::xml_node& config)
 
 	music_path = config.child("file").attribute("music_name").as_string();
 	scroll_speed = config.child("scroll").attribute("speed").as_float();
+	uint i = 0;
+	for (pugi::xml_node level = config.child("level"); level; level = config.next_sibling("level")) {
+		id[i] = level.attribute("id").as_uint();
+		i++;
+	}
 	rock_level = config.child("level").attribute("rock").value();
 	jail_level = config.child("level").attribute("jail").value();
 
@@ -41,7 +46,7 @@ bool j1Scene::Start()
 	App->map->Load(first_map.GetString());
 	current_map = first_map.GetString();
 	InitializeMap();
-	App->audio->PlayMusic("audio/music/Armored Armadillo.ogg");
+	App->audio->PlayMusic(music_path);
 	return true;
 }
 

@@ -57,6 +57,7 @@ private:
 
 	const char* rock_level;
 	const char* jail_level;
+	uint id[2];
 };
 
 #endif // __j1SCENE_H__
