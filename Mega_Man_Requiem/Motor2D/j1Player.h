@@ -19,6 +19,7 @@ public:
 	bool Start();
 	void Init();
 	bool Update(float dt);
+	bool CleanUp();
 
 	void jump(float dt);
 	void move(float dt);
@@ -30,6 +31,9 @@ public:
 	fPoint startPos;
 	fPoint pos;
 
+	void OnCollision(Collider* c1, Collider* c2);
+	Collider* collider = nullptr;
+	Collider* collider2 = nullptr;
 private:
 	
 	Animation* current_animation;

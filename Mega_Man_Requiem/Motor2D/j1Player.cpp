@@ -6,6 +6,8 @@
 #include "j1Player.h"
 #include "j1Input.h"
 #include "j1map.h"
+#include "j1Collision.h"
+#include "j1Scene.h"
 
 
 j1Player::j1Player() : j1Module() {
@@ -41,10 +43,14 @@ j1Player::j1Player() : j1Module() {
 	sJump.PushBack({ 206, 209, 26, 30 });
 	sJump.speed = 0.1f;
 
+	
 }
 
 j1Player::~j1Player()
-{}
+{
+	if (collider != nullptr)
+		collider->to_delete = true;
+}
 
 bool j1Player::Awake(pugi::xml_node& config) {
 	bool ret = true;
@@ -70,7 +76,6 @@ bool j1Player::Start() {
 	graphics = App->tex->Load(path);
 	if (graphics == nullptr)
 		ret = false;
-
 	Init();
 
 	return ret;
@@ -78,9 +83,11 @@ bool j1Player::Start() {
 
 void j1Player::Init() {
 	pos = startPos;
-
+	
 	jumping = 1;
 	actualJumpframes = 0;
+	collider = App->collision->AddCollider({ (int)startPos.x, (int)startPos.y, 21, 24 }, COLLIDER_PLAYER, this);
+	//collider2 = App->collision->AddCollider({ 260, 170, 21, 24 }, COLLIDER_ENEMY, this);
 }
 
 
@@ -102,7 +109,21 @@ bool j1Player::Update(float dt) {
 	SDL_Rect r = current_animation->GetCurrentFrame();
 	App->render->Blit(graphics, pos.x, pos.y, &r);
 
+	if (collider != nullptr)
+		collider->SetPos((int)pos.x, (int)pos.y);
 	
+	return ret;
+}
+
+bool j1Player::CleanUp() {
+	bool ret = true;
+	
+	if (collider != nullptr || collider) {
+		App->collision->EraseCollider(collider);
+		collider = nullptr;
+	}
+	App->tex->UnLoad(graphics);
+
 	return ret;
 }
 
@@ -166,6 +187,16 @@ void j1Player::move(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		current_animation = &idle;
+}
+
+void j1Player::OnCollision(Collider* c1, Collider* c2)
+{
+	collider = c1;
+	if (c2->type == COLLIDER_TYPE::COLLIDER_ENEMY) {
+		App->collision->EraseCollider(collider);
+		collider = nullptr;
+		App->scene->MapStart();
+	}
 }
 
 // Load player position
