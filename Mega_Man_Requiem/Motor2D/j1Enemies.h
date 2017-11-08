@@ -20,6 +20,7 @@ struct EnemyInfo
 {
 	ENEMY_TYPES type = ENEMY_TYPES::NO_TYPE;
 	int x, y;
+	int id;
 };
 
 class j1Enemies : public j1Module {
@@ -45,6 +46,10 @@ private:
 	SDL_Texture* sprites;
 	const char* path;
 	EnemyInfo queue[MAX_ENEMIES];
+
+	int screen_width;
+	int screen_height;
+	int screen_size;
 };
 
 #endif

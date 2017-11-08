@@ -118,7 +118,7 @@ bool j1Player::Update(float dt) {
 bool j1Player::CleanUp() {
 	bool ret = true;
 	
-	if (collider != nullptr || collider) {
+	if (collider != nullptr) {
 		App->collision->EraseCollider(collider);
 		collider = nullptr;
 	}
@@ -127,7 +127,6 @@ bool j1Player::CleanUp() {
 	return ret;
 }
 
-//Method for the jump (Valdivia) and the double jump (Varela)
 void j1Player::jump(float dt) {
 		
 	if (actualJumpframes > 0) {

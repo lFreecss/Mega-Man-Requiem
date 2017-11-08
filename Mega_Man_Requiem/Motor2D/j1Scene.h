@@ -44,6 +44,9 @@ public:
 	//Restart map id
 	void InitializeMap();
 
+	//Initialize Enemies
+	void EnemySpawn();
+
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
@@ -58,6 +61,7 @@ private:
 	const char* rock_level;
 	const char* jail_level;
 	uint id[2];
+	
 };
 
 #endif // __j1SCENE_H__

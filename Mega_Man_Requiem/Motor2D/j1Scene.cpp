@@ -9,6 +9,8 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1Collision.h"
+#include "j1Enemies.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -47,7 +49,16 @@ bool j1Scene::Start()
 	current_map = first_map.GetString();
 	InitializeMap();
 	App->audio->PlayMusic(music_path);
+
+	EnemySpawn();
+	
 	return true;
+}
+
+
+void j1Scene::EnemySpawn() {
+	App->enemies->AddEnemy(GROUND, 550, 160);
+	App->enemies->AddEnemy(AIR, 260, 170);
 }
 
 // Called each loop iteration
@@ -111,6 +122,8 @@ bool j1Scene::Update(float dt)
 
 	//When player gets at the end of the level, change to the next, TODO Valdivia
 	if (App->player->pos.x >= App->map->data.tile_width*App->map->data.width - 30) {
+		App->collision->EraseCollider(App->player->collider);
+
 		if (current_map == "rock_level.tmx") {
 			ChangeMaps("JAIL.tmx");
 			MapStart();

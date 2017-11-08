@@ -1,5 +1,5 @@
-#ifndef __ENEMY_BALLOON_H__
-#define __ENEMY_BALLOON_H__
+#ifndef __BALDER_H__
+#define __BLADER_H__
 
 #include "Enemy.h"
 

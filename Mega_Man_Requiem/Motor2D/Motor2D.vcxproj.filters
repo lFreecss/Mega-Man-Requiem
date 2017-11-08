@@ -52,6 +52,9 @@
     <ClCompile Include="j1Collision.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Crazy_Razy.cpp">
+      <Filter>Desenvolupament  ========\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="j1Collision.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Crazy_Razy.h">
+      <Filter>Desenvolupament  ========\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

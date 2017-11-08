@@ -12,9 +12,11 @@ protected:
 	Animation* animation = nullptr;
 
 public:
+
 	iPoint pos;
 	Collider* collider = nullptr;
 	int type;
+	int id;
 
 public:
 	Enemy(int x, int y);

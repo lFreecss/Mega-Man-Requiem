@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Blader.cpp" />
+    <ClCompile Include="Crazy_Razy.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Enemies.cpp" />
@@ -97,6 +98,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Blader.h" />
+    <ClInclude Include="Crazy_Razy.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1Enemies.h" />

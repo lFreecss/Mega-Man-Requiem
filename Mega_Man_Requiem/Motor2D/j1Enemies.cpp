@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Render.h"
+#include "j1Window.h"
 #include "j1Textures.h"
 #include "j1Player.h"
 #include "j1Input.h"
@@ -9,6 +10,7 @@
 #include "j1Enemies.h"
 #include "Enemy.h"
 #include "Blader.h"
+#include "Crazy_Razy.h"
 
 j1Enemies::j1Enemies() : j1Module()
 {
@@ -29,24 +31,30 @@ bool j1Enemies::Start() {
 	bool ret = true;
 
 	sprites = App->tex->Load(path);
+	uint sheight;
+	uint swidth;
+	App->win->GetWindowSize(swidth, sheight);
+	screen_size = (int)App->win->GetScale();
+	screen_width = (int)swidth;
+	screen_height = (int)sheight;
 
 	return ret;
 }
 
 bool j1Enemies::PreUpdate() {
 	bool ret = true;
-	/*for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
 		if (queue[i].type != ENEMY_TYPES::NO_TYPE)
 		{
-			if (queue[i].y >(abs(App->render->camera.y) / SCREEN_SIZE) - SPAWN_MARGIN)
+			if (queue[i].y >(abs(App->render->camera.y) / screen_size)) //-SPAWN_MARGIN
 			{
 				SpawnEnemy(queue[i]);
 				queue[i].type = ENEMY_TYPES::NO_TYPE;
 				LOG("Spawning enemy at %d", queue[i].y);
 			}
 		}
-	}*/
+	}
 	return ret;
 }
 
@@ -54,21 +62,23 @@ bool j1Enemies::Update(float dt) {
 	bool ret = true;
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
-		if (enemies[i] != nullptr) enemies[i]->Move();
+		if (enemies[i] != nullptr)
+			enemies[i]->Move();
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
-		if (enemies[i] != nullptr) enemies[i]->Draw(sprites);
+		if (enemies[i] != nullptr) 
+			enemies[i]->Draw(sprites);
 
 	return ret;
 }
 
 bool j1Enemies::PostUpdate() {
 	bool ret = true;
-	/*for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
 		if (enemies[i] != nullptr)
 		{
-			if (enemies[i]->pos.y >((abs(App->render->camera.y) + SCREEN_WIDTH) / SCREEN_SIZE) + 240)
+			if (enemies[i]->pos.y >((abs(App->render->camera.y) + screen_height) / screen_width) + 240)
 			{
 				LOG("DeSpawning enemy at %d", enemies[i]->pos.y);
 				delete enemies[i];
@@ -76,7 +86,6 @@ bool j1Enemies::PostUpdate() {
 			}
 		}
 	}
-*/
 	return ret;
 }
 
@@ -110,6 +119,7 @@ bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y)
 			queue[i].type = type;
 			queue[i].x = x;
 			queue[i].y = y;
+			queue[i].id = i;
 			ret = true;
 			break;
 		}
@@ -126,9 +136,16 @@ void j1Enemies::SpawnEnemy(const EnemyInfo& info) {
 	{
 		switch (info.type)
 		{
+		case ENEMY_TYPES::GROUND:
+			enemies[i] = new Crazy_Razy(info.x, info.y);
+			enemies[i]->type = ENEMY_TYPES::GROUND;
+			enemies[i]->id = info.id;
+			break;
 		case ENEMY_TYPES::AIR:
 			enemies[i] = new Blader(info.x, info.y);
 			enemies[i]->type = ENEMY_TYPES::AIR;
+			enemies[i]->id = info.id;
+			break;
 		}
 	}
 }
