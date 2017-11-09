@@ -122,22 +122,22 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 
 	// north
 	cell.create(pos.x, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
+	//if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.create(pos.x, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
+	//if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
+	//if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
+	//if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	return list_to_fill.list.count();
@@ -172,9 +172,9 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	int ret;
 
 	//if origin or destination are not walkable, return -1
-	if (IsWalkable(origin) == false || IsWalkable(destination) == false)
+	//if (IsWalkable(origin) == false || IsWalkable(destination) == false)
 		ret = -1;
-	else {
+	//else {
 		ret = 0;
 
 		// Create two lists: open, close
@@ -201,6 +201,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				// Use the Pathnode::parent and Flip() the path when you are finished
 				last_path.Flip();
 				ret = last_path.Count();
+				return ret;
 			}
 			
 			else {
@@ -230,7 +231,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				}
 				neighbours.list.clear();
 			}
-		}
+		//}
 	}
 	return ret;
 }
