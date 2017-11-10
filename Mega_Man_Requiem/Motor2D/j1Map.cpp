@@ -34,10 +34,10 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 
-	p2List_item<map_layer*>* layer = data.layers.start;
 	p2List_item<TileSet*>* tiles = data.tilesets.start;
-
 	while (tiles != nullptr) {
+		p2List_item<map_layer*>* layer = data.layers.start;
+		p2List_item<map_layer*>* collisions = data.collisions.start;
 		while (layer != nullptr) {
 			for (uint i = 0; i < layer->data->width; i++) {
 				for (uint j = 0; j < layer->data->height; j++) {
@@ -54,6 +54,21 @@ void j1Map::Draw()
 				}
 			}
 			layer = layer->next;
+		}
+		while (collisions != nullptr) {
+			for (uint i = 0; i < collisions->data->width; i++) {
+				for (uint j = 0; j < collisions->data->height; j++) {
+
+					if (collisions->data->Get(i, j) != 0) {
+						iPoint pos = MapToWorld(i, j);
+						SDL_Rect* square = &tiles->data->GetTileRect(collisions->data->Get(i, j));
+
+						if (collisions->data->name == "Collision")
+							App->render->Blit(tiles->data->texture, pos.x, pos.y, square);
+					}
+				}
+			}
+			collisions = collisions->next;
 		}
 		tiles = tiles->next;
 	}
@@ -401,6 +416,19 @@ bool j1Map::LoadLayer(pugi::xml_node& node, map_layer* layer)
 	}
 
 	else {
+		layer->name = node.attribute("name").as_string();
+
+		if (layer->name == "Parallax") {
+			layer->id = PARALLAX;
+		}
+		else if (layer->name == "Front") {
+			layer->id = FRONT;
+		}
+		else if (layer->name == "Collision") {
+			collisions = layer;
+			layer->id = COLLISION;
+		}
+
 		layer->name = node.attribute("name").as_string();
 		layer->width = node.attribute("width").as_uint();
 		layer->height = node.attribute("height").as_uint();

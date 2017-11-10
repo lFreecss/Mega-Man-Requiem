@@ -9,8 +9,17 @@
 #include "j1Textures.h"
 typedef unsigned int uint;
 
+enum LAYER_TYPE
+{
+	ZERO,
+	PARALLAX,
+	FRONT,
+	COLLISION,
+};
+
 struct map_layer {
 	p2SString name = nullptr;
+	LAYER_TYPE id = ZERO;
 	uint width = 0;
 	uint height = 0;
 	uint* data = nullptr;
@@ -121,6 +130,7 @@ private:
 public:
 
 	MapData data;
+	map_layer* collisions = nullptr;
 
 private:
 
