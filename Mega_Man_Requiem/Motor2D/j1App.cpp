@@ -2,6 +2,7 @@
 
 #include "p2Defs.h"
 #include "p2Log.h"
+#include "Brofiler\Brofiler.h"
 
 #include "j1Window.h"
 #include "j1Input.h"
@@ -131,6 +132,7 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
+	//BROFILER_CATEGORY("Update", Profiler::Color::Yellow);
 	bool ret = true;
 	PrepareUpdate();
 
