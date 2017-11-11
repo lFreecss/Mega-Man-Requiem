@@ -7,6 +7,7 @@
 #include "j1Module.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Render.h"
 typedef unsigned int uint;
 
 enum LAYER_TYPE

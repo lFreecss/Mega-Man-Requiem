@@ -132,6 +132,9 @@
     <ClInclude Include="Crazy_Razy.h">
       <Filter>Desenvolupament  ========\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Programacio 2 ===========</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">

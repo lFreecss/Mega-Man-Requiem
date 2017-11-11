@@ -10,7 +10,8 @@ class Blader : public Enemy
 private:
 	Animation idle;
 	iPoint original_pos;
-	int i;
+	int iteration;
+	int destination;
 
 	const p2DynArray<iPoint>* path;
 

@@ -21,28 +21,36 @@ Blader::Blader(int x, int y) : Enemy(x, y)
 }
 
 void Blader::Move() {
-	//pos.x += 1;
 	iPoint player_pos;
 	player_pos.x = (int)App->player->pos.x;
 	player_pos.y = (int)App->player->pos.y;
-
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
-		App->pathfinding->CreatePath(App->map->WorldToMap(pos.x, pos.y), App->map->WorldToMap(player_pos.x, player_pos.y));
-		path = App->pathfinding->GetLastPath();
-		i = 0;
+	if (player_pos.x > original_pos.x - player_pos.x && player_pos.x < 500 && iteration == 0) {
+		//if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+			destination = App->pathfinding->CreatePath(App->map->WorldToMap(pos.x, pos.y), App->map->WorldToMap(player_pos.x, player_pos.y));
+			path = App->pathfinding->GetLastPath();
+			iteration = 0;
+		//}
 	}
 
+	if (path != nullptr && path->At(iteration) != nullptr) {
+		iPoint next_pos = App->map->MapToWorld(path->At(iteration)->x, path->At(iteration)->y);
+		if (pos.x < next_pos.x)
+			pos.x++;
+		if (pos.y < next_pos.y)
+			pos.y++;
+		if (pos.x > next_pos.x)
+			pos.x--;
+		if (pos.y > next_pos.y)
+			pos.y--;
 
-	if (path != nullptr && path->At(i) != nullptr) {
-		iPoint next_pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		if(pos.x == next_pos.x && pos.y == next_pos.y)
+			iteration++;
 
-		pos.x = next_pos.x;
-		pos.y = next_pos.y;
-
+		if (iteration == destination)
+			iteration = 0;
+		//pos.x = next_pos.x;
+		//pos.y = next_pos.y;
 		//pos = App->map->MapToWorld(next_pos.x, next_pos.y);
-
-		i++;
-
 	}
 }
 
