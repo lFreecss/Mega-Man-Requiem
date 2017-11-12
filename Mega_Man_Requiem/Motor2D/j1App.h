@@ -3,8 +3,9 @@
 
 #include "p2List.h"
 #include "j1Module.h"
+#include "j1PerfTimer.h"
+#include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
-
 
 // Modules
 class j1Window;
@@ -114,6 +115,10 @@ private:
 	p2SString			load_game;
 	mutable p2SString	save_game;
 
+	j1Timer timer;
+	j1PerfTimer perf_timer;
+	uint64 frame_count = 0;
+	uint32 last_frames;
 
 	long prevTime;
 };

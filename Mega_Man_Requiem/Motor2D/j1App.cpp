@@ -53,6 +53,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// render last to swap buffer
 	AddModule(render);
+
+	LOG("j1App: Constructor took %fl sec", timer.ReadSec());
 }
 
 // Destructor
@@ -110,7 +112,10 @@ bool j1App::Awake()
 		}
 	}
 
-	return ret;
+	LOG("j1App: Awake took %fl sec", timer.ReadSec());
+	LOG("j1App: Awake took %fl ms", perf_timer.ReadMs());
+
+	return ret;	
 }
 
 // Called before the first frame
@@ -125,6 +130,8 @@ bool j1App::Start()
 		ret = item->data->Start();
 		item = item->next;
 	}
+
+	LOG("j1App: Start took %fl sec", timer.ReadSec());
 
 	return ret;
 }
@@ -198,6 +205,25 @@ void j1App::FinishUpdate()
 
 	if(want_to_load == true)
 		LoadGameNow();
+
+	// Amount of time since game start (use a low resolution timer)
+	float seconds_since_startup = timer.ReadSec();
+	// Average FPS for the whole game life
+	float dt = perf_timer.ReadMs() / frame_count;
+	// Amount of frames since startup
+	float avg_fps = 1 / dt;
+	// Amount of frames during the last second
+	uint32 last_frame_ms = perf_timer.ReadMs() / frame_count; //
+															  // Amount of ms took the last update
+	uint32 frames_on_last_update = last_frames; //
+	frame_count++;
+
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
+
+	App->win->SetTitle(title);
 
 }
 
@@ -286,6 +312,8 @@ bool j1App::CleanUp()
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
+
+	LOG("j1App: CleanUp took %fl sec", timer.ReadSec());
 
 	return ret;
 }
