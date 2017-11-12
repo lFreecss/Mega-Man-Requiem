@@ -33,7 +33,6 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 	Collider* collider = nullptr;
-	Collider* collider2 = nullptr;
 private:
 	
 	Animation* current_animation;

@@ -20,42 +20,46 @@ Blader::Blader(int x, int y) : Enemy(x, y)
 	collider = App->collision->AddCollider({ 0, 0, 16, 21 }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->enemies);
 }
 
-void Blader::Move() {
-	iPoint player_pos;
+void Blader::Move(float dt) {
 	player_pos.x = (int)App->player->pos.x;
 	player_pos.y = (int)App->player->pos.y;
-	if (player_pos.x > original_pos.x - player_pos.x && player_pos.x < 500 && iteration == 0) {
-		//if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
-			destination = App->pathfinding->CreatePath(App->map->WorldToMap(pos.x, pos.y), App->map->WorldToMap(player_pos.x, player_pos.y));
-			path = App->pathfinding->GetLastPath();
-			iteration = 0;
-		//}
+
+	if (player_pos.x > original_pos.x - player_pos.x && player_pos.x < original_pos.x + 200 && iteration == 0) {
+		CreatePath();
 	}
 
 	if (path != nullptr && path->At(iteration) != nullptr) {
-		iPoint next_pos = App->map->MapToWorld(path->At(iteration)->x, path->At(iteration)->y);
-		if (pos.x < next_pos.x)
-			pos.x++;
-		if (pos.y < next_pos.y)
-			pos.y++;
-		if (pos.x > next_pos.x)
-			pos.x--;
-		if (pos.y > next_pos.y)
-			pos.y--;
-
-		if(pos.x == next_pos.x && pos.y == next_pos.y)
-			iteration++;
-
-		if (iteration == destination)
-			iteration = 0;
-		//pos.x = next_pos.x;
-		//pos.y = next_pos.y;
-		//pos = App->map->MapToWorld(next_pos.x, next_pos.y);
+		FollowPath();
 	}
 }
 
 void Blader::OnCollision(Collider* collider) {
 
 
+
+}
+
+void Blader::CreatePath() {
+	destination = App->pathfinding->CreatePath(App->map->WorldToMap(pos.x, pos.y), App->map->WorldToMap(player_pos.x, player_pos.y));
+	path = App->pathfinding->GetLastPath();
+	iteration = 0;
+}
+
+void Blader::FollowPath() {
+	iPoint next_pos = App->map->MapToWorld(path->At(iteration)->x, path->At(iteration)->y);
+	if (pos.x < next_pos.x)
+		pos.x++;
+	if (pos.y < next_pos.y)
+		pos.y++;
+	if (pos.x > next_pos.x)
+		pos.x--;
+	if (pos.y > next_pos.y)
+		pos.y--;
+
+	if (pos.x == next_pos.x && pos.y == next_pos.y)
+		iteration++;
+
+	if (iteration == destination)
+		iteration = 0;
 
 }

@@ -10,6 +10,7 @@ class Blader : public Enemy
 private:
 	Animation idle;
 	iPoint original_pos;
+	iPoint player_pos;
 	int iteration;
 	int destination;
 
@@ -17,8 +18,11 @@ private:
 
 public:
 	Blader(int x, int y);
-	void Move();
+	void Move(float dt);
 	void OnCollision(Collider* collider);
+
+	void CreatePath();
+	void FollowPath();
 };
 
 

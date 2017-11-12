@@ -83,11 +83,10 @@ bool j1Player::Start() {
 
 void j1Player::Init() {
 	pos = startPos;
-	
+	App->collision->EraseCollider(collider);
 	jumping = 1;
 	actualJumpframes = 0;
 	collider = App->collision->AddCollider({ (int)startPos.x, (int)startPos.y, 21, 24 }, COLLIDER_PLAYER, this);
-	//collider2 = App->collision->AddCollider({ 260, 170, 21, 24 }, COLLIDER_ENEMY, this);
 }
 
 
