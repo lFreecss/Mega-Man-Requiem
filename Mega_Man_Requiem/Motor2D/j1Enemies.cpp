@@ -150,6 +150,19 @@ void j1Enemies::SpawnEnemy(const EnemyInfo& info) {
 	}
 }
 
+void j1Enemies::DeleteEnemy() {
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+		{
+			delete enemies[i];
+			enemies[i] = nullptr;
+		}
+	}
+
+}
+
 void j1Enemies::OnCollision(Collider* c1, Collider* c2)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)

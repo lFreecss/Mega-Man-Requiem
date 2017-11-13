@@ -5,13 +5,16 @@
 	<textures />
 	<audio />
 	<map />
+	<pathfinding />
 	<scene>
 		<map name="1" />
 	</scene>
 	<player>
-		<position x="26.7999992" y="185.799973" />
+		<position x="790.90094" y="122.119537" />
 	</player>
+	<enemies />
+	<:anonymous />
 	<renderer>
-		<camera x="-66" y="0" />
+		<camera x="-1977" y="0" />
 	</renderer>
 </game_state>

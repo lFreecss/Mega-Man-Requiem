@@ -32,6 +32,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Checks if it is the correct map in case of applying a save state
+	void CheckMap();
+
 	//Change map
 	void ChangeMaps(const char*);
 
@@ -46,6 +49,12 @@ public:
 
 	//Initialize Enemies
 	void EnemySpawn();
+
+	//Change enemies from level to level
+	void EnemyInitialation();
+
+	//Function for the debug keys
+	void DebugKeys();
 
 	// Load / Save
 	bool Load(pugi::xml_node&);

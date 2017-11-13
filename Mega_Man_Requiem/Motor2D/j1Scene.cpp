@@ -56,11 +56,6 @@ bool j1Scene::Start()
 }
 
 
-void j1Scene::EnemySpawn() {
-	App->enemies->AddEnemy(GROUND, 550, 160);
-	App->enemies->AddEnemy(AIR, 260, 170);
-}
-
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
@@ -70,57 +65,23 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if (map_num == 0 && current_map != "rock_level.tmx")
-		ChangeMaps("rock_level.tmx");
-	if (map_num == 1 && current_map != "JAIL.tmx")
-		ChangeMaps("JAIL.tmx");
-
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		Restart();
-
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		MapStart();
-
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		App->SaveGame();
-
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->LoadGame();
-
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->LoadGame();
-
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
-		App->render->camera.y -= 1;
-
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
-		App->render->camera.y += 1;
-
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
-		App->render->camera.x -= 1;
-
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
-		App->render->camera.x += 1;
-
+	CheckMap();
+	DebugKeys();
 	App->map->Draw();
-
+/*
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		App->map->data.width, App->map->data.height,
 		App->map->data.tile_width, App->map->data.tile_height,
 		App->map->data.tilesets.count());
 
-	App->win->SetTitle(title.GetString());
+	App->win->SetTitle(title.GetString());*/
 
-	// Scroll, TODO Valdivia
-	//App->player->pos.x < 560
+	//Scroll
 	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - 64)
-		App->render->camera.x = -(2.5 * App->player->pos.x);
+		App->render->camera.x = -(scroll_speed * App->player->pos.x);
 
-	//Debug
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 130;
-
-	//When player gets at the end of the level, change to the next, TODO Valdivia
+	
+	//When player gets at the end of the level, change to the next
 	if (App->player->pos.x >= App->map->data.tile_width*App->map->data.width - 30) {
 		App->collision->EraseCollider(App->player->collider);
 
@@ -133,19 +94,6 @@ bool j1Scene::Update(float dt)
 			ChangeMaps("rock_level.tmx");
 			MapStart();
 		}
-
-	}
-	//Change level, for debuging 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-
-		if (current_map == "rock_level.tmx") {
-			ChangeMaps("JAIL.tmx");
-		}
-
-		else {
-			ChangeMaps("rock_level.tmx");
-		}
-
 	}
 
 	return true;
@@ -169,6 +117,62 @@ bool j1Scene::CleanUp()
 
 	return true;
 }
+
+void j1Scene::DebugKeys(){
+
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		Restart();
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		MapStart();
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		App->SaveGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		App->LoadGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
+		App->render->camera.y -= 1;
+
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
+		App->render->camera.y += 1;
+
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
+		App->render->camera.x -= 1;
+
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
+		App->render->camera.x += 1;
+
+	//Debug for the scroll
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 130;
+
+	//Change level, for debuging 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+
+		if (current_map == "rock_level.tmx") 
+			ChangeMaps("JAIL.tmx");
+
+		else 
+			ChangeMaps("rock_level.tmx");
+
+	}
+}
+
+void j1Scene::CheckMap() {
+
+	if (map_num == 0 && current_map != "rock_level.tmx") {
+		ChangeMaps("rock_level.tmx");
+		EnemyInitialation();
+	}
+	if (map_num == 1 && current_map != "JAIL.tmx") {
+		ChangeMaps("JAIL.tmx");
+		EnemyInitialation();
+	}
+
+}
+
 //Change from one map to the other, TODO Valdivia
 void j1Scene::ChangeMaps(const char* map_name) {
 	App->map->CleanUp();
@@ -177,6 +181,7 @@ void j1Scene::ChangeMaps(const char* map_name) {
 	InitializeMap();
 	//MapStart();
 }
+
 //For starting form the same map, TODO Varela
 void j1Scene::InitializeMap() {
 	if (current_map == "rock_level.tmx") {
@@ -186,6 +191,7 @@ void j1Scene::InitializeMap() {
 		map_num = 1;
 	}
 }
+
 //To Start form the very first level, TODO Varela
 void j1Scene::Restart() {
 	//first_map.GetString()
@@ -198,7 +204,29 @@ void j1Scene::MapStart() {
 	App->render->camera.x = 0;
 	App->render->camera.x = 0;
 	App->player->Init();
+	EnemyInitialation();
 }
+
+//Initialize enemies for each level
+void j1Scene::EnemyInitialation() {
+
+	if (current_map == "rock_level.tmx") {
+		EnemySpawn();
+	}
+	if (current_map == "JAIL.tmx") {
+		App->enemies->DeleteEnemy();
+		App->enemies->AddEnemy(AIR, 320, 170);
+	}
+
+}
+
+//Enemies for the first level
+void j1Scene::EnemySpawn() {
+	App->enemies->DeleteEnemy();
+	App->enemies->AddEnemy(GROUND, 550, 160);
+	App->enemies->AddEnemy(AIR, 260, 170);
+}
+
 //Load map
 bool j1Scene::Load(pugi::xml_node& data)
 {
