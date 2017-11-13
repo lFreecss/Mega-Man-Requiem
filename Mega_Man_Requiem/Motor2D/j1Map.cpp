@@ -46,7 +46,7 @@ void j1Map::Draw()
 						iPoint pos = MapToWorld(i, j);
 						SDL_Rect* square = &tiles->data->GetTileRect(layer->data->Get(i, j));
 
-						if (layer->data->name == "Parallax")
+						if (layer->data->id == PARALLAX)
 							App->render->Blit(tiles->data->texture, pos.x, pos.y, square, 0.7);
 						else
 							App->render->Blit(tiles->data->texture, pos.x, pos.y, square);
@@ -63,7 +63,7 @@ void j1Map::Draw()
 						iPoint pos = MapToWorld(i, j);
 						SDL_Rect* square = &tiles->data->GetTileRect(collisions->data->Get(i, j));
 
-						if (collisions->data->name == "Collision")
+						if (collisions->data->id == COLLISION)
 							App->render->Blit(tiles->data->texture, pos.x, pos.y, square);
 					}
 				}
@@ -205,7 +205,7 @@ bool j1Map::Load(const char* file_name)
 		if (ret == true)
 			ret = LoadLayer(layer, layer0);
 
-		if (layer0->name == "Collision")
+		if (layer0->id == COLLISION)
 			data.collisions.add(layer0);
 		else
 			data.layers.add(layer0);

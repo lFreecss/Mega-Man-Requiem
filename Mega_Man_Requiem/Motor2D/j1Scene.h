@@ -5,6 +5,12 @@
 
 struct SDL_Texture;
 
+enum LEVEL_ID {
+	NO_LEVEL = 0,
+	ROCK,
+	JAIL
+};
+
 class j1Scene : public j1Module
 {
 public:
@@ -36,7 +42,7 @@ public:
 	void CheckMap();
 
 	//Change map
-	void ChangeMaps(const char*);
+	void ChangeMaps(LEVEL_ID level_name);
 
 	//Start from 1st level
 	void Restart();
@@ -69,7 +75,7 @@ private:
 
 	const char* rock_level;
 	const char* jail_level;
-	uint id[2];
+	LEVEL_ID current_level = NO_LEVEL;
 	
 };
 

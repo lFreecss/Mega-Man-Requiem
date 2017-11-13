@@ -30,10 +30,14 @@ bool j1Scene::Awake(pugi::xml_node& config)
 
 	music_path = config.child("file").attribute("music_name").as_string();
 	scroll_speed = config.child("scroll").attribute("speed").as_float();
-	uint i = 0;
-	for (pugi::xml_node level = config.child("level"); level; level = config.next_sibling("level")) {
-		id[i] = level.attribute("id").as_uint();
-		i++;
+	
+	for (pugi::xml_node level = config.child("levels").child("level"); level; level = config.next_sibling("level")) {
+		if (level.attribute("id").as_uint() == 1)
+			rock_level = level.attribute("name").as_string();
+		if (level.attribute("id").as_uint() == 2)
+			jail_level = level.attribute("name").as_string();
+		//if(level.attribute("loaded").as_bool() == true)
+		//first_map = level.attribute("name").as_string();
 	}
 	rock_level = config.child("level").attribute("rock").value();
 	jail_level = config.child("level").attribute("jail").value();
@@ -85,13 +89,13 @@ bool j1Scene::Update(float dt)
 	if (App->player->pos.x >= App->map->data.tile_width*App->map->data.width - 30) {
 		App->collision->EraseCollider(App->player->collider);
 
-		if (current_map == "rock_level.tmx") {
-			ChangeMaps("JAIL.tmx");
+		if (current_level == ROCK) {
+			ChangeMaps(JAIL);
 			MapStart();
 		}
 
 		else {
-			ChangeMaps("rock_level.tmx");
+			ChangeMaps(ROCK);
 			MapStart();
 		}
 	}
@@ -151,33 +155,39 @@ void j1Scene::DebugKeys(){
 	//Change level, for debuging 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 
-		if (current_map == "rock_level.tmx") 
-			ChangeMaps("JAIL.tmx");
+		if (current_level == ROCK) 
+			ChangeMaps(JAIL);
 
 		else 
-			ChangeMaps("rock_level.tmx");
+			ChangeMaps(ROCK);
 
 	}
 }
 
 void j1Scene::CheckMap() {
 
-	if (map_num == 0 && current_map != "rock_level.tmx") {
-		ChangeMaps("rock_level.tmx");
+	if (map_num == 0 && current_level != ROCK) {
+		ChangeMaps(ROCK);
 		EnemyInitialation();
 	}
-	if (map_num == 1 && current_map != "JAIL.tmx") {
-		ChangeMaps("JAIL.tmx");
+	if (map_num == 1 && current_level != JAIL) {
+		ChangeMaps(JAIL);
 		EnemyInitialation();
 	}
 
 }
 
 //Change from one map to the other, TODO Valdivia
-void j1Scene::ChangeMaps(const char* map_name) {
+void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	App->map->CleanUp();
-	App->map->Load(map_name);
-	current_map = map_name;
+	if (level_name == ROCK) {
+		App->map->Load("rock_level.tmx");
+		current_map = "rock_level.tmx";
+	}
+	else {
+		App->map->Load("JAIL.tmx");
+		current_map = "JAIL.tmx";
+	}
 	InitializeMap();
 	//MapStart();
 }
@@ -185,9 +195,11 @@ void j1Scene::ChangeMaps(const char* map_name) {
 //For starting form the same map, TODO Varela
 void j1Scene::InitializeMap() {
 	if (current_map == "rock_level.tmx") {
+		current_level = ROCK;
 		map_num = 0;
 	}
 	if (current_map == "JAIL.tmx") {
+		current_level = JAIL;
 		map_num = 1;
 	}
 }
@@ -195,7 +207,7 @@ void j1Scene::InitializeMap() {
 //To Start form the very first level, TODO Varela
 void j1Scene::Restart() {
 	//first_map.GetString()
-	ChangeMaps("rock_level.tmx");
+	ChangeMaps(ROCK);
 	MapStart();
 	map_num = 0;
 }
@@ -210,10 +222,10 @@ void j1Scene::MapStart() {
 //Initialize enemies for each level
 void j1Scene::EnemyInitialation() {
 
-	if (current_map == "rock_level.tmx") {
+	if (current_level == ROCK) {
 		EnemySpawn();
 	}
-	if (current_map == "JAIL.tmx") {
+	if (current_level == JAIL) {
 		App->enemies->DeleteEnemy();
 		App->enemies->AddEnemy(AIR, 320, 170);
 	}
