@@ -4,6 +4,7 @@
   <app>
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
+    <game_saving_xml name = "save_game.xml" want_to_save = "false"/>
   </app>
 	
   <renderer>
@@ -25,8 +26,8 @@
 
   <map>
     <folder>maps/</folder>
-    <file name="JAIL" loaded="0"/>
-    <file name="rock_level" loaded="1"/>	
+    <file name="JAIL.tmx" loaded="0"/>
+    <file name="rock_level.tmx" loaded="1"/>	
   </map>
 
 <scene>
@@ -34,10 +35,18 @@
   <scroll speed = "2.5" />
   
   <levels>
-    <map first="1"/>
-    <level id= "1" loaded= "1" name = "rock_level.tmx"/>
-    <level id= "2" loaded= "0" name = "JAIL.tmx"/>
+    <!-- <map first="1"/>-->
+    <first_level id= "1" loaded= "1" name = "rock_level.tmx"/>
+    <second_level id= "2" loaded= "0" name = "JAIL.tmx"/>
   </levels>
+
+  <enemy_pos>
+    <Air1-1 x ="260" y="170"/>
+    <Ground1-1 x ="550" y="170"/>
+    <Air1-2 x ="1200" y="200"/>
+    <Air2-1 x ="320" y="170"/>
+    <Ground2-1 x ="1050" y="200"/>
+  </enemy_pos>
   
 </scene>
 
@@ -50,6 +59,11 @@
 
 <enemies>
   <file name = "textures/enemies.png" />
+
+  <blader>
+    <size x = "16" y = "21"/>
+  </blader>
+  
 </enemies>
 
 </config>

@@ -6,6 +6,11 @@
 #include "j1Input.h"
 #include "j1Map.h"
 
+void Blader::Awake(pugi::xml_node& config) {
+	size.x = config.child("blader").child("size").attribute("x").as_int();
+	size.y = config.child("blader").child("size").attribute("y").as_int();
+}
+
 Blader::Blader(int x, int y) : Enemy(x, y)
 {
 	idle.PushBack({ 187, 108, 16, 21 });
@@ -13,11 +18,12 @@ Blader::Blader(int x, int y) : Enemy(x, y)
 	idle.speed = 0.2f;
 
 	animation = &idle;
-
+	size.x = 16;
+	size.y = 21;
 	original_pos.y = y;
 	original_pos.x = x;
 
-	collider = App->collision->AddCollider({ 0, 0, 16, 21 }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->enemies);
+	collider = App->collision->AddCollider({ 0, 0, size.x, size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->enemies);
 }
 
 void Blader::Move(float dt) {

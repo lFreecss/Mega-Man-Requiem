@@ -21,10 +21,8 @@
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
-	want_to_save = want_to_load = false;
+	//want_to_save = want_to_load = false;
 	prevTime = 0;
-	load_game = "save_game.xml";
-	save_game = "save_game.xml";
 
 	input = new j1Input();
 	win = new j1Window();
@@ -98,6 +96,8 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
+		load_game = save_game = app_config.child("game_saving_xml").attribute("name").as_string();
+		want_to_load = want_to_save = app_config.child("game_saving_xml").attribute("want_to_save").as_bool();
 	}
 
 	if(ret == true)

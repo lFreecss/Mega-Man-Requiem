@@ -21,9 +21,11 @@ public:
 	Blader(int x, int y);
 	void Move(float dt);
 	void OnCollision(Collider* collider);
+	void Awake(pugi::xml_node& config);
 
 	void CreatePath();
 	void FollowPath();
+	iPoint size;
 };
 
 

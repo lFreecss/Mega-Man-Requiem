@@ -23,7 +23,7 @@ public:
 	virtual ~Enemy();
 
 	const Collider* GetCollider() const;
-
+	virtual void Awake(pugi::xml_node& config);
 	virtual void Move(float dt);
 	virtual void Draw(SDL_Texture* sprites);
 	virtual void OnCollision(Collider* collider);

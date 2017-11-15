@@ -31,3 +31,6 @@ void Enemy::Move(float dt)
 
 void Enemy::OnCollision(Collider* collider)
 {}
+
+void Enemy::Awake(pugi::xml_node& config)
+{}

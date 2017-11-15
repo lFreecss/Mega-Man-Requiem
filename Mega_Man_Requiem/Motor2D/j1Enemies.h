@@ -42,6 +42,7 @@ public:
 	void DeleteEnemy();
 
 	Enemy* enemies[MAX_ENEMIES];
+
 private:
 
 	void SpawnEnemy(const EnemyInfo&);

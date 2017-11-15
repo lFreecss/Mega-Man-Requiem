@@ -76,7 +76,12 @@ private:
 	const char* rock_level;
 	const char* jail_level;
 	LEVEL_ID current_level = NO_LEVEL;
-	
+
+	iPoint air_enem_1_1;
+	iPoint ground_enem_1_1;
+	iPoint air_enem_1_2;
+	iPoint air_enem_2_1;
+	iPoint ground_enem_2_1;
 };
 
 #endif // __j1SCENE_H__

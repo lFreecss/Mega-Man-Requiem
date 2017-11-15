@@ -31,16 +31,27 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	music_path = config.child("file").attribute("music_name").as_string();
 	scroll_speed = config.child("scroll").attribute("speed").as_float();
 	
-	for (pugi::xml_node level = config.child("levels").child("level"); level; level = config.next_sibling("level")) {
+	/*for (pugi::xml_node level = config.child("levels").child("level"); level; level = config.next_sibling("level")) {
 		if (level.attribute("id").as_uint() == 1)
 			rock_level = level.attribute("name").as_string();
 		if (level.attribute("id").as_uint() == 2)
 			jail_level = level.attribute("name").as_string();
-		//if(level.attribute("loaded").as_bool() == true)
-		//first_map = level.attribute("name").as_string();
-	}
-	rock_level = config.child("level").attribute("rock").value();
-	jail_level = config.child("level").attribute("jail").value();
+	}*/
+	rock_level = config.child("levels").child("first_level").attribute("name").as_string();
+	jail_level = config.child("levels").child("second_level").attribute("name").as_string();
+
+	LOG("Charging all enemy positions");
+	pugi::xml_node enemy_pos = config.child("enemy_pos");
+	air_enem_1_1.x = enemy_pos.child("Air1-1").attribute("x").as_int();
+	air_enem_1_1.y = enemy_pos.child("Air1-1").attribute("y").as_int();
+	ground_enem_1_1.x = enemy_pos.child("Ground1-1").attribute("x").as_int();
+	ground_enem_1_1.y = enemy_pos.child("Ground1-1").attribute("y").as_int();
+	air_enem_1_2.x = enemy_pos.child("Air1-2").attribute("x").as_int();
+	air_enem_1_2.y = enemy_pos.child("Air1-2").attribute("y").as_int();
+	air_enem_2_1.x = enemy_pos.child("Air2-1").attribute("x").as_int();
+	air_enem_2_1.y = enemy_pos.child("Air2-1").attribute("y").as_int();
+	ground_enem_2_1.x = enemy_pos.child("Ground2-1").attribute("x").as_int();
+	ground_enem_2_1.y = enemy_pos.child("Ground2-1").attribute("y").as_int();
 
 	return ret;
 }
@@ -181,12 +192,12 @@ void j1Scene::CheckMap() {
 void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	App->map->CleanUp();
 	if (level_name == ROCK) {
-		App->map->Load("rock_level.tmx");
-		current_map = "rock_level.tmx";
+		App->map->Load(rock_level);
+		current_map = rock_level;
 	}
 	else {
-		App->map->Load("JAIL.tmx");
-		current_map = "JAIL.tmx";
+		App->map->Load(jail_level);
+		current_map = jail_level;
 	}
 	InitializeMap();
 	//MapStart();
@@ -194,11 +205,11 @@ void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 
 //For starting form the same map, TODO Varela
 void j1Scene::InitializeMap() {
-	if (current_map == "rock_level.tmx") {
+	if (current_map == rock_level) {
 		current_level = ROCK;
 		map_num = 0;
 	}
-	if (current_map == "JAIL.tmx") {
+	if (current_map == jail_level) {
 		current_level = JAIL;
 		map_num = 1;
 	}
@@ -227,8 +238,8 @@ void j1Scene::EnemyInitialation() {
 	}
 	if (current_level == JAIL) {
 		App->enemies->DeleteEnemy();
-		App->enemies->AddEnemy(AIR, 320, 170);
-		App->enemies->AddEnemy(GROUND, 1050, 200);
+		App->enemies->AddEnemy(AIR, air_enem_2_1.x, air_enem_2_1.y);
+		App->enemies->AddEnemy(GROUND, ground_enem_2_1.x, ground_enem_2_1.y);
 	}
 
 }
@@ -237,9 +248,9 @@ void j1Scene::EnemyInitialation() {
 void j1Scene::EnemySpawn() {
 	App->enemies->DeleteEnemy();
 	//App->enemies->AddEnemy(GROUND, 70, 170);
-	App->enemies->AddEnemy(AIR, 260, 170);
-	App->enemies->AddEnemy(GROUND, 550, 170);
-	App->enemies->AddEnemy(AIR, 1200, 200);
+	App->enemies->AddEnemy(AIR, air_enem_1_1.x, air_enem_1_1.y);
+	App->enemies->AddEnemy(GROUND, ground_enem_1_1.x, ground_enem_1_1.y);
+	App->enemies->AddEnemy(AIR, air_enem_1_2.x, air_enem_1_2.y);
 }
 
 //Load map
