@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "p2DynArray.h"
 #include "p2Point.h"
+#include "j1Enemies.h"
 
 class Blader : public Enemy
 {

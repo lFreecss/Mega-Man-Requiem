@@ -40,7 +40,7 @@ void Blader::OnCollision(Collider* collider) {
 }
 
 void Blader::CreatePath() {
-	destination = App->pathfinding->CreatePath(App->map->WorldToMap(pos.x, pos.y), App->map->WorldToMap(player_pos.x, player_pos.y));
+	destination = App->pathfinding->CreatePath(App->map->WorldToMap(pos.x, pos.y), App->map->WorldToMap(player_pos.x, player_pos.y), AIR);
 	path = App->pathfinding->GetLastPath();
 	iteration = 0;
 }

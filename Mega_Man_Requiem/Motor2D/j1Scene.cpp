@@ -228,6 +228,7 @@ void j1Scene::EnemyInitialation() {
 	if (current_level == JAIL) {
 		App->enemies->DeleteEnemy();
 		App->enemies->AddEnemy(AIR, 320, 170);
+		App->enemies->AddEnemy(GROUND, 1050, 200);
 	}
 
 }
@@ -235,8 +236,10 @@ void j1Scene::EnemyInitialation() {
 //Enemies for the first level
 void j1Scene::EnemySpawn() {
 	App->enemies->DeleteEnemy();
-	App->enemies->AddEnemy(GROUND, 550, 160);
+	//App->enemies->AddEnemy(GROUND, 70, 170);
 	App->enemies->AddEnemy(AIR, 260, 170);
+	App->enemies->AddEnemy(GROUND, 550, 170);
+	App->enemies->AddEnemy(AIR, 1200, 200);
 }
 
 //Load map

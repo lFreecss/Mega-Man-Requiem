@@ -5,6 +5,7 @@
 #include "Path.h"
 #include "p2DynArray.h"
 #include "p2Point.h"
+#include "j1Enemies.h"
 
 class Crazy_Razy : public Enemy
 {
@@ -25,7 +26,7 @@ public:
 	int iteration;
 	int destination;
 	void CreatePath();
-	void FollowPath();
+	void FollowPath(float dt);
 
 };
 
