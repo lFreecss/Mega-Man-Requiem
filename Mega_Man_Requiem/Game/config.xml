@@ -41,7 +41,6 @@
       <second_level id= "2" loaded= "0" name = "JAIL.tmx"/>
     </levels>
 
-<<<<<<< HEAD
     <enemy_pos>
       <Air1-1 x ="260" y="170"/>
       <Ground1-1 x ="550" y="170"/>
@@ -52,19 +51,6 @@
       <Air2-2 x ="1500" y="50"/>
       <Ground2-2 x ="1900" y="100"/>
     </enemy_pos>
-=======
-  <enemy_pos>
-    <Air1-1 x ="260" y="170"/>
-    <Ground1-1 x ="550" y="170"/>
-    <Air1-2 x ="1500" y="50"/>
-    <Ground1-2 x ="1900" y="100"/>
-    <Air2-1 x ="320" y="170"/>
-    <Ground2-1 x ="1050" y="200"/>
-    <Air2-2 x ="1500" y="50"/>
-    <Ground2-2 x ="1900" y="100"/>
-  </enemy_pos>
->>>>>>> origin/master
-  
   </scene>
 
   <player>

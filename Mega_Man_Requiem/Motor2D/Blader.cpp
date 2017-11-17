@@ -33,21 +33,14 @@ void Blader::Move(float dt) {
 	player_pos.y = (int)App->player->pos.y;
 
 	if (iteration == 0 && player_pos.x < player_pos.x < original_pos.x + 200) {
-<<<<<<< HEAD
-		if (player_pos.x < 700 && player_pos.x > original_pos.x - player_pos.x)
-=======
 		if (player_pos.x < 700 && player_pos.x > original_pos.x - player_pos.x )
->>>>>>> origin/master
+
 			CreatePath();
 		else if (player_pos.x > 700 && player_pos.x > original_pos.x - player_pos.x + 1300)
 			CreatePath();
 	}
 
-<<<<<<< HEAD
 	if (path != nullptr && path->At(iteration) != nullptr)
-=======
-	if (path != nullptr && path->At(iteration) != nullptr) 
->>>>>>> origin/master
 		FollowPath(dt);
 
 }
