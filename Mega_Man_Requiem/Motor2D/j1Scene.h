@@ -80,8 +80,11 @@ private:
 	iPoint air_enem_1_1;
 	iPoint ground_enem_1_1;
 	iPoint air_enem_1_2;
+	iPoint ground_enem_1_2;
 	iPoint air_enem_2_1;
 	iPoint ground_enem_2_1;
+	iPoint air_enem_2_2;
+	iPoint ground_enem_2_2;
 };
 
 #endif // __j1SCENE_H__

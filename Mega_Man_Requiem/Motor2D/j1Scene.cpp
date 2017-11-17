@@ -48,10 +48,16 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	ground_enem_1_1.y = enemy_pos.child("Ground1-1").attribute("y").as_int();
 	air_enem_1_2.x = enemy_pos.child("Air1-2").attribute("x").as_int();
 	air_enem_1_2.y = enemy_pos.child("Air1-2").attribute("y").as_int();
+	ground_enem_1_2.x = enemy_pos.child("Ground1-2").attribute("x").as_int();
+	ground_enem_1_2.y = enemy_pos.child("Ground1-2").attribute("y").as_int();
 	air_enem_2_1.x = enemy_pos.child("Air2-1").attribute("x").as_int();
 	air_enem_2_1.y = enemy_pos.child("Air2-1").attribute("y").as_int();
 	ground_enem_2_1.x = enemy_pos.child("Ground2-1").attribute("x").as_int();
 	ground_enem_2_1.y = enemy_pos.child("Ground2-1").attribute("y").as_int();
+	air_enem_2_2.x = enemy_pos.child("Air2-2").attribute("x").as_int();
+	air_enem_2_2.y = enemy_pos.child("Air2-2").attribute("y").as_int();
+	ground_enem_2_2.x = enemy_pos.child("Ground2-2").attribute("x").as_int();
+	ground_enem_2_2.y = enemy_pos.child("Ground2-2").attribute("y").as_int();
 
 	return ret;
 }
@@ -240,6 +246,8 @@ void j1Scene::EnemyInitialation() {
 		App->enemies->DeleteEnemy();
 		App->enemies->AddEnemy(AIR, air_enem_2_1.x, air_enem_2_1.y);
 		App->enemies->AddEnemy(GROUND, ground_enem_2_1.x, ground_enem_2_1.y);
+		App->enemies->AddEnemy(AIR, air_enem_2_2.x, air_enem_2_2.y);
+		App->enemies->AddEnemy(GROUND, ground_enem_2_2.x, ground_enem_2_2.y);
 	}
 
 }
@@ -247,10 +255,10 @@ void j1Scene::EnemyInitialation() {
 //Enemies for the first level
 void j1Scene::EnemySpawn() {
 	App->enemies->DeleteEnemy();
-	//App->enemies->AddEnemy(GROUND, 70, 170);
 	App->enemies->AddEnemy(AIR, air_enem_1_1.x, air_enem_1_1.y);
 	App->enemies->AddEnemy(GROUND, ground_enem_1_1.x, ground_enem_1_1.y);
 	App->enemies->AddEnemy(AIR, air_enem_1_2.x, air_enem_1_2.y);
+	App->enemies->AddEnemy(GROUND, ground_enem_1_2.x, ground_enem_1_2.y);
 }
 
 //Load map

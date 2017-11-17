@@ -65,7 +65,7 @@ void Blader::FollowPath() {
 	if (pos.x == next_pos.x && pos.y == next_pos.y)
 		iteration++;
 
-	if (iteration == destination)
+	if (iteration == destination || iteration > 10)
 		iteration = 0;
 
 }

@@ -202,7 +202,7 @@ int PathNode::Score() const
 int PathNode::CalculateF(const iPoint& destination)
 {
 	g = parent->g + 1;
-	h = pos.DistanceTo(destination);
+	h = pos.DistanceManhattan(destination);
 
 	return g + h;
 }
@@ -226,7 +226,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, E
 		PathList Open;
 		PathList Close;
 		// Add the origin tile to open
-		PathNode origin_node(0, origin.DistanceTo(destination), origin, nullptr);
+		PathNode origin_node(0, origin.DistanceManhattan(destination), origin, nullptr);
 		Open.list.add(origin_node);
 
 		// Iterate while we have tile in the open list
