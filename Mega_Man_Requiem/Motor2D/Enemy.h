@@ -27,6 +27,8 @@ public:
 	virtual void Move(float dt);
 	virtual void Draw(SDL_Texture* sprites);
 	virtual void OnCollision(Collider* collider);
+	virtual void CreatePath();
+	virtual void FollowPath(float dt);
 };
 
 

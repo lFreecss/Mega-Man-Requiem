@@ -30,13 +30,16 @@ void Blader::Move(float dt) {
 	player_pos.x = (int)App->player->pos.x;
 	player_pos.y = (int)App->player->pos.y;
 
-	if (player_pos.x > original_pos.x - player_pos.x && player_pos.x < original_pos.x + 200 && iteration == 0) {
-		CreatePath();
+	if (iteration == 0 && player_pos.x < player_pos.x < original_pos.x + 200) {
+		if (player_pos.x < 700 && player_pos.x > original_pos.x - player_pos.x )
+			CreatePath();
+		else if (player_pos.x > 700 && player_pos.x > original_pos.x - player_pos.x + 1300)
+			CreatePath();
 	}
 
-	if (path != nullptr && path->At(iteration) != nullptr) {
-		FollowPath();
-	}
+	if (path != nullptr && path->At(iteration) != nullptr) 
+		FollowPath(dt);
+
 }
 
 void Blader::OnCollision(Collider* collider) {
@@ -51,7 +54,7 @@ void Blader::CreatePath() {
 	iteration = 0;
 }
 
-void Blader::FollowPath() {
+void Blader::FollowPath(float dt) {
 	iPoint next_pos = App->map->MapToWorld(path->At(iteration)->x, path->At(iteration)->y);
 	if (pos.x < next_pos.x)
 		pos.x++;
@@ -67,5 +70,4 @@ void Blader::FollowPath() {
 
 	if (iteration == destination || iteration > 10)
 		iteration = 0;
-
 }
