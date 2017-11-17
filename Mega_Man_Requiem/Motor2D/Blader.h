@@ -24,7 +24,7 @@ public:
 	void Awake(pugi::xml_node& config);
 
 	void CreatePath();
-	void FollowPath();
+	void FollowPath(float dt);
 	iPoint size;
 };
 

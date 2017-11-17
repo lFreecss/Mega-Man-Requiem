@@ -42,7 +42,7 @@ private:
 	Animation jumpR;
 	Animation sJump;
 	SDL_Texture* graphics = nullptr;
-	const char* path;
+	p2SString path;
 
 	fPoint vel;
 	float gravity;

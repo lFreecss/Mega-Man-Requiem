@@ -48,7 +48,7 @@ private:
 	void SpawnEnemy(const EnemyInfo&);
 
 	SDL_Texture* sprites;
-	const char* path;
+	p2SString path;
 	EnemyInfo queue[MAX_ENEMIES];
 
 	int screen_width;

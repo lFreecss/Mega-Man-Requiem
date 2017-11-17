@@ -34,3 +34,8 @@ void Enemy::OnCollision(Collider* collider)
 
 void Enemy::Awake(pugi::xml_node& config)
 {}
+
+void Enemy::CreatePath()
+{}
+void Enemy::FollowPath(float dt)
+{}

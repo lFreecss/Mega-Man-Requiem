@@ -28,7 +28,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	bool ret = true;
 	LOG("Loading Scene");
 
-	music_path = config.child("file").attribute("music_name").as_string();
+	music_path.create(config.child("file").attribute("music_name").as_string());
+	//music_path = config.child("file").attribute("music_name").as_string();
 	scroll_speed = config.child("scroll").attribute("speed").as_float();
 	
 	/*for (pugi::xml_node level = config.child("levels").child("level"); level; level = config.next_sibling("level")) {
@@ -37,8 +38,10 @@ bool j1Scene::Awake(pugi::xml_node& config)
 		if (level.attribute("id").as_uint() == 2)
 			jail_level = level.attribute("name").as_string();
 	}*/
-	rock_level = config.child("levels").child("first_level").attribute("name").as_string();
-	jail_level = config.child("levels").child("second_level").attribute("name").as_string();
+	//rock_level = config.child("levels").child("first_level").attribute("name").as_string();
+	rock_level.create(config.child("levels").child("first_level").attribute("name").as_string());
+	//jail_level = config.child("levels").child("second_level").attribute("name").as_string();
+	jail_level.create(config.child("levels").child("second_level").attribute("name").as_string());
 
 	LOG("Charging all enemy positions");
 	pugi::xml_node enemy_pos = config.child("enemy_pos");
@@ -48,10 +51,16 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	ground_enem_1_1.y = enemy_pos.child("Ground1-1").attribute("y").as_int();
 	air_enem_1_2.x = enemy_pos.child("Air1-2").attribute("x").as_int();
 	air_enem_1_2.y = enemy_pos.child("Air1-2").attribute("y").as_int();
+	ground_enem_1_2.x = enemy_pos.child("Ground1-2").attribute("x").as_int();
+	ground_enem_1_2.y = enemy_pos.child("Ground1-2").attribute("y").as_int();
 	air_enem_2_1.x = enemy_pos.child("Air2-1").attribute("x").as_int();
 	air_enem_2_1.y = enemy_pos.child("Air2-1").attribute("y").as_int();
 	ground_enem_2_1.x = enemy_pos.child("Ground2-1").attribute("x").as_int();
 	ground_enem_2_1.y = enemy_pos.child("Ground2-1").attribute("y").as_int();
+	air_enem_2_2.x = enemy_pos.child("Air2-2").attribute("x").as_int();
+	air_enem_2_2.y = enemy_pos.child("Air2-2").attribute("y").as_int();
+	ground_enem_2_2.x = enemy_pos.child("Ground2-2").attribute("x").as_int();
+	ground_enem_2_2.y = enemy_pos.child("Ground2-2").attribute("y").as_int();
 
 	return ret;
 }
@@ -59,11 +68,12 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	first_map = ("%s%s", App->map_name.GetString(), ".tmx");
+	//first_map = ("%s%s", App->map_name.GetString(), ".tmx");
+	first_map = rock_level;
 	App->map->Load(first_map.GetString());
 	current_map = first_map.GetString();
 	InitializeMap();
-	App->audio->PlayMusic(music_path);
+	App->audio->PlayMusic(music_path.GetString());
 
 	EnemySpawn();
 	
@@ -192,12 +202,12 @@ void j1Scene::CheckMap() {
 void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	App->map->CleanUp();
 	if (level_name == ROCK) {
-		App->map->Load(rock_level);
-		current_map = rock_level;
+		App->map->Load(rock_level.GetString());
+		current_map = rock_level.GetString();
 	}
 	else {
-		App->map->Load(jail_level);
-		current_map = jail_level;
+		App->map->Load(jail_level.GetString());
+		current_map = jail_level.GetString();
 	}
 	InitializeMap();
 	//MapStart();
@@ -205,11 +215,11 @@ void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 
 //For starting form the same map, TODO Varela
 void j1Scene::InitializeMap() {
-	if (current_map == rock_level) {
+	if (current_map == rock_level.GetString()) {
 		current_level = ROCK;
 		map_num = 0;
 	}
-	if (current_map == jail_level) {
+	if (current_map == jail_level.GetString()) {
 		current_level = JAIL;
 		map_num = 1;
 	}
@@ -240,6 +250,8 @@ void j1Scene::EnemyInitialation() {
 		App->enemies->DeleteEnemy();
 		App->enemies->AddEnemy(AIR, air_enem_2_1.x, air_enem_2_1.y);
 		App->enemies->AddEnemy(GROUND, ground_enem_2_1.x, ground_enem_2_1.y);
+		App->enemies->AddEnemy(AIR, air_enem_2_2.x, air_enem_2_2.y);
+		App->enemies->AddEnemy(GROUND, ground_enem_2_2.x, ground_enem_2_2.y);
 	}
 
 }
@@ -247,10 +259,10 @@ void j1Scene::EnemyInitialation() {
 //Enemies for the first level
 void j1Scene::EnemySpawn() {
 	App->enemies->DeleteEnemy();
-	//App->enemies->AddEnemy(GROUND, 70, 170);
 	App->enemies->AddEnemy(AIR, air_enem_1_1.x, air_enem_1_1.y);
 	App->enemies->AddEnemy(GROUND, ground_enem_1_1.x, ground_enem_1_1.y);
 	App->enemies->AddEnemy(AIR, air_enem_1_2.x, air_enem_1_2.y);
+	App->enemies->AddEnemy(GROUND, ground_enem_1_2.x, ground_enem_1_2.y);
 }
 
 //Load map

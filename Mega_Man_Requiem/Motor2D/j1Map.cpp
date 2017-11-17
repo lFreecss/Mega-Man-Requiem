@@ -101,7 +101,7 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		ret.x = -1;
 	else
 		ret.x = x / data.tile_width;
-	ret.y = y / data.tile_height;
+		ret.y = y / data.tile_height;
 
 	return ret;
 }
@@ -162,7 +162,10 @@ bool j1Map::CleanUp()
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
-	p2SString tmp("%s%s", folder.GetString(), file_name);
+	//p2SString tmp("%s%s", folder.GetString(), file_name);
+
+	p2SString tmp(PATH(folder.GetString(), file_name));
+	
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
@@ -173,7 +176,7 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	// Load general info ----------------------------------------------
-	if(ret == true)
+	if(ret)
 	{
 		ret = LoadMap();
 	}

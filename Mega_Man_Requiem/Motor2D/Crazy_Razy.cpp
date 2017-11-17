@@ -29,46 +29,45 @@ Crazy_Razy::Crazy_Razy(int x, int y) : Enemy(x, y)
 }
 
 void Crazy_Razy::Move(float dt) {
-	//walk.PushBack({ 1.0f, 0.0f }, 10000);
-	//walk.PushBack({ 1.0f, 0.0f }, 100);
-	//walk.loop = true;
 	player_pos.x = (int)App->player->pos.x;
 	player_pos.y = (int)App->player->pos.y;
+
 	pos.y += 200.0 * dt;;
 	iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
 	iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);
 	if (App->map->CollisionY(posWorld.x, endPosWorld.x, posWorld.y + 2)) {
 		pos.y -= 200.0 * dt;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		pos.x -= 150.0*dt;
-		iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
-		iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);
-		if (App->map->CollisionX(posWorld.x + 2, posWorld.y, endPosWorld.y))
-			pos.x += 150.0*dt;
-		animation = &left;
+	/*if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+	pos.x -= 150.0*dt;
+	iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
+	iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);
+	if (App->map->CollisionX(posWorld.x + 2, posWorld.y, endPosWorld.y))
+	pos.x += 150.0*dt;
+	animation = &left;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		pos.x += 150.0*dt;
-		iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
-		iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);
-		if (App->map->CollisionX(posWorld.x + 2, posWorld.y, endPosWorld.y))
-			pos.x -= 150.0*dt;
-		animation = &right;
+	pos.x += 150.0*dt;
+	iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
+	iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);
+	if (App->map->CollisionX(posWorld.x + 2, posWorld.y, endPosWorld.y))
+	pos.x -= 150.0*dt;
+	animation = &right;
+	}
+	*/
+	if (iteration == 0 && player_pos.x < player_pos.x < original_pos.x + 200) {
+		if (player_pos.x < 1000 && player_pos.x > original_pos.x - player_pos.x + 200)
+			CreatePath();
+		else if (player_pos.x > 1000 && player_pos.x > original_pos.x - player_pos.x + 1350)
+			CreatePath();
 	}
 
-	
-
-	if (player_pos.x > original_pos.x - player_pos.x + 200 && player_pos.x < player_pos.x < original_pos.x + 200 && iteration == 0) {
-		CreatePath();
-	}
-
-	if (path != nullptr && path->At(iteration) != nullptr) {
+	if (path != nullptr && path->At(iteration) != nullptr)
 		FollowPath(dt);
-	}
-	
-	
+
+
+
 }
 
 void Crazy_Razy::OnCollision(Collider* collider) {
@@ -84,26 +83,26 @@ void Crazy_Razy::CreatePath() {
 void Crazy_Razy::FollowPath(float dt) {
 	iPoint next_pos = App->map->MapToWorld(path->At(iteration)->x, path->At(iteration)->y);
 	if (pos.x < next_pos.x) {
-		pos.x += 150.0*dt;
+		pos.x += 100.0*dt;
 		iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
 		iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);
 		if (App->map->CollisionX(posWorld.x + 2, posWorld.y, endPosWorld.y))
-			pos.x -= 150.0*dt;
+			pos.x -= 100.0*dt;
 		animation = &right;
 	}
 	if (pos.x > next_pos.x) {
-		pos.x -= 150.0*dt;
+		pos.x -= 100.0*dt;
 		iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
 		iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);
 		if (App->map->CollisionX(posWorld.x + 2, posWorld.y, endPosWorld.y))
-			pos.x += 150.0*dt;
+			pos.x += 100.0*dt;
 		animation = &left;
 	}
 
 	if (pos.x == next_pos.x)
 		iteration++;
 
-	if (iteration == destination)
+	if (iteration == destination || player_pos.x < pos.x && iteration > 10)
 		iteration = 0;
 
 }

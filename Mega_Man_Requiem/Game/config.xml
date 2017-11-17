@@ -5,10 +5,11 @@
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
     <game_saving_xml name = "save_game.xml" want_to_save = "false"/>
+    <framerate_cap value = "30"/>
   </app>
 	
   <renderer>
-    <vsync value="true"/>
+    <vsync value="false"/>
   </renderer>
 
   <window>
@@ -19,51 +20,54 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
-
+  
+<!--
   <file_system>
     <path>data.zip</path>
   </file_system>
-
+-->
+  
   <map>
-    <folder>maps/</folder>
-    <file name="JAIL.tmx" loaded="0"/>
-    <file name="rock_level.tmx" loaded="1"/>	
+    <folder>maps</folder>
   </map>
 
-<scene>
-  <file music_name = "audio/music/Armored Armadillo.ogg"/>
-  <scroll speed = "2.5" />
+  <scene>
+    <file music_name = "audio/music/Armored Armadillo.ogg"/>
+    <scroll speed = "2.5" />
   
-  <levels>
-    <!-- <map first="1"/>-->
-    <first_level id= "1" loaded= "1" name = "rock_level.tmx"/>
-    <second_level id= "2" loaded= "0" name = "JAIL.tmx"/>
-  </levels>
+    <levels>
+      <!-- <map first="1"/>-->
+      <first_level id= "1" loaded= "1" name = "rock_level.tmx"/>
+      <second_level id= "2" loaded= "0" name = "JAIL.tmx"/>
+    </levels>
 
-  <enemy_pos>
-    <Air1-1 x ="260" y="170"/>
-    <Ground1-1 x ="550" y="170"/>
-    <Air1-2 x ="1200" y="200"/>
-    <Air2-1 x ="320" y="170"/>
-    <Ground2-1 x ="1050" y="200"/>
-  </enemy_pos>
+    <enemy_pos>
+      <Air1-1 x ="260" y="170"/>
+      <Ground1-1 x ="550" y="170"/>
+      <Air1-2 x ="1500" y="50"/>
+      <Ground1-2 x ="1900" y="100"/>
+      <Air2-1 x ="320" y="170"/>
+      <Ground2-1 x ="1050" y="200"/>
+      <Air2-2 x ="1500" y="50"/>
+      <Ground2-2 x ="1900" y="100"/>
+    </enemy_pos>
   
-</scene>
+  </scene>
 
-<player>
-  <file name = "textures/8bitmegaman.png" />
-  <physics velocityx = " 150.0" velocityy = "480.0" gravity = "200.0"/>
-  <movement jumpframes= "15"/>
-  <size x= "22" y= "22" />
-</player>
+  <player>
+    <file name = "textures/8bitmegaman.png" />
+    <physics velocityx = " 150.0" velocityy = "480.0" gravity = "200.0"/>
+    <movement jumpframes= "15"/>
+    <size x= "22" y= "22" />
+  </player>
 
-<enemies>
-  <file name = "textures/enemies.png" />
+  <enemies>
+    <file name = "textures/enemies.png" />
 
-  <blader>
-    <size x = "16" y = "21"/>
-  </blader>
+    <blader>
+      <size x = "16" y = "21"/>
+    </blader>
   
-</enemies>
+  </enemies>
 
 </config>

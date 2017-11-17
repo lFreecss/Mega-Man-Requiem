@@ -70,18 +70,21 @@ private:
 	p2SString first_map;
 	const char* current_map;
 	int map_num;
-	const char* music_path;
+	p2SString music_path;
 	float scroll_speed;
 
-	const char* rock_level;
-	const char* jail_level;
+	p2SString rock_level;
+	p2SString jail_level;
 	LEVEL_ID current_level = NO_LEVEL;
 
 	iPoint air_enem_1_1;
 	iPoint ground_enem_1_1;
 	iPoint air_enem_1_2;
+	iPoint ground_enem_1_2;
 	iPoint air_enem_2_1;
 	iPoint ground_enem_2_1;
+	iPoint air_enem_2_2;
+	iPoint ground_enem_2_2;
 };
 
 #endif // __j1SCENE_H__

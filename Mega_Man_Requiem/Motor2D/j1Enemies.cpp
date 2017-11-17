@@ -15,6 +15,9 @@
 j1Enemies::j1Enemies() : j1Module()
 {
 	name.create("enemies");
+	for (uint i = 0; i < MAX_ENEMIES; ++i) {
+		enemies[i] = nullptr;
+	}
 
 }
 j1Enemies::~j1Enemies() {
@@ -23,17 +26,19 @@ j1Enemies::~j1Enemies() {
 
 bool j1Enemies::Awake(pugi::xml_node& config) {
 	bool ret = true;
-	path = config.child("file").attribute("name").as_string();
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	//path = config.child("file").attribute("name").as_string();
+	path.create(config.child("file").attribute("name").as_string());
+	for (uint i = 0; i < MAX_ENEMIES; ++i) {
 		if (enemies[i] != nullptr)
 			enemies[i]->Awake(config);
+	}
 	return ret;
 }
 
 bool j1Enemies::Start() {
 	bool ret = true;
 
-	sprites = App->tex->Load(path);
+	sprites = App->tex->Load(path.GetString());
 	uint sheight;
 	uint swidth;
 	App->win->GetWindowSize(swidth, sheight);

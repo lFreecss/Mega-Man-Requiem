@@ -56,7 +56,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	bool ret = true;
 	LOG("Loading Player");
 
-	path = config.child("file").attribute("name").as_string();
+	//path = config.child("file").attribute("name").as_string();
+	path.create(config.child("file").attribute("name").as_string());
 
 	vel.x = config.child("physics").attribute("velocityx").as_float();
 	vel.y = config.child("physics").attribute("velocityy").as_float();
@@ -73,7 +74,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 bool j1Player::Start() {
 	bool ret = true;
-	graphics = App->tex->Load(path);
+	graphics = App->tex->Load(path.GetString());
 	if (graphics == nullptr)
 		ret = false;
 	Init();
