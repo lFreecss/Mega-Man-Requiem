@@ -8,6 +8,8 @@
 
 Crazy_Razy::Crazy_Razy(int x, int y) : Enemy(x, y)
 {
+	path = nullptr;
+
 	left.PushBack({ 146, 7, 32, 31 });
 	left.PushBack({ 181, 7, 32, 31 });
 	left.PushBack({ 216, 7, 32, 31 });
