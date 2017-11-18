@@ -148,13 +148,17 @@ bool j1Player::Update(float dt) {
 	//OnCollision(collider, COLLIDER_ENEMY);
 	if (jumping == 1) {
 		current_animation = &jumpR;
-		if (GodMode())
-			current_animation = &jumpR_inv;
+		if (GodMode()){
+			if(pos.y < floor_level)
+				current_animation = &jumpR_inv;
+			else
+				current_animation = &idle_inv;
+		}
 	}
 	if (jumping == 0) {
 		current_animation = &sJump;
 		if (GodMode())
-			current_animation = &sJump_inv;
+		current_animation = &sJump_inv;
 	}
 
 
@@ -263,8 +267,8 @@ bool j1Player::GodMode() {
 	if (is_invincible == false)
 		return ret;
 
-		if (App->player->pos.y > floor_level) {
-			App->player->pos.y = floor_level;
+		if (pos.y > floor_level) {
+			pos.y = floor_level;
 			jumping = 1;
 		}
 
