@@ -43,7 +43,50 @@ j1Player::j1Player() : j1Module() {
 	sJump.PushBack({ 206, 209, 26, 30 });
 	sJump.speed = 0.1f;
 
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 133, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.speed = 0.4f;
 	
+	right_inv.PushBack({ 188, 10, 24, 24 });
+	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	right_inv.PushBack({ 218, 10, 21, 24 });
+	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	right_inv.PushBack({ 239, 10, 21, 24 });
+	right_inv.speed = 0.5f;
+
+	left_inv.PushBack({ 281, 86, 24, 24 });
+	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	left_inv.PushBack({ 259, 86, 21, 24 });
+	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	left_inv.PushBack({ 233, 86, 21, 24 });
+	left_inv.speed = 0.5f;
+
+	jumpR_inv.PushBack({ 265, 4, 27, 30 });
+	jumpR_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	jumpR_inv.PushBack({ 265, 4, 27, 30 });
+	jumpR_inv.speed = 0.5f;
+
+	sJump_inv.PushBack({ 206, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 239, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 266, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 297, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 206, 209, 26, 30 });
+	sJump.speed = 0.1f;
 }
 
 j1Player::~j1Player()
@@ -96,14 +139,23 @@ bool j1Player::Update(float dt) {
 	bool ret = true;
 
 	current_animation = &idle;
+	
+	if(GodMode())
+		current_animation = &idle_inv;
 
 	move(dt);
 	jump(dt);
 	//OnCollision(collider, COLLIDER_ENEMY);
-	if (jumping == 1)
+	if (jumping == 1) {
 		current_animation = &jumpR;
-	if (jumping == 0)
+		if (GodMode())
+			current_animation = &jumpR_inv;
+	}
+	if (jumping == 0) {
 		current_animation = &sJump;
+		if (GodMode())
+			current_animation = &sJump_inv;
+	}
 
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
@@ -112,7 +164,7 @@ bool j1Player::Update(float dt) {
 	if (collider != nullptr)
 		collider->SetPos((int)pos.x, (int)pos.y);
 
-	GodMode();
+	
 
 	return ret;
 }
@@ -169,6 +221,9 @@ void j1Player::move(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		current_animation = &left;
+		if(GodMode())
+			current_animation = &left_inv;
+
 		pos.x -= vel.x*dt;
 		iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
 		iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);
@@ -178,6 +233,9 @@ void j1Player::move(float dt) {
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		current_animation = &right;
+		if (GodMode())
+			current_animation = &right_inv;
+
 		pos.x += vel.x*dt;
 		iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
 		iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);

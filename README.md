@@ -38,6 +38,8 @@ F1 for starting from the first level
 F2 for starting from the current level
 F5 for saving state
 F6 for loading state
+F9 for colider logic
+F10 for god mode
 --------------------------------------------------------------------------------------------------------------------------
 MIT License
 

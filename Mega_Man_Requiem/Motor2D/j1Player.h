@@ -44,6 +44,12 @@ private:
 	Animation left;
 	Animation jumpR;
 	Animation sJump;
+	Animation idle_inv;
+	Animation right_inv;
+	Animation left_inv;
+	Animation jumpR_inv;
+	Animation sJump_inv;
+
 	SDL_Texture* graphics = nullptr;
 	p2SString path;
 
