@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "p2Point.h"
+#include "p2DynArray.h"
 
 struct SDL_Texture;
 
@@ -10,6 +11,7 @@ class Enemy
 {
 protected:
 	Animation* animation = nullptr;
+	const p2DynArray<iPoint>* path;
 
 public:
 

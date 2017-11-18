@@ -16,7 +16,6 @@ private:
 	iPoint player_pos;
 	iPoint size;
 	Path walk;
-	const p2DynArray<iPoint>* path;
 
 public:
 	Crazy_Razy(int x, int y);
@@ -27,7 +26,6 @@ public:
 	int destination;
 	void CreatePath();
 	void FollowPath(float dt);
-
 };
 
 

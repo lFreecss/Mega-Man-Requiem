@@ -28,10 +28,6 @@ bool j1Enemies::Awake(pugi::xml_node& config) {
 	bool ret = true;
 	//path = config.child("file").attribute("name").as_string();
 	path.create(config.child("file").attribute("name").as_string());
-	for (uint i = 0; i < MAX_ENEMIES; ++i) {
-		if (enemies[i] != nullptr)
-			enemies[i]->Awake(config);
-	}
 	return ret;
 }
 

@@ -58,8 +58,8 @@ void Crazy_Razy::Move(float dt) {
 	animation = &right;
 	}
 	*/
-	if (iteration == 0 && player_pos.x < player_pos.x < original_pos.x + 200) {
-		if (player_pos.x < 1000 && player_pos.x > original_pos.x - player_pos.x + 200)
+	if (iteration == 0 && player_pos.x < original_pos.x + 200) {
+		if (player_pos.x < 1000 && player_pos.x > original_pos.x - player_pos.x + 100)
 			CreatePath();
 		else if (player_pos.x > 1000 && player_pos.x > original_pos.x - player_pos.x + 1350)
 			CreatePath();
@@ -102,7 +102,10 @@ void Crazy_Razy::FollowPath(float dt) {
 	if (pos.x == next_pos.x)
 		iteration++;
 
-	if (iteration == destination || player_pos.x < pos.x && iteration > 10)
+	if (iteration == destination || player_pos.x < pos.x && iteration > 5) {
 		iteration = 0;
+		path = nullptr;
+		destination = 0;
+	}
 
 }

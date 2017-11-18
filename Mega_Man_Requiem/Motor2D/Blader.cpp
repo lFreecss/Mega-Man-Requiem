@@ -6,10 +6,6 @@
 #include "j1Input.h"
 #include "j1Map.h"
 
-void Blader::Awake(pugi::xml_node& config) {
-	size.x = config.child("blader").child("size").attribute("x").as_int();
-	size.y = config.child("blader").child("size").attribute("y").as_int();
-}
 
 Blader::Blader(int x, int y) : Enemy(x, y)
 {
@@ -32,9 +28,8 @@ void Blader::Move(float dt) {
 	player_pos.x = (int)App->player->pos.x;
 	player_pos.y = (int)App->player->pos.y;
 
-	if (iteration == 0 && player_pos.x < player_pos.x < original_pos.x + 200) {
+	if (iteration == 0 && player_pos.x < original_pos.x + 200) {
 		if (player_pos.x < 700 && player_pos.x > original_pos.x - player_pos.x )
-
 			CreatePath();
 		else if (player_pos.x > 700 && player_pos.x > original_pos.x - player_pos.x + 1300)
 			CreatePath();
@@ -60,17 +55,20 @@ void Blader::CreatePath() {
 void Blader::FollowPath(float dt) {
 	iPoint next_pos = App->map->MapToWorld(path->At(iteration)->x, path->At(iteration)->y);
 	if (pos.x < next_pos.x)
-		pos.x++;
-	if (pos.y < next_pos.y)
-		pos.y++;
+		pos.x += 60.0*dt;
 	if (pos.x > next_pos.x)
-		pos.x--;
+		pos.x -= 60.0*dt;
+	if (pos.y < next_pos.y)
+		pos.y += 60.0*dt;
 	if (pos.y > next_pos.y)
-		pos.y--;
+		pos.y -= 60.0*dt;
 
 	if (pos.x == next_pos.x && pos.y == next_pos.y)
 		iteration++;
 
-	if (iteration == destination || iteration > 10)
+	if (iteration == destination || iteration > 5) {
 		iteration = 0;
+		path = nullptr;
+		destination = 0;
+	}
 }

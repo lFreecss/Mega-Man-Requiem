@@ -214,6 +214,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, ENEMY_TYPES type)
 {
+	BROFILER_CATEGORY("Pathfinding_Create_Path", Profiler::Color::DeepPink);
 	last_path.Clear();
 
 	int ret;
