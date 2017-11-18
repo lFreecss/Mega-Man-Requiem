@@ -13,81 +13,6 @@
 
 j1Player::j1Player() : j1Module() {
 	name.create("player");
-
-	//Mega Man animation, TODO Varela & Valdivia
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 133, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.speed = 0.04f;
-
-	right.PushBack({ 188, 10, 24, 24 });
-	right.PushBack({ 218, 10, 21, 24 });
-	right.PushBack({ 239, 10, 21, 24 });
-	right.speed = 0.08f;
-
-	left.PushBack({ 281, 86, 24, 24 });
-	left.PushBack({ 259, 86, 21, 24 });
-	left.PushBack({ 233, 86, 21, 24 });
-	left.speed = 0.08f;
-
-	jumpR.PushBack({ 265, 4, 27, 30 });
-	jumpR.speed = 0.001f;
-
-	sJump.PushBack({ 206, 209, 26, 30 });
-	sJump.PushBack({ 239, 209, 26, 30 });
-	sJump.PushBack({ 266, 209, 26, 30 });
-	sJump.PushBack({ 297, 209, 26, 30 });
-	sJump.PushBack({ 206, 209, 26, 30 });
-	sJump.speed = 0.1f;
-
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 133, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.speed = 0.4f;
-	
-	right_inv.PushBack({ 188, 10, 24, 24 });
-	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	right_inv.PushBack({ 218, 10, 21, 24 });
-	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	right_inv.PushBack({ 239, 10, 21, 24 });
-	right_inv.speed = 0.5f;
-
-	left_inv.PushBack({ 281, 86, 24, 24 });
-	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	left_inv.PushBack({ 259, 86, 21, 24 });
-	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	left_inv.PushBack({ 233, 86, 21, 24 });
-	left_inv.speed = 0.5f;
-
-	jumpR_inv.PushBack({ 265, 4, 27, 30 });
-	jumpR_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	jumpR_inv.PushBack({ 265, 4, 27, 30 });
-	jumpR_inv.speed = 0.5f;
-
-	sJump_inv.PushBack({ 206, 209, 26, 30 });
-	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	sJump_inv.PushBack({ 239, 209, 26, 30 });
-	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	sJump_inv.PushBack({ 266, 209, 26, 30 });
-	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	sJump_inv.PushBack({ 297, 209, 26, 30 });
-	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	sJump_inv.PushBack({ 206, 209, 26, 30 });
-	sJump.speed = 0.1f;
 }
 
 j1Player::~j1Player()
@@ -113,6 +38,18 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	size.x = config.child("size").attribute("x").as_int();
 	size.y = config.child("size").attribute("y").as_int();
 
+	//Loading animation speeds
+	pugi::xml_node animation = config.child("animation");
+	idle_speed = animation.attribute("idle_speed").as_float();
+	right_speed = animation.attribute("right_speed").as_float();
+	left_speed = animation.attribute("left_speed").as_float();
+	jumpR_speed = animation.attribute("jumpR_speed").as_float();
+	sJump_speed = animation.attribute("sJump_speed").as_float();
+	idle_inv_speed = animation.attribute("idle_inv_speed").as_float();
+	right_inv_speed = animation.attribute("right_inv_speed").as_float();
+	left_inv_speed = animation.attribute("left_inv_speed").as_float();
+	jumpR_inv_speed = animation.attribute("jumpR_inv_speed").as_float();
+	sJump_inv_speed = animation.attribute("sJump_inv_speed").as_float();
 
 	return ret;
 }
@@ -128,6 +65,7 @@ bool j1Player::Start() {
 }
 
 void j1Player::Init() {
+	AnimationInit();
 	pos = startPos;
 	App->collision->EraseCollider(collider);
 	jumping = 1;
@@ -135,6 +73,81 @@ void j1Player::Init() {
 	collider = App->collision->AddCollider({ (int)startPos.x, (int)startPos.y, 21, 24 }, COLLIDER_PLAYER, this);
 }
 
+void j1Player::AnimationInit() {
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 133, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.speed = idle_speed;
+
+	right.PushBack({ 188, 10, 24, 24 });
+	right.PushBack({ 218, 10, 21, 24 });
+	right.PushBack({ 239, 10, 21, 24 });
+	right.speed = right_speed;
+
+	left.PushBack({ 281, 86, 24, 24 });
+	left.PushBack({ 259, 86, 21, 24 });
+	left.PushBack({ 233, 86, 21, 24 });
+	left.speed = left_speed;
+
+	jumpR.PushBack({ 265, 4, 27, 30 });
+	jumpR.speed = jumpR_speed;
+
+	sJump.PushBack({ 206, 209, 26, 30 });
+	sJump.PushBack({ 239, 209, 26, 30 });
+	sJump.PushBack({ 266, 209, 26, 30 });
+	sJump.PushBack({ 297, 209, 26, 30 });
+	sJump.PushBack({ 206, 209, 26, 30 });
+	sJump.speed = sJump_speed;
+
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 133, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.speed = idle_inv_speed;
+
+	right_inv.PushBack({ 188, 10, 24, 24 });
+	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	right_inv.PushBack({ 218, 10, 21, 24 });
+	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	right_inv.PushBack({ 239, 10, 21, 24 });
+	right_inv.speed = right_inv_speed;
+
+	left_inv.PushBack({ 281, 86, 24, 24 });
+	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	left_inv.PushBack({ 259, 86, 21, 24 });
+	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	left_inv.PushBack({ 233, 86, 21, 24 });
+	left_inv.speed = left_inv_speed;
+
+	jumpR_inv.PushBack({ 265, 4, 27, 30 });
+	jumpR_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	jumpR_inv.PushBack({ 265, 4, 27, 30 });
+	jumpR_inv.speed = jumpR_inv_speed;
+
+	sJump_inv.PushBack({ 206, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 239, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 266, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 297, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 206, 209, 26, 30 });
+	sJump.speed = sJump_inv_speed;
+
+}
 
 bool j1Player::Update(float dt) {
 	bool ret = true;

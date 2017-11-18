@@ -33,8 +33,8 @@
 
   <scene>
     <file music_name = "audio/music/Armored Armadillo.ogg"/>
-    <scroll speed = "2.5" />
-  
+    <scroll speed = "2.5" limit ="64" />
+    <map limit="30"/>
     <levels>
       <!-- <map first="1"/>-->
       <first_level id= "1" loaded= "1" name = "rock_level.tmx"/>
@@ -51,6 +51,7 @@
       <Air2-2 x ="1500" y="50"/>
       <Ground2-2 x ="1900" y="100"/>
     </enemy_pos>
+    
   </scene>
 
   <player>
@@ -58,6 +59,8 @@
     <physics velocityx = " 150.0" velocityy = "480.0" gravity = "200.0" floor_level = "250"/>
     <movement jumpframes= "15"/>
     <size x= "22" y= "22" />
+    <animation idle_speed ="0.04" right_speed="0.08" left_speed="0.08" jumpR_speed="0.001" sJump_speed="0.1" 
+               idle_inv_speed="0.4" right_inv_speed="0.5" left_inv_speed="0.5" jumpR_inv_speed="0.5" sJump_inv_speed="0.1"/>
   </player>
 
   <enemies>
@@ -65,8 +68,18 @@
 
     <blader>
       <size x = "16" y = "21"/>
+      <physics speed ="60.0"/>
+      <player_radar positioning_barrier="700" limit_1="0" limit_2= "1300" ending_limit= "300"/>
+      <animation speed="0.2"/>
     </blader>
-  
-  </enemies>
+    
+    <crazy_razy>
+      <size x = "32" y = "31"/>
+      <physics speed ="100.0" gravity = "200.0"/>
+      <player_radar positioning_barrier="1000" limit_1="100" limit_2= "1350" ending_limit= "200"/>
+      <animation speed1="0.2" speed2="0.2"/>
+    </crazy_razy>
+ 
+ </enemies>
 
 </config>

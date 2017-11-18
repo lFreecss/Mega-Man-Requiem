@@ -72,6 +72,8 @@ private:
 	int map_num;
 	p2SString music_path;
 	float scroll_speed;
+	uint scroll_limit;
+	uint map_limit;
 
 	p2SString rock_level;
 	p2SString jail_level;

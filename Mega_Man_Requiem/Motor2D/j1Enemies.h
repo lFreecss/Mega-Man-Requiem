@@ -22,6 +22,18 @@ struct EnemyInfo
 	int x, y;
 	int id;
 };
+struct EnemyTypeInfo {
+	iPoint size;
+	float speed;
+	float gravity;
+	uint positioning_barrier;
+	uint radar_limit_1;
+	uint radar_limit_2;
+	uint ending_radar_limit;
+	float anim1_speed;
+	float anim2_speed;
+};
+
 
 class j1Enemies : public j1Module {
 public:
@@ -37,7 +49,8 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 	bool AddEnemy(ENEMY_TYPES type, int x, int y);
-
+	EnemyTypeInfo& BInfo() { return blader_info; }
+	EnemyTypeInfo& CRInfo() { return crazy_razy_info; }
 	//Like CleanUp, deletes all enemies, but doesn't clear up the spritesheet
 	void DeleteEnemy();
 
@@ -54,6 +67,9 @@ private:
 	int screen_width;
 	int screen_height;
 	int screen_size;
+
+	EnemyTypeInfo blader_info;
+	EnemyTypeInfo crazy_razy_info;
 };
 
 #endif

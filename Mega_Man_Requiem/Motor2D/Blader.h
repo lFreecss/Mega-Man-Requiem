@@ -9,21 +9,22 @@
 class Blader : public Enemy
 {
 private:
+
 	Animation idle;
 	iPoint original_pos;
 	iPoint player_pos;
 	int iteration;
 	int destination;
-
+	EnemyTypeInfo b;
 
 public:
+
 	Blader(int x, int y);
 	void Move(float dt);
 	void OnCollision(Collider* collider);
-
 	void CreatePath();
 	void FollowPath(float dt);
-	iPoint size;
+	
 };
 
 

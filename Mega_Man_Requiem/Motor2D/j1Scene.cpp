@@ -29,9 +29,9 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 
 	music_path.create(config.child("file").attribute("music_name").as_string());
-	//music_path = config.child("file").attribute("music_name").as_string();
 	scroll_speed = config.child("scroll").attribute("speed").as_float();
-	
+	scroll_limit = config.child("scroll").attribute("limit").as_uint();
+	map_limit = config.child("map").attribute("limit").as_uint();
 	/*for (pugi::xml_node level = config.child("levels").child("level"); level; level = config.next_sibling("level")) {
 		if (level.attribute("id").as_uint() == 1)
 			rock_level = level.attribute("name").as_string();
@@ -72,6 +72,8 @@ bool j1Scene::Start()
 	first_map = rock_level;
 	App->map->Load(first_map.GetString());
 	current_map = first_map.GetString();
+	//current_level = ROCK;
+	//map_num = 0;
 	InitializeMap();
 	App->audio->PlayMusic(music_path.GetString());
 
@@ -102,12 +104,12 @@ bool j1Scene::Update(float dt)
 	App->win->SetTitle(title.GetString());*/
 
 	//Scroll
-	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - 64)
+	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - scroll_limit)
 		App->render->camera.x = -(scroll_speed * App->player->pos.x);
 
 	
 	//When player gets at the end of the level, change to the next
-	if (App->player->pos.x >= App->map->data.tile_width*App->map->data.width - 30) {
+	if (App->player->pos.x >= App->map->data.tile_width*App->map->data.width - map_limit) {
 		App->collision->EraseCollider(App->player->collider);
 
 		if (current_level == ROCK) {

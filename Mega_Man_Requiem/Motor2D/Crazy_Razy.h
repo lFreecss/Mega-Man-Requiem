@@ -10,22 +10,23 @@
 class Crazy_Razy : public Enemy
 {
 private:
+
 	Animation left;
 	Animation right;
 	iPoint original_pos;
 	iPoint player_pos;
-	iPoint size;
-	Path walk;
+	int iteration;
+	int destination;
+	EnemyTypeInfo cr;
 
 public:
+
 	Crazy_Razy(int x, int y);
 	void Move(float dt);
 	void OnCollision(Collider* collider);
-
-	int iteration;
-	int destination;
 	void CreatePath();
 	void FollowPath(float dt);
+
 };
 
 

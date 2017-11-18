@@ -26,8 +26,32 @@ j1Enemies::~j1Enemies() {
 
 bool j1Enemies::Awake(pugi::xml_node& config) {
 	bool ret = true;
-	//path = config.child("file").attribute("name").as_string();
 	path.create(config.child("file").attribute("name").as_string());
+	
+	//Blader info
+	pugi::xml_node blader = config.child("blader");
+	blader_info.size.x = blader.child("size").attribute("x").as_int();
+	blader_info.size.y = blader.child("size").attribute("y").as_int();
+	blader_info.speed = blader.child("physics").attribute("speed").as_float();
+	blader_info.positioning_barrier = blader.child("player_radar").attribute("positioning_barrier").as_uint();
+	blader_info.radar_limit_1 = blader.child("player_radar").attribute("limit_1").as_uint();
+	blader_info.radar_limit_2 = blader.child("player_radar").attribute("limit_2").as_uint();
+	blader_info.ending_radar_limit = blader.child("player_radar").attribute("ending_limit").as_uint();
+	blader_info.anim1_speed = blader.child("animation").attribute("speed").as_float();
+	
+	//Crazy Razy info
+	pugi::xml_node crazy_razy = config.child("crazy_razy");
+	crazy_razy_info.size.x = crazy_razy.child("size").attribute("x").as_int();
+	crazy_razy_info.size.y = crazy_razy.child("size").attribute("y").as_int();
+	crazy_razy_info.speed = crazy_razy.child("physics").attribute("speed").as_float();
+	crazy_razy_info.gravity = crazy_razy.child("physics").attribute("gravity").as_float();
+	crazy_razy_info.positioning_barrier = crazy_razy.child("player_radar").attribute("positioning_barrier").as_uint();
+	crazy_razy_info.radar_limit_1 = crazy_razy.child("player_radar").attribute("limit_1").as_uint();
+	crazy_razy_info.radar_limit_2 = crazy_razy.child("player_radar").attribute("limit_2").as_uint();
+	crazy_razy_info.ending_radar_limit = crazy_razy.child("player_radar").attribute("ending_limit").as_uint();
+	crazy_razy_info.anim1_speed = crazy_razy.child("animation").attribute("speed1").as_float();
+	crazy_razy_info.anim2_speed = crazy_razy.child("animation").attribute("speed2").as_float();
+
 	return ret;
 }
 

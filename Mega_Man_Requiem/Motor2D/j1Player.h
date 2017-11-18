@@ -18,6 +18,7 @@ public:
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	void Init();
+	void AnimationInit();
 	bool Update(float dt);
 	bool CleanUp();
 
@@ -49,6 +50,16 @@ private:
 	Animation left_inv;
 	Animation jumpR_inv;
 	Animation sJump_inv;
+	float idle_speed;
+	float right_speed;
+	float left_speed;
+	float jumpR_speed;
+	float sJump_speed;
+	float idle_inv_speed;
+	float right_inv_speed;
+	float left_inv_speed;
+	float jumpR_inv_speed;
+	float sJump_inv_speed;
 
 	SDL_Texture* graphics = nullptr;
 	p2SString path;
