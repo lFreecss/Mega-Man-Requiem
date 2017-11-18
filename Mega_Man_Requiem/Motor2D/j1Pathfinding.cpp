@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1PathFinding.h"
 #include "j1Map.h"
+#include "Brofiler\Brofiler.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
@@ -118,6 +119,7 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 // ----------------------------------------------------------------------------------
 uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, ENEMY_TYPES type) const
 {
+	BROFILER_CATEGORY("Pathfinding_Walkable_Adjacents", Profiler::Color::DeepPink);
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 	uint i = 0;

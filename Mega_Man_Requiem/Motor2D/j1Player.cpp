@@ -8,6 +8,7 @@
 #include "j1map.h"
 #include "j1Collision.h"
 #include "j1Scene.h"
+#include "Brofiler\Brofiler.h"
 
 
 j1Player::j1Player() : j1Module() {
@@ -221,8 +222,7 @@ void j1Player::jump(float dt) {
 //Function that allows the player to move right and left, TODO Valdivia
 //taking into account collisions, TODO Varela
 void j1Player::move(float dt) {
-
-
+	BROFILER_CATEGORY("Player_Move_Collisions", Profiler::Color::DarkOrange);
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		current_animation = &left;
 		if(GodMode())

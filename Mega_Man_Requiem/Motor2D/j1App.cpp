@@ -148,7 +148,7 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
-	//BROFILER_CATEGORY("Update", Profiler::Color::Yellow);
+	BROFILER_CATEGORY("Update", Profiler::Color::DarkBlue);
 	bool ret = true;
 	PrepareUpdate();
 
@@ -188,6 +188,7 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+	BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::CornflowerBlue);
 	frame_count++;
 	last_sec_frame_count++;
 
@@ -198,6 +199,7 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
+	BROFILER_CATEGORY("FinishUpdate", Profiler::Color::DodgerBlue);
 	if(want_to_save == true)
 		SavegameNow();
 
@@ -252,6 +254,7 @@ void j1App::FinishUpdate()
 // Call modules before each loop iteration
 bool j1App::PreUpdate()
 {
+	BROFILER_CATEGORY("PreUpdate", Profiler::Color::DeepSkyBlue);
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;
@@ -274,6 +277,7 @@ bool j1App::PreUpdate()
 // Call modules on each loop iteration
 bool j1App::DoUpdate()
 {
+	BROFILER_CATEGORY("DoUpdate", Profiler::Color::Cyan);
 	bool ret = true;
 
 	long currTime = GetCurrentTime();
@@ -304,6 +308,7 @@ bool j1App::DoUpdate()
 // Call modules after each loop iteration
 bool j1App::PostUpdate()
 {
+	BROFILER_CATEGORY("PostUpdate", Profiler::Color::MediumTurquoise);
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	j1Module* pModule = NULL;
