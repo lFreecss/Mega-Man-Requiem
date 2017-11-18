@@ -120,7 +120,6 @@ bool j1Scene::Update(float dt)
 			MapStart();
 		}
 	}
-
 	return true;
 }
 
@@ -156,6 +155,13 @@ void j1Scene::DebugKeys(){
 
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		if (App->player->is_invincible == false)
+			App->player->is_invincible = true;
+		else
+			App->player->is_invincible = false;
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 		App->render->camera.y -= 1;

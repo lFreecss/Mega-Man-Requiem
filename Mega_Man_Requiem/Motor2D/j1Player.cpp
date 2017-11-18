@@ -62,6 +62,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	vel.x = config.child("physics").attribute("velocityx").as_float();
 	vel.y = config.child("physics").attribute("velocityy").as_float();
 	gravity = config.child("physics").attribute("gravity").as_float();
+	floor_level = config.child("physics").attribute("floor_level").as_uint();
 
 	jumpframes = config.child("movement").attribute("jumpframes").as_uint();
 
@@ -98,8 +99,7 @@ bool j1Player::Update(float dt) {
 
 	move(dt);
 	jump(dt);
-
-	
+	//OnCollision(collider, COLLIDER_ENEMY);
 	if (jumping == 1)
 		current_animation = &jumpR;
 	if (jumping == 0)
@@ -111,7 +111,9 @@ bool j1Player::Update(float dt) {
 
 	if (collider != nullptr)
 		collider->SetPos((int)pos.x, (int)pos.y);
-	
+
+	GodMode();
+
 	return ret;
 }
 
@@ -191,11 +193,24 @@ void j1Player::move(float dt) {
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	collider = c1;
-	if (c2->type == COLLIDER_TYPE::COLLIDER_ENEMY) {
+	if (c2->type == COLLIDER_TYPE::COLLIDER_ENEMY && GodMode() == false) {
 		App->collision->EraseCollider(collider);
 		collider = nullptr;
 		App->scene->MapStart();
 	}
+}
+
+bool j1Player::GodMode() {
+	bool ret = is_invincible;
+
+	if (is_invincible){
+		if (App->player->pos.y > floor_level) {
+			App->player->pos.y = floor_level;
+			jumping = 1;
+		}
+	}
+
+	return ret;
 }
 
 // Load player position

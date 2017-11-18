@@ -33,6 +33,9 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 	Collider* collider = nullptr;
+
+	bool GodMode();
+	bool is_invincible = false;
 private:
 	
 	Animation* current_animation;
@@ -51,8 +54,7 @@ private:
 	uint jumpframes;
 	uint actualJumpframes;
 	iPoint size;
-
-	
+	uint floor_level;
 };
 
 #endif
