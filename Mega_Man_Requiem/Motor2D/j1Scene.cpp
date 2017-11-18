@@ -156,13 +156,14 @@ void j1Scene::DebugKeys(){
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		if (App->player->is_invincible == false)
-			App->player->is_invincible = true;
-		else
-			App->player->is_invincible = false;
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN){
+		App->collision->view_collision = !App->collision->view_collision;
+		App->map->view_collision = !App->map->view_collision;
 	}
-
+		
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		App->player->is_invincible = !App->player->is_invincible;
+	
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 		App->render->camera.y -= 1;
 

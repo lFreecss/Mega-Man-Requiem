@@ -63,7 +63,7 @@ void j1Map::Draw()
 						iPoint pos = MapToWorld(i, j);
 						SDL_Rect* square = &tiles->data->GetTileRect(collisions->data->Get(i, j));
 
-						if (collisions->data->id == COLLISION)
+						if (collisions->data->id == COLLISION && view_collision == true)
 							App->render->Blit(tiles->data->texture, pos.x, pos.y, square);
 					}
 				}

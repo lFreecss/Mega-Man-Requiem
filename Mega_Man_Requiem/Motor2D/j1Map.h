@@ -117,6 +117,8 @@ public:
 	bool CollisionX(uint x, uint y_up, uint y_down);
 	bool CollisionY(uint x_left, uint x_right, uint y);
 
+	bool view_collision = false;
+
 private:
 
 	bool LoadMap();

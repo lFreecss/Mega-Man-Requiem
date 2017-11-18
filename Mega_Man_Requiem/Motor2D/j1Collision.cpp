@@ -90,10 +90,7 @@ bool j1Collision::Update(float dt)
 
 void j1Collision::DebugDraw()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		debug = !debug;
-
-	if (debug == false)
+	if (view_collision == false)
 		return;
 
 	Uint8 alpha = 80;
@@ -108,7 +105,7 @@ void j1Collision::DebugDraw()
 				App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 				break;
 			case COLLIDER_PLAYER: // green
-				App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+				App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 				break;
 			case COLLIDER_ENEMY: // red
 				App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);

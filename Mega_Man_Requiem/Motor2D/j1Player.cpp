@@ -202,13 +202,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 
 bool j1Player::GodMode() {
 	bool ret = is_invincible;
+	if (is_invincible == false)
+		return ret;
 
-	if (is_invincible){
 		if (App->player->pos.y > floor_level) {
 			App->player->pos.y = floor_level;
 			jumping = 1;
 		}
-	}
 
 	return ret;
 }
