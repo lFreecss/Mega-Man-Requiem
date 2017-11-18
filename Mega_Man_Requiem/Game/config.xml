@@ -55,7 +55,7 @@
 
   <player>
     <file name = "textures/8bitmegaman.png" />
-    <physics velocityx = " 150.0" velocityy = "480.0" gravity = "200.0" floor_level = "220"/>
+    <physics velocityx = " 150.0" velocityy = "480.0" gravity = "200.0" floor_level = "250"/>
     <movement jumpframes= "15"/>
     <size x= "22" y= "22" />
   </player>
