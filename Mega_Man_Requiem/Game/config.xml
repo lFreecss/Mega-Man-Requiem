@@ -58,7 +58,7 @@
   <player>
     <file name = "textures/8bitmegaman.png" />
     <physics velocityx = " 150.0" velocityy = "400.0" gravity = "200.0" floor_level = "250"/>
-    <movement jumpframes= "15"/>
+    <movement jumpMaxTime= "0.5"/>
     <size x= "22" y= "22" />
     <animation idle_speed ="5" right_speed="10" left_speed="10" jumpR_speed="10" sJump_speed="10" 
                idle_inv_speed="10" right_inv_speed="15" left_inv_speed="15" jumpR_inv_speed="15" sJump_inv_speed="15"/>

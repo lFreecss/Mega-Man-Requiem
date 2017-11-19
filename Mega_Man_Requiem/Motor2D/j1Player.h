@@ -69,8 +69,8 @@ private:
 	float gravity;
 
 	int jumping;
-	uint jumpframes;
-	uint actualJumpframes;
+	float jumpMaxTime;
+	float actualJumpTime;
 	iPoint size;
 	uint floor_level;
 };

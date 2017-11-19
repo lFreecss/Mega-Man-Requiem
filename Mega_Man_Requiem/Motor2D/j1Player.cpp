@@ -96,7 +96,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	gravity = config.child("physics").attribute("gravity").as_float();
 	floor_level = config.child("physics").attribute("floor_level").as_uint();
 
-	jumpframes = config.child("movement").attribute("jumpframes").as_uint();
+	jumpMaxTime = config.child("movement").attribute("jumpMaxTime").as_float();
 
 	size.x = config.child("size").attribute("x").as_int();
 	size.y = config.child("size").attribute("y").as_int();
@@ -131,7 +131,7 @@ void j1Player::Init() {
 	pos = startPos;
 	App->collision->EraseCollider(collider);
 	jumping = 1;
-	actualJumpframes = 0;
+	actualJumpTime = 0;
 	collider = App->collision->AddCollider({ (int)startPos.x, (int)startPos.y, 21, 24 }, COLLIDER_PLAYER, this);
 }
 
@@ -202,10 +202,10 @@ bool j1Player::CleanUp() {
 
 void j1Player::jump(float dt) {
 		
-	if (actualJumpframes > 0) {
-		++actualJumpframes;
-		if (actualJumpframes > jumpframes) {
-			actualJumpframes = 0;
+	if (actualJumpTime > 0) {
+		actualJumpTime += dt;
+		if (actualJumpTime > jumpMaxTime) {
+			actualJumpTime = 0;
 		}
 		else {
 			pos.y -= vel.y*dt;
@@ -228,7 +228,7 @@ void j1Player::jump(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 		if (jumping > 0) {
 			jumping --;
-			actualJumpframes = 1;
+			actualJumpTime = dt;
 		}
 	}
 	
