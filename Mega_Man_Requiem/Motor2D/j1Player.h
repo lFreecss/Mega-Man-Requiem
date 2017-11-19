@@ -18,12 +18,13 @@ public:
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	void Init();
-	void AnimationInit();
 	bool Update(float dt);
 	bool CleanUp();
 
 	void jump(float dt);
 	void move(float dt);
+
+	void updateAnim(float dt);
 
 	// Load / Save
 	bool Load(pugi::xml_node&);

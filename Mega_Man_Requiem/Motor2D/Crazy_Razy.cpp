@@ -16,12 +16,10 @@ Crazy_Razy::Crazy_Razy(int x, int y) : Enemy(x, y)
 	left.PushBack({ 146, 7, 32, 31 });
 	left.PushBack({ 181, 7, 32, 31 });
 	left.PushBack({ 216, 7, 32, 31 });
-	left.speed = cr.anim1_speed;
 
 	right.PushBack({ 147, 52, 32, 31 });
 	right.PushBack({ 182, 52, 32, 31 });
 	right.PushBack({ 217, 52, 32, 31 });
-	right.speed = cr.anim2_speed;
 
 	animation = &left;
 

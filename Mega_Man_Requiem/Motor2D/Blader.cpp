@@ -15,7 +15,6 @@ Blader::Blader(int x, int y) : Enemy(x, y)
 
 	idle.PushBack({ 187, 108, 16, 21 });
 	idle.PushBack({ 206, 108, 16, 21 });
-	idle.speed = b.anim1_speed;
 
 	animation = &idle;
 	
