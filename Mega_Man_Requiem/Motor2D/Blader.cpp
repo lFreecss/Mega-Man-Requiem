@@ -28,6 +28,9 @@ Blader::Blader(int x, int y) : Enemy(x, y)
 void Blader::Move(float dt) {
 	player_pos.x = (int)App->player->pos.x;
 	player_pos.y = (int)App->player->pos.y;
+	
+	if (pos == original_pos)
+		iteration = 0;
 
 	//It creates some kind of radar with barriers that the enemy cannot cross in case the player is outside this barriers. 
 	//If the player is in this barriers creates a path.
@@ -40,7 +43,6 @@ void Blader::Move(float dt) {
 
 	if (path != nullptr && path->At(iteration) != nullptr)
 		FollowPath(dt);
-
 }
 
 void Blader::OnCollision(Collider* collider) {
@@ -72,7 +74,7 @@ void Blader::FollowPath(float dt) {
 
 	if (iteration == destination || iteration > 5) {
 		iteration = 0;
-		path = nullptr;
-		destination = 0;
+		//path = nullptr;
+		//destination = 0;
 	}
 }

@@ -34,6 +34,9 @@ Crazy_Razy::Crazy_Razy(int x, int y) : Enemy(x, y)
 void Crazy_Razy::Move(float dt) {
 	player_pos.x = (int)App->player->pos.x;
 	player_pos.y = (int)App->player->pos.y;
+	
+	if (pos == original_pos)
+		iteration = 0;
 
 	pos.y += cr.gravity * dt;;
 	iPoint posWorld = App->map->WorldToMap(pos.x, pos.y);
@@ -92,8 +95,8 @@ void Crazy_Razy::FollowPath(float dt) {
 
 	if (iteration == destination || player_pos.x < pos.x && iteration > 5) {
 		iteration = 0;
-		path = nullptr;
-		destination = 0;
+		//path = nullptr;
+		//destination = 0;
 	}
 
 }
