@@ -101,6 +101,7 @@ bool j1App::Awake()
 		load_game = save_game = app_config.child("game_saving_xml").attribute("name").as_string();
 		want_to_load = want_to_save = app_config.child("game_saving_xml").attribute("want_to_save").as_bool();
 
+		framerate_capped = app_config.child("framerate_capped").attribute("value").as_bool();
 		uint cap = app_config.child("framerate_cap").attribute("value").as_uint();
 		if (cap > 0)
 		{
@@ -206,24 +207,6 @@ void j1App::FinishUpdate()
 	if(want_to_load == true)
 		LoadGameNow();
 
-	/*// Amount of time since game start (use a low resolution timer)
-	float seconds_since_startup = timer.ReadSec();
-	// Average FPS for the whole game life
-	float dt = perf_timer.ReadMs() / frame_count;
-	// Amount of frames since startup
-	float avg_fps = 1 / dt;
-	// Amount of frames during the last second
-	uint32 last_frame_ms = perf_timer.ReadMs() / frame_count; //
-															  // Amount of ms took the last update
-	uint32 frames_on_last_update = last_frames; //
-	frame_count++;
-
-
-	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
-		avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
-
-	App->win->SetTitle(title);*/
 	// Framerate calculations --
 
 	if (last_sec_frame_time.Read() > 1000)
@@ -237,18 +220,29 @@ void j1App::FinishUpdate()
 	float seconds_since_startup = startup_time.ReadSec();
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
+	p2SString capped_value = nullptr;
+	if (framerate_capped)
+		capped_value.create("on");
+	else
+		capped_value.create("off");
+	p2SString vsync_value = nullptr;
+	if (App->render->vsync)
+		vsync_value.create("on");
+	else
+		vsync_value.create("off");
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
-		avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Cap: %s Vsync: %s Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, capped_value.GetString(), vsync_value.GetString(), dt, seconds_since_startup, frame_count);
 	App->win->SetTitle(title);
 
-	//if(App->render.config.child("vsync").attribute("value").as_bool(false) == false)
+	if (!App->render->vsync && framerate_capped) {
 		if (capped_ms > 0 && last_frame_ms < capped_ms)
 		{
 			//j1PerfTimer t;
 			SDL_Delay(capped_ms - last_frame_ms);
-		}	
+		}
+	}
 }
 
 // Call modules before each loop iteration

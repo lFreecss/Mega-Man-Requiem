@@ -5,6 +5,7 @@
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
     <game_saving_xml name = "save_game.xml" want_to_save = "false"/>
+    <framerate_capped value ="true"/>
     <framerate_cap value = "30"/>
   </app>
 	
@@ -14,7 +15,7 @@
 
   <window>
     <resolution width="1280" height="860" scale="3"/>
-    <!-- <resolution width="640" height="480" scale="2"/>-->
+    <!--<resolution width="1040" height="480" scale="2"/>-->
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
