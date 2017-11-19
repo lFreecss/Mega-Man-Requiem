@@ -13,6 +13,79 @@
 
 j1Player::j1Player() : j1Module() {
 	name.create("player");
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 133, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.PushBack({ 103, 10, 21, 24 });
+	idle.speed = 0.04;
+
+	right.PushBack({ 188, 10, 24, 24 });
+	right.PushBack({ 218, 10, 21, 24 });
+	right.PushBack({ 239, 10, 21, 24 });
+	right.speed = 0.08;
+
+	left.PushBack({ 281, 86, 24, 24 });
+	left.PushBack({ 259, 86, 21, 24 });
+	left.PushBack({ 233, 86, 21, 24 });
+	left.speed = 0.08;
+
+	jumpR.PushBack({ 265, 4, 27, 30 });
+	jumpR.speed = 0.001;
+
+	sJump.PushBack({ 206, 209, 26, 30 });
+	sJump.PushBack({ 239, 209, 26, 30 });
+	sJump.PushBack({ 266, 209, 26, 30 });
+	sJump.PushBack({ 297, 209, 26, 30 });
+	sJump.PushBack({ 206, 209, 26, 30 });
+	sJump.speed = 0.1;
+
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 133, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	idle_inv.PushBack({ 103, 10, 21, 24 });
+	idle_inv.speed = 0.4;
+
+	right_inv.PushBack({ 188, 10, 24, 24 });
+	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	right_inv.PushBack({ 218, 10, 21, 24 });
+	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	right_inv.PushBack({ 239, 10, 21, 24 });
+	right_inv.speed = 0.5;
+
+	left_inv.PushBack({ 281, 86, 24, 24 });
+	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	left_inv.PushBack({ 259, 86, 21, 24 });
+	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	left_inv.PushBack({ 233, 86, 21, 24 });
+	left_inv.speed = 0.5;
+
+	jumpR_inv.PushBack({ 265, 4, 27, 30 });
+	jumpR_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	jumpR_inv.PushBack({ 265, 4, 27, 30 });
+	jumpR_inv.speed = 0.5;
+
+	sJump_inv.PushBack({ 206, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 239, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 266, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 297, 209, 26, 30 });
+	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
+	sJump_inv.PushBack({ 206, 209, 26, 30 });
+	sJump.speed = 0.1;
+
 }
 
 j1Player::~j1Player()
@@ -74,78 +147,7 @@ void j1Player::Init() {
 }
 
 void j1Player::AnimationInit() {
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 133, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.PushBack({ 103, 10, 21, 24 });
-	idle.speed = idle_speed;
-
-	right.PushBack({ 188, 10, 24, 24 });
-	right.PushBack({ 218, 10, 21, 24 });
-	right.PushBack({ 239, 10, 21, 24 });
-	right.speed = right_speed;
-
-	left.PushBack({ 281, 86, 24, 24 });
-	left.PushBack({ 259, 86, 21, 24 });
-	left.PushBack({ 233, 86, 21, 24 });
-	left.speed = left_speed;
-
-	jumpR.PushBack({ 265, 4, 27, 30 });
-	jumpR.speed = jumpR_speed;
-
-	sJump.PushBack({ 206, 209, 26, 30 });
-	sJump.PushBack({ 239, 209, 26, 30 });
-	sJump.PushBack({ 266, 209, 26, 30 });
-	sJump.PushBack({ 297, 209, 26, 30 });
-	sJump.PushBack({ 206, 209, 26, 30 });
-	sJump.speed = sJump_speed;
-
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 133, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	idle_inv.PushBack({ 103, 10, 21, 24 });
-	idle_inv.speed = idle_inv_speed;
-
-	right_inv.PushBack({ 188, 10, 24, 24 });
-	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	right_inv.PushBack({ 218, 10, 21, 24 });
-	right_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	right_inv.PushBack({ 239, 10, 21, 24 });
-	right_inv.speed = right_inv_speed;
-
-	left_inv.PushBack({ 281, 86, 24, 24 });
-	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	left_inv.PushBack({ 259, 86, 21, 24 });
-	left_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	left_inv.PushBack({ 233, 86, 21, 24 });
-	left_inv.speed = left_inv_speed;
-
-	jumpR_inv.PushBack({ 265, 4, 27, 30 });
-	jumpR_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	jumpR_inv.PushBack({ 265, 4, 27, 30 });
-	jumpR_inv.speed = jumpR_inv_speed;
-
-	sJump_inv.PushBack({ 206, 209, 26, 30 });
-	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	sJump_inv.PushBack({ 239, 209, 26, 30 });
-	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	sJump_inv.PushBack({ 266, 209, 26, 30 });
-	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	sJump_inv.PushBack({ 297, 209, 26, 30 });
-	sJump_inv.PushBack({ 0, 240, 21, 24 }); //INV FRAME
-	sJump_inv.PushBack({ 206, 209, 26, 30 });
-	sJump.speed = sJump_inv_speed;
+	
 
 }
 
