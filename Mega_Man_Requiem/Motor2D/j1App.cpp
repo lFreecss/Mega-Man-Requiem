@@ -22,8 +22,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
 	PERF_START(ptimer);
 	frames = 0;
-	//want_to_save = want_to_load = false;
-	//prevTime = 0;
 
 	input = new j1Input();
 	win = new j1Window();
@@ -170,7 +168,7 @@ bool j1App::Update()
 }
 
 // ---------------------------------------------
-//Load config file, TODO Ricard
+
 pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 {
 	pugi::xml_node ret;
@@ -272,13 +270,6 @@ bool j1App::DoUpdate()
 {
 	BROFILER_CATEGORY("DoUpdate", Profiler::Color::Cyan);
 	bool ret = true;
-
-	/*long currTime = GetCurrentTime();
-	//dt is in seconds
-	if (currTime > prevTime) {
-		dt = ((float)(currTime - prevTime)) / 1000;
-		prevTime = currTime;
-	}*/
 
 	p2List_item<j1Module*>* item;
 	item = modules.start;

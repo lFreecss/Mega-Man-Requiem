@@ -97,10 +97,7 @@ void Crazy_Razy::FollowPath(float dt) {
 	if (pos.x == next_pos.x)
 		iteration++;
 
-	if (iteration == destination || player_pos.x < pos.x && iteration > 5) {
+	if (iteration == destination || player_pos.x < pos.x && iteration > 5) 
 		iteration = 0;
-		//path = nullptr;
-		//destination = 0;
-	}
 
 }

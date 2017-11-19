@@ -15,18 +15,12 @@
 
   <window>
     <resolution width="1280" height="860" scale="3"/>
-    <!--<resolution width="1040" height="480" scale="2"/>-->
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
   
-<!--
-  <file_system>
-    <path>data.zip</path>
-  </file_system>
--->
   
   <map>
     <folder>maps</folder>
@@ -37,7 +31,6 @@
     <scroll speed = "2.5" limit ="64" />
     <map limit="30"/>
     <levels>
-      <!-- <map first="1"/>-->
       <first_level id= "1" loaded= "1" name = "rock_level.tmx"/>
       <second_level id= "2" loaded= "0" name = "JAIL.tmx"/>
     </levels>
@@ -57,7 +50,7 @@
 
   <player>
     <file name = "textures/8bitmegaman.png" />
-    <physics velocityx = " 150.0" velocityy = "400.0" gravity = "200.0" floor_level = "250"/>
+    <physics velocityx = " 150.0" velocityy = "320.0" gravity = "200.0" floor_level = "250"/>
     <movement jumpMaxTime= "0.5"/>
     <size x= "22" y= "22" />
     <animation idle_speed ="5" right_speed="10" left_speed="10" jumpR_speed="10" sJump_speed="10" 

@@ -60,9 +60,6 @@ private:
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
-	//Load map method
-	p2SString LoadMap(pugi::xml_node&)const;
-
 	// Call modules before each loop iteration
 	void PrepareUpdate();
 
@@ -102,7 +99,6 @@ private:
 
 	p2List<j1Module*>	modules;
 	uint				frames;
-	//float				dt;
 	int					argc;
 	char**				args;
 
@@ -124,7 +120,6 @@ private:
 	float				dt = 0.0f;
 	int					capped_ms = -1;
 
-	//long prevTime;
 };
 
 extern j1App* App; 

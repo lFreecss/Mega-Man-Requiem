@@ -77,9 +77,7 @@ void Blader::FollowPath(float dt) {
 	if (pos.x == next_pos.x && pos.y == next_pos.y)
 		iteration++;
 
-	if (iteration == destination || iteration > 5) {
+	if (iteration == destination || iteration > 5) 
 		iteration = 0;
-		//path = nullptr;
-		//destination = 0;
-	}
+
 }

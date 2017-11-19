@@ -88,7 +88,6 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	bool ret = true;
 	LOG("Loading Player");
 
-	//path = config.child("file").attribute("name").as_string();
 	path.create(config.child("file").attribute("name").as_string());
 
 	vel.x = config.child("physics").attribute("velocityx").as_float();
@@ -160,7 +159,7 @@ bool j1Player::Update(float dt) {
 	updateAnim(dt);
 	move(dt);
 	jump(dt);
-	//OnCollision(collider, COLLIDER_ENEMY);
+
 	if (jumping == 1) {
 		current_animation = &jumpR;
 		if (GodMode()){
@@ -233,8 +232,8 @@ void j1Player::jump(float dt) {
 	}
 	
 }
-//Function that allows the player to move right and left, TODO Valdivia
-//taking into account collisions, TODO Varela
+
+
 void j1Player::move(float dt) {
 	BROFILER_CATEGORY("Player_Move_Collisions", Profiler::Color::DarkOrange);
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {

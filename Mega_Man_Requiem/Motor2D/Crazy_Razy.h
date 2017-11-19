@@ -2,7 +2,6 @@
 #define __CRAZY_RAZY_H__
 
 #include "Enemy.h"
-#include "Path.h"
 #include "p2DynArray.h"
 #include "p2Point.h"
 #include "j1Enemies.h"

@@ -32,15 +32,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	scroll_speed = config.child("scroll").attribute("speed").as_float();
 	scroll_limit = config.child("scroll").attribute("limit").as_uint();
 	map_limit = config.child("map").attribute("limit").as_uint();
-	/*for (pugi::xml_node level = config.child("levels").child("level"); level; level = config.next_sibling("level")) {
-		if (level.attribute("id").as_uint() == 1)
-			rock_level = level.attribute("name").as_string();
-		if (level.attribute("id").as_uint() == 2)
-			jail_level = level.attribute("name").as_string();
-	}*/
-	//rock_level = config.child("levels").child("first_level").attribute("name").as_string();
 	rock_level.create(config.child("levels").child("first_level").attribute("name").as_string());
-	//jail_level = config.child("levels").child("second_level").attribute("name").as_string();
 	jail_level.create(config.child("levels").child("second_level").attribute("name").as_string());
 
 	LOG("Charging all enemy positions");
@@ -68,12 +60,9 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	//first_map = ("%s%s", App->map_name.GetString(), ".tmx");
 	first_map = rock_level;
 	App->map->Load(first_map.GetString());
 	current_map = first_map.GetString();
-	//current_level = ROCK;
-	//map_num = 0;
 	InitializeMap();
 	App->audio->PlayMusic(music_path.GetString());
 
@@ -95,13 +84,6 @@ bool j1Scene::Update(float dt)
 	CheckMap();
 	DebugKeys();
 	App->map->Draw();
-/*
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.count());
-
-	App->win->SetTitle(title.GetString());*/
 
 	//Scroll
 	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - scroll_limit)
@@ -170,32 +152,10 @@ void j1Scene::DebugKeys(){
 		App->framerate_capped = !App->framerate_capped;
 	}
 	    
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
-		App->render->camera.y -= 1;
+	//Change the level
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 50;
 
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
-		App->render->camera.y += 1;
-
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
-		App->render->camera.x -= 1;
-
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
-		App->render->camera.x += 1;
-
-	//Debug for the scroll
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 130;
-
-	//Change level, for debuging 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-
-		if (current_level == ROCK) 
-			ChangeMaps(JAIL);
-
-		else 
-			ChangeMaps(ROCK);
-
-	}
 }
 
 void j1Scene::CheckMap() {
@@ -223,7 +183,6 @@ void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 		current_map = jail_level.GetString();
 	}
 	InitializeMap();
-	//MapStart();
 }
 
 //For starting form the same map, TODO Varela
@@ -240,7 +199,6 @@ void j1Scene::InitializeMap() {
 
 //To Start form the very first level, TODO Varela
 void j1Scene::Restart() {
-	//first_map.GetString()
 	ChangeMaps(ROCK);
 	MapStart();
 	map_num = 0;
