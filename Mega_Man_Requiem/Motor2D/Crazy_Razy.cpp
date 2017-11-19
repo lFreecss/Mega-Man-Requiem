@@ -31,6 +31,12 @@ Crazy_Razy::Crazy_Razy(int x, int y) : Enemy(x, y)
 	collider = App->collision->AddCollider({ 0, 0, cr.size.x, cr.size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->enemies);
 }
 
+void Crazy_Razy::UpdateAnim(float dt) {
+	left.speed = cr.anim1_speed*dt;
+	right.speed = cr.anim2_speed*dt;
+
+}
+
 void Crazy_Razy::Move(float dt) {
 	player_pos.x = (int)App->player->pos.x;
 	player_pos.y = (int)App->player->pos.y;

@@ -165,7 +165,11 @@ void j1Scene::DebugKeys(){
 		
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		App->player->is_invincible = !App->player->is_invincible;
-	
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+		App->framerate_capped = !App->framerate_capped;
+	}
+	    
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 		App->render->camera.y -= 1;
 

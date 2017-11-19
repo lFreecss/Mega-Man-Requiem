@@ -25,7 +25,13 @@ Blader::Blader(int x, int y) : Enemy(x, y)
 	collider = App->collision->AddCollider({ 0, 0, b.size.x, b.size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->enemies);
 }
 
+void Blader::UpdateAnim(float dt) {
+	idle.speed = b.anim1_speed*dt;
+}
+
+
 void Blader::Move(float dt) {
+
 	player_pos.x = (int)App->player->pos.x;
 	player_pos.y = (int)App->player->pos.y;
 	

@@ -23,7 +23,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	PERF_START(ptimer);
 	frames = 0;
 	//want_to_save = want_to_load = false;
-	prevTime = 0;
+	//prevTime = 0;
 
 	input = new j1Input();
 	win = new j1Window();
@@ -236,10 +236,9 @@ void j1App::FinishUpdate()
 		avg_fps, last_frame_ms, frames_on_last_update, capped_value.GetString(), vsync_value.GetString(), dt, seconds_since_startup, frame_count);
 	App->win->SetTitle(title);
 
-	if (!App->render->vsync && framerate_capped) {
+	if (framerate_capped) {
 		if (capped_ms > 0 && last_frame_ms < capped_ms)
 		{
-			//j1PerfTimer t;
 			SDL_Delay(capped_ms - last_frame_ms);
 		}
 	}
@@ -274,12 +273,12 @@ bool j1App::DoUpdate()
 	BROFILER_CATEGORY("DoUpdate", Profiler::Color::Cyan);
 	bool ret = true;
 
-	long currTime = GetCurrentTime();
+	/*long currTime = GetCurrentTime();
 	//dt is in seconds
 	if (currTime > prevTime) {
 		dt = ((float)(currTime - prevTime)) / 1000;
 		prevTime = currTime;
-	}
+	}*/
 
 	p2List_item<j1Module*>* item;
 	item = modules.start;

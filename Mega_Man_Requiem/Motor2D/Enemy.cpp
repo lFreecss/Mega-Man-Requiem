@@ -26,6 +26,10 @@ void Enemy::Draw(SDL_Texture* sprites)
 		App->render->Blit(sprites, pos.x, pos.y, &(animation->GetCurrentFrame()));
 }
 
+void Enemy::UpdateAnim(float dt) {
+
+}
+
 void Enemy::Move(float dt)
 {}
 

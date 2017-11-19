@@ -90,8 +90,10 @@ bool j1Enemies::Update(float dt) {
 	bool ret = true;
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
-		if (enemies[i] != nullptr)
+		if (enemies[i] != nullptr) {
+			enemies[i]->UpdateAnim(dt);
 			enemies[i]->Move(dt);
+		}
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 		if (enemies[i] != nullptr) 

@@ -23,6 +23,7 @@ public:
 
 	Crazy_Razy(int x, int y);
 	void Move(float dt);
+	void UpdateAnim(float dt);
 	void OnCollision(Collider* collider);
 	void CreatePath();
 	void FollowPath(float dt);

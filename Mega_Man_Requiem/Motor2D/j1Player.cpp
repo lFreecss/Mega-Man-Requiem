@@ -154,6 +154,19 @@ void j1Player::AnimationInit() {
 bool j1Player::Update(float dt) {
 	bool ret = true;
 
+	float anim_speed = 5.0f;
+	idle.speed = anim_speed*dt;
+	right.speed = anim_speed*dt;
+	left.speed = anim_speed*dt;
+	jumpR.speed = anim_speed*dt;
+	sJump.speed = anim_speed*dt;
+	idle_inv.speed = anim_speed*dt;
+	right_inv.speed = anim_speed*dt;
+	left_inv.speed = anim_speed*dt;
+	jumpR_inv.speed = anim_speed*dt;
+	sJump_inv.speed = anim_speed*dt;
+
+
 	current_animation = &idle;
 	
 	if(GodMode())

@@ -10,7 +10,7 @@
   </app>
 	
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
   </renderer>
 
   <window>
@@ -71,14 +71,14 @@
       <size x = "16" y = "21"/>
       <physics speed ="60.0"/>
       <player_radar positioning_barrier="700" limit_1="0" limit_2= "1300" ending_limit= "300"/>
-      <animation speed="0.2"/>
+      <animation speed="8.0"/>
     </blader>
     
     <crazy_razy>
       <size x = "32" y = "31"/>
       <physics speed ="100.0" gravity = "200.0"/>
       <player_radar positioning_barrier="1000" limit_1="100" limit_2= "1350" ending_limit= "200"/>
-      <animation speed1="0.2" speed2="0.2"/>
+      <animation speed1="8.0" speed2="8.0"/>
     </crazy_razy>
  
  </enemies>
