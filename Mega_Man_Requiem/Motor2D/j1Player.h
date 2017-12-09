@@ -30,14 +30,15 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	fPoint startPos;
-	fPoint pos;
+	fPoint startPos = { 0.0f, 0.0f };
+	fPoint pos = { 0.0f,0.0f };
 
 	void OnCollision(Collider* c1, Collider* c2);
 	Collider* collider = nullptr;
 
 	bool GodMode();
 	bool is_invincible = false;
+	bool PlayerIsActive = true;
 private:
 	
 	Animation* current_animation;
@@ -51,28 +52,29 @@ private:
 	Animation left_inv;
 	Animation jumpR_inv;
 	Animation sJump_inv;
-	float idle_speed;
-	float right_speed;
-	float left_speed;
-	float jumpR_speed;
-	float sJump_speed;
-	float idle_inv_speed;
-	float right_inv_speed;
-	float left_inv_speed;
-	float jumpR_inv_speed;
-	float sJump_inv_speed;
+	float idle_speed = 0.0f;
+	float right_speed = 0.0f;
+	float left_speed = 0.0f;
+	float jumpR_speed = 0.0f;
+	float sJump_speed = 0.0f;
+	float idle_inv_speed = 0.0f;
+	float right_inv_speed = 0.0f;
+	float left_inv_speed = 0.0f;
+	float jumpR_inv_speed = 0.0f;
+	float sJump_inv_speed = 0.0f;
 
 	SDL_Texture* graphics = nullptr;
 	p2SString path;
 
-	fPoint vel;
-	float gravity;
+	fPoint vel = { 0.0f, 0.0f };
+	float gravity = 0.0f;
 
-	int jumping;
-	float jumpMaxTime;
-	float actualJumpTime;
-	iPoint size;
-	uint floor_level;
+	int jumping = 0;
+	float jumpMaxTime = 0.0f;
+	float actualJumpTime = 0.0f;
+	iPoint size = { 0,0 };
+	uint floor_level = 0;
+
 };
 
 #endif

@@ -11,10 +11,10 @@ class Blader : public Enemy
 private:
 
 	Animation idle;
-	iPoint original_pos;
-	iPoint player_pos;
-	int iteration;
-	int destination;
+	iPoint original_pos = { 0,0 };
+	iPoint player_pos = { 0,0 };
+	int iteration = 0;
+	int destination = 0;
 	EnemyTypeInfo b;
 
 public:

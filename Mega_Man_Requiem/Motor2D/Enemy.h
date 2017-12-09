@@ -15,7 +15,7 @@ protected:
 
 public:
 
-	iPoint pos;
+	iPoint pos = { 0,0 };
 	Collider* collider = nullptr;
 	int type;
 	int id;

@@ -154,7 +154,7 @@ void j1Scene::DebugKeys(){
 	    
 	//Change the level
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 50;
+		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 30;
 
 }
 

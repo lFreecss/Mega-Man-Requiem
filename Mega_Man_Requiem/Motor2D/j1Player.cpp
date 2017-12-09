@@ -150,39 +150,40 @@ void j1Player::updateAnim(float dt) {
 
 bool j1Player::Update(float dt) {
 	bool ret = true;
-
-	current_animation = &idle;
 	
-	if(GodMode())
-		current_animation = &idle_inv;
-	
-	updateAnim(dt);
-	move(dt);
-	jump(dt);
+	if (PlayerIsActive) {
+		current_animation = &idle;
 
-	if (jumping == 1) {
-		current_animation = &jumpR;
-		if (GodMode()){
-			if(pos.y < floor_level)
-				current_animation = &jumpR_inv;
-			else
-				current_animation = &idle_inv;
-		}
-	}
-	if (jumping == 0) {
-		current_animation = &sJump;
 		if (GodMode())
-		current_animation = &sJump_inv;
+			current_animation = &idle_inv;
+
+		updateAnim(dt);
+		move(dt);
+		jump(dt);
+
+		if (jumping == 1) {
+			current_animation = &jumpR;
+			if (GodMode()) {
+				if (pos.y < floor_level)
+					current_animation = &jumpR_inv;
+				else
+					current_animation = &idle_inv;
+			}
+		}
+		if (jumping == 0) {
+			current_animation = &sJump;
+			if (GodMode())
+				current_animation = &sJump_inv;
+		}
+
+
+		SDL_Rect r = current_animation->GetCurrentFrame();
+		App->render->Blit(graphics, pos.x, pos.y, &r);
+
+		if (collider != nullptr)
+			collider->SetPos((int)pos.x, (int)pos.y);
+
 	}
-
-
-	SDL_Rect r = current_animation->GetCurrentFrame();
-	App->render->Blit(graphics, pos.x, pos.y, &r);
-
-	if (collider != nullptr)
-		collider->SetPos((int)pos.x, (int)pos.y);
-
-	
 
 	return ret;
 }

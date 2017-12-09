@@ -64,9 +64,9 @@ private:
 	p2SString path;
 	EnemyInfo queue[MAX_ENEMIES];
 
-	int screen_width;
-	int screen_height;
-	int screen_size;
+	int screen_width = 0;
+	int screen_height = 0;
+	int screen_size = 0;
 
 	EnemyTypeInfo blader_info;
 	EnemyTypeInfo crazy_razy_info;
