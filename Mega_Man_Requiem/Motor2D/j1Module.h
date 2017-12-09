@@ -11,6 +11,8 @@
 
 class j1App;
 struct Collider;
+class UI;
+enum BUTTON_EVENTS;
 
 class j1Module
 {
@@ -74,6 +76,12 @@ public:
 
 	// Callbacks ---
 	virtual void OnCollision(Collider*, Collider*) {}
+
+	//On the case of UI triggering elements
+
+	virtual void UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
+	{}
+
 	
 public:
 

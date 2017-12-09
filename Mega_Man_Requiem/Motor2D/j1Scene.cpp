@@ -82,8 +82,8 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	CheckMap();
-	DebugKeys();
 	App->map->Draw();
+	DebugKeys();
 
 	//Scroll
 	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - scroll_limit)
@@ -153,8 +153,9 @@ void j1Scene::DebugKeys(){
 	}
 	    
 	//Change the level
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 30;
+	}
 
 }
 
@@ -174,6 +175,7 @@ void j1Scene::CheckMap() {
 //Change from one map to the other, TODO Valdivia
 void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	App->map->CleanUp();
+	
 	if (level_name == ROCK) {
 		App->map->Load(rock_level.GetString());
 		current_map = rock_level.GetString();

@@ -61,6 +61,18 @@
     <ClCompile Include="j1Timer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -144,6 +156,18 @@
     <ClInclude Include="j1Timer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -166,6 +190,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Enemies">
       <UniqueIdentifier>{d880f21b-0ec4-4ae1-aad1-840b64ee774f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\UI">
+      <UniqueIdentifier>{4ddabfa1-412d-41cd-8d83-495bfee13d5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
