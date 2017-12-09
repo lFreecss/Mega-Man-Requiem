@@ -65,7 +65,7 @@ private:
 
 	SDL_Texture* graphics = nullptr;
 	p2SString path;
-
+	
 	fPoint vel = { 0.0f, 0.0f };
 	float gravity = 0.0f;
 
@@ -75,6 +75,7 @@ private:
 	iPoint size = { 0,0 };
 	uint floor_level = 0;
 
+	bool landed = false;
 };
 
 #endif

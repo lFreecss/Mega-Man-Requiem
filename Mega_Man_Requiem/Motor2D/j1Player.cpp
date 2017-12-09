@@ -133,6 +133,9 @@ void j1Player::Init() {
 	jumping = 1;
 	actualJumpTime = 0;
 	collider = App->collision->AddCollider({ (int)startPos.x, (int)startPos.y, 21, 24 }, COLLIDER_PLAYER, this);
+
+	App->audio->LoadFx("audio/fx/mega_man_landing.wav"); //1
+	App->audio->LoadFx("audio/fx/mega_man_defeat.wav"); //2
 }
 
 void j1Player::updateAnim(float dt) {
@@ -202,7 +205,7 @@ bool j1Player::CleanUp() {
 }
 
 void j1Player::jump(float dt) {
-		
+	
 	if (actualJumpTime > 0) {
 		actualJumpTime += dt;
 		if (actualJumpTime > jumpMaxTime) {
@@ -214,6 +217,7 @@ void j1Player::jump(float dt) {
 			iPoint endPosWorld = App->map->WorldToMap(pos.x + size.x, pos.y + size.y);
 			if (App->map->CollisionY(posWorld.x, endPosWorld.x, posWorld.y)) {
 				pos.y += gravity*dt;
+				
 			}
 		}
 	}
@@ -227,12 +231,18 @@ void j1Player::jump(float dt) {
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+		landed = true;
 		if (jumping > 0) {
 			jumping --;
 			actualJumpTime = dt;
 		}
 	}
-	
+
+	//Sound that Mega Man makes when he lands
+	if (jumping == 2 && landed == true) {
+		App->audio->PlayFx(1, 0);
+		landed = false;
+	}
 }
 
 
@@ -273,6 +283,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (c2->type == COLLIDER_TYPE::COLLIDER_ENEMY && GodMode() == false) {
 		App->collision->EraseCollider(collider);
 		collider = nullptr;
+		App->audio->PlayFx(2, 0);
 		App->scene->MapStart();
 	}
 }

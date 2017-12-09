@@ -7,6 +7,7 @@
 #include <math.h>
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1Audio.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -469,6 +470,7 @@ bool j1Map::CollisionY(uint x_left, uint x_right, uint y)
 	if (y < 0) 
 		return true;
 	if (y >= data.height) {
+		App->audio->PlayFx(2, 0);
 		App->scene->MapStart();
 		return true;
 	}
