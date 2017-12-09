@@ -8,6 +8,7 @@
 #include "j1map.h"
 #include "j1Collision.h"
 #include "j1Scene.h"
+#include "j1Audio.h"
 #include "Brofiler\Brofiler.h"
 
 

@@ -177,10 +177,12 @@ void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	if (level_name == ROCK) {
 		App->map->Load(rock_level.GetString());
 		current_map = rock_level.GetString();
+		App->audio->PlayMusic(music_path.GetString(), 0.0f);
 	}
-	else {
+	if (level_name == JAIL) {
 		App->map->Load(jail_level.GetString());
 		current_map = jail_level.GetString();
+		App->audio->PlayMusic("audio/music/cut_man.ogg", 0.0f);
 	}
 	InitializeMap();
 }

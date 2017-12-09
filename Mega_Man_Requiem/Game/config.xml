@@ -27,7 +27,7 @@
   </map>
 
   <scene>
-    <file music_name = "audio/music/Armored Armadillo.ogg"/>
+    <file music_name = "audio/music/guts_man.ogg"/>
     <scroll speed = "2.5" limit ="64" />
     <map limit="30"/>
     <levels>
