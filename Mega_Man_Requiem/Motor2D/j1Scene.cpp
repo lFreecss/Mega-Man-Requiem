@@ -61,8 +61,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	first_map = rock_level;
+	current_map = rock_level.GetString();
 	App->map->Load(first_map.GetString());
-	current_map = first_map.GetString();
 	InitializeMap();
 	App->audio->PlayMusic(music_path.GetString());
 
