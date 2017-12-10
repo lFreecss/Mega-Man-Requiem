@@ -7,14 +7,16 @@
 	<map />
 	<pathfinding />
 	<scene>
-		<map name="1" />
+		<map name="0" />
 	</scene>
 	<enemies />
 	<player>
-		<position x="131.649979" y="195.520142" />
+		<position x="12" y="217" />
 	</player>
 	<:anonymous />
+	<fonts />
+	<gui />
 	<renderer>
-		<camera x="-316" y="0" />
+		<camera x="-30" y="0" />
 	</renderer>
 </game_state>

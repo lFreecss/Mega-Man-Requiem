@@ -122,6 +122,9 @@ bool j1Player::Start() {
 	graphics = App->tex->Load(path.GetString());
 	if (graphics == nullptr)
 		ret = false;
+
+	App->audio->LoadFx("audio/fx/mega_man_landing.wav"); //1
+	App->audio->LoadFx("audio/fx/mega_man_defeat.wav"); //2
 	Init();
 
 	return ret;
@@ -134,8 +137,6 @@ void j1Player::Init() {
 	actualJumpTime = 0;
 	collider = App->collision->AddCollider({ (int)startPos.x, (int)startPos.y, 21, 24 }, COLLIDER_PLAYER, this);
 
-	App->audio->LoadFx("audio/fx/mega_man_landing.wav"); //1
-	App->audio->LoadFx("audio/fx/mega_man_defeat.wav"); //2
 }
 
 void j1Player::updateAnim(float dt) {
@@ -155,7 +156,6 @@ void j1Player::updateAnim(float dt) {
 bool j1Player::Update(float dt) {
 	bool ret = true;
 	
-	if (PlayerIsActive) {
 		current_animation = &idle;
 
 		if (GodMode())
@@ -186,8 +186,6 @@ bool j1Player::Update(float dt) {
 
 		if (collider != nullptr)
 			collider->SetPos((int)pos.x, (int)pos.y);
-
-	}
 
 	return ret;
 }

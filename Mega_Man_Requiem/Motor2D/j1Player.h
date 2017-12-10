@@ -38,7 +38,7 @@ public:
 
 	bool GodMode();
 	bool is_invincible = false;
-	bool PlayerIsActive = true;
+
 private:
 	
 	Animation* current_animation;

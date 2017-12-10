@@ -11,6 +11,8 @@
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "j1Enemies.h"
+#include "j1Gui.h"
+#include "j1Textures.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -67,8 +69,61 @@ bool j1Scene::Start()
 	App->audio->PlayMusic(music_path.GetString());
 
 	EnemySpawn();
-	
+
+	//Trying stuff
+	//SDL_Texture* tex = App->tex->Load("textures/8bitmegaman.png");
+	//App->gui->CreateLabel({ 10, 50 }, "Cosas del pueblo", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
+	//App->gui->CreateImage({ 10,50 }, { 103, 10, 21, 24 }, tex, false, this);
+	//App->gui->CreateButton({ 60,50 }, { 103, 10, 21, 24 }, { 188, 10, 24, 24 }, { 281, 86, 24, 24 }, tex, true, this);
+	//App->player->active = false;
 	return true;
+}
+
+
+void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
+{
+	if (UI_elem->GetType() == BUTTON) {
+		Button* bttn = (Button*)UI_elem;
+		switch (UI_state)
+		{
+		case NONE:
+			break;
+		case MOUSE_ENTER:
+			bttn->ChangeToHoverImg();
+			break;
+		case MOUSE_LEAVE:
+			bttn->ChangeToNormalImg();
+			break;
+		case LEFT_MOUSE_PRESS:
+			bttn->ChangeToPressedImg();
+			break;
+		case RIGHT_MOUSE_PRESS:
+			bttn->ChangeToPressedImg();
+			break;
+		}
+	}
+
+	if (UI_elem->GetType() == LABEL) {
+		Label* labl = (Label*)UI_elem;
+		switch (UI_state)
+		{
+		case NONE:
+			break;
+		case MOUSE_ENTER:
+			labl->ChangeText("A");
+			break;
+		case MOUSE_LEAVE:
+			labl->ChangeText("B");
+			break;
+		case LEFT_MOUSE_PRESS:
+			labl->ChangeText("C");
+			break;
+		case RIGHT_MOUSE_PRESS:
+			labl->ChangeText("D");
+			break;
+		}
+	}
+
 }
 
 

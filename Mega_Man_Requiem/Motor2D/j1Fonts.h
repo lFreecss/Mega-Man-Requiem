@@ -4,7 +4,7 @@
 #include "j1Module.h"
 #include "SDL\include\SDL_pixels.h"
 
-#define DEFAULT_FONT "fonts/fonts/Mega_Man_2.ttf"
+#define DEFAULT_FONT "fonts/Mega_Man_2.ttf"
 #define DEFAULT_FONT_SIZE 12
 
 struct SDL_Texture;

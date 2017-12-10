@@ -62,6 +62,9 @@ public:
 	//Function for the debug keys
 	void DebugKeys();
 
+	//UI interaction
+	void UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state);
+
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;

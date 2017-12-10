@@ -27,7 +27,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
-	Mega_Man_2 = App->font->Load("fonts/Mega_Man_2.ttf");
+	Mega_Man_2 = App->font->Load("fonts/Mega_Man_2.ttf", 10);
 	Mega_Man_10 = App->font->Load("fonts/Mega_Man_10.ttf");
 
 
@@ -96,10 +96,10 @@ Button* j1Gui::CreateButton(iPoint pos, SDL_Rect normal_img, SDL_Rect hover_img,
 _TTF_Font* j1Gui::GetFont(FONT_TYPE font_name) {
 	switch (font_name) {
 	case MEGA_MAN_2:
-		return Mega_Man_2;
+		return App->font->Load("fonts/Mega_Man_2.ttf", 12);
 		break;
 	case MEGA_MAN_10:
-		return Mega_Man_10;
+		return App->font->Load("fonts/Mega_Man_10.ttf", 12);
 		break;
 	default:
 		return Mega_Man_2;
