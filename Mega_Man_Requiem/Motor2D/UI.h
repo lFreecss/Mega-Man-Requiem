@@ -4,7 +4,7 @@
 #include "j1Render.h"
 
 enum UI_TYPE {
-	NO_TYPE,
+	TYPE_NONE,
 	IMAGE,
 	LABEL,
 	BUTTON
@@ -28,7 +28,7 @@ protected:
 	iPoint screen_area = { 0,0 };
 	SDL_Rect UI_logic_rect;
 	const SDL_Texture* tex = nullptr;
-	UI_TYPE type = NO_TYPE;
+	UI_TYPE type = TYPE_NONE;
 	j1Module* callback = nullptr;
 	bool is_draggable = false;
 
