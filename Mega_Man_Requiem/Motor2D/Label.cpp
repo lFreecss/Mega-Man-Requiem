@@ -1,4 +1,4 @@
-/*#include "j1App.h"
+#include "j1App.h"
 #include "Label.h"
 #include "j1Fonts.h"
 #include "j1Textures.h"
@@ -34,4 +34,4 @@ void Label::ChangeColor(SDL_Color colour) {
 	App->tex->UnLoad((SDL_Texture*)tex);
 	tex = App->font->Print(text.GetString(), colour, font);
 
-}*/
+}
