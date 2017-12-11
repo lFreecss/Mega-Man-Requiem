@@ -62,13 +62,12 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	first_map = rock_level;
-	current_map = rock_level.GetString();
-	App->map->Load(first_map.GetString());
-	InitializeMap();
-	App->audio->PlayMusic(music_path.GetString());
-
-	EnemySpawn();
+	App->player->active = false;
+	App->map->active = false;
+	App->enemies->active = false;
+	App->audio->PlayMusic("audio/music/title.ogg", 0.0f);
+	
+	//StartPlaying();
 
 	//Trying stuff
 	//SDL_Texture* tex = App->tex->Load("textures/8bitmegaman.png");
@@ -136,9 +135,15 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	CheckMap();
-	App->map->Draw();
-	DebugKeys();
+	if (App->map->active) {
+		CheckMap();
+		App->map->Draw();
+		DebugKeys();
+	}
+	
+	//DEBUG!!!!! TO DELETE LATER!!!11
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+		StartPlaying();
 
 	//Scroll
 	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - scroll_limit)
@@ -179,6 +184,20 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void j1Scene::StartPlaying() {
+	App->player->active = true;
+	App->map->active = true;
+	App->enemies->active = true;
+
+	first_map = rock_level;
+	current_map = rock_level.GetString();
+	App->map->Load(first_map.GetString());
+	InitializeMap();
+	App->audio->PlayMusic(music_path.GetString(), 0.0f);
+
+	EnemySpawn();
 }
 
 void j1Scene::DebugKeys(){

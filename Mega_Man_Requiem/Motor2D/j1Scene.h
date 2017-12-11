@@ -38,6 +38,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Starts the playable game part
+	void StartPlaying();
+
 	//Checks if it is the correct map in case of applying a save state
 	void CheckMap();
 
