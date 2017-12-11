@@ -41,8 +41,14 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Goes to the Start
+	void StartScreen();
+
 	//Starts the playable game part
 	void StartPlaying();
+
+	//Goes to the Credits screen
+	void CreditsScreen();
 
 	//Checks if it is the correct map in case of applying a save state
 	void CheckMap();
@@ -104,7 +110,9 @@ private:
 	Button* start_bttn;
 	Button* load_bttn;
 	Button* settings_bttn;
+	Button* credits_bttn;
 	Button* quit_bttn;
+	Button* back_bttn;
 	bool quit_pressed = false;
 };
 

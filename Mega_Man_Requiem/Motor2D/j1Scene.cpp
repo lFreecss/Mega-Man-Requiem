@@ -65,7 +65,7 @@ bool j1Scene::Start()
 	App->player->active = false;
 	App->map->active = false;
 	App->enemies->active = false;
-	App->audio->PlayMusic("audio/music/title.ogg", 0.0f);
+
 	App->audio->LoadFx("audio/fx/mega_man_landing.wav"); //1
 	App->audio->LoadFx("audio/fx/mega_man_defeat.wav"); //2
 	App->audio->LoadFx("audio/fx/game_start.wav"); //3
@@ -74,19 +74,8 @@ bool j1Scene::Start()
 	title_bg = App->tex->Load("textures/title.png");
 	buttons = App->tex->Load("textures/buttons.png");
 
-	title_img = App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, title_bg, false, this);
-	start_bttn = App->gui->CreateButton({ 80,180 }, { 6, 10, 38, 7 }, { 49, 10, 38, 8 }, { 6, 10, 38, 7 }, buttons, false, this);
-	load_bttn = App->gui->CreateButton({ 80,200 }, { 9, 28, 30, 7 }, { 50, 27, 30, 8 }, { 9, 28, 30, 7 }, buttons, false, this);
-	settings_bttn = App->gui->CreateButton({ 80,220 }, { 7, 43, 60, 7 }, { 76, 43, 60, 8 }, { 7, 43, 60, 7 }, buttons, false, this);
-	quit_bttn = App->gui->CreateButton({ 80,240 }, { 7, 57, 28, 7 }, { 42, 57, 28, 8 }, { 7, 57, 28, 7 }, buttons, false, this);
-	//StartPlaying();
+	StartScreen();
 
-	//Trying stuff
-	//SDL_Texture* tex = App->tex->Load("textures/8bitmegaman.png");
-	//App->gui->CreateLabel({ 10, 50 }, "Cosas del pueblo", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
-	//App->gui->CreateImage({ 10,50 }, { 103, 10, 21, 24 }, tex, false, this);
-	//App->gui->CreateButton({ 60,50 }, { 103, 10, 21, 24 }, { 188, 10, 24, 24 }, { 281, 86, 24, 24 }, tex, true, this);
-	//App->player->active = false;
 	return true;
 }
 
@@ -101,7 +90,7 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 			break;
 		case MOUSE_ENTER:
 			bttn->ChangeToHoverImg();
-				App->audio->PlayFx(4, 0);
+			App->audio->PlayFx(4, 0);
 			break;
 		case MOUSE_LEAVE:
 			bttn->ChangeToNormalImg();
@@ -113,6 +102,12 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 				StartPlaying();
 				App->audio->PlayFx(3, 0);
 			}
+			if (bttn == credits_bttn) 
+				CreditsScreen();
+
+			if (bttn == back_bttn)
+				StartScreen();
+
 			if (bttn == quit_bttn)
 				quit_pressed = true;
 			break;
@@ -129,16 +124,16 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 		case NONE:
 			break;
 		case MOUSE_ENTER:
-			labl->ChangeText("A");
+			//labl->ChangeText("A");
 			break;
 		case MOUSE_LEAVE:
-			labl->ChangeText("B");
+			//labl->ChangeText("B");
 			break;
 		case LEFT_MOUSE_PRESS:
-			labl->ChangeText("C");
+			//labl->ChangeText("C");
 			break;
 		case RIGHT_MOUSE_PRESS:
-			labl->ChangeText("D");
+			//labl->ChangeText("D");
 			break;
 		}
 	}
@@ -202,6 +197,18 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
+void j1Scene::StartScreen() {
+	App->gui->CleanUp();
+	App->audio->PlayMusic("audio/music/title.ogg", 0.0f);
+
+	title_img = App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, title_bg, false, this);
+	start_bttn = App->gui->CreateButton({ 60,170 }, { 6, 10, 38, 7 }, { 49, 10, 38, 8 }, { 6, 10, 38, 7 }, buttons, false, this);
+	load_bttn = App->gui->CreateButton({ 60,190 }, { 9, 28, 30, 7 }, { 50, 27, 30, 8 }, { 9, 28, 30, 7 }, buttons, false, this);
+	settings_bttn = App->gui->CreateButton({ 60,210 }, { 7, 43, 60, 7 }, { 76, 43, 60, 8 }, { 7, 43, 60, 7 }, buttons, false, this);
+	credits_bttn = App->gui->CreateButton({ 60,230 }, { 6, 84, 52, 7 }, { 65, 84, 52, 8 }, { 6, 84, 52, 7 }, buttons, false, this);
+	quit_bttn = App->gui->CreateButton({ 60,250 }, { 7, 57, 28, 7 }, { 42, 57, 28, 8 }, { 7, 57, 28, 7 }, buttons, false, this);
+}
+
 void j1Scene::StartPlaying() {
 	App->player->active = true;
 	App->map->active = true;
@@ -214,6 +221,15 @@ void j1Scene::StartPlaying() {
 	App->audio->PlayMusic(music_path.GetString(), 0.0f);
 
 	EnemySpawn();
+}
+
+void j1Scene::CreditsScreen() {
+	App->gui->CleanUp();
+	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
+	App->gui->CreateLabel({ 90, 40 }, "Licence:", App->gui->GetFont(MEGA_MAN_10), { 255,255,255,255 }, false, this);
+	App->gui->CreateLabel({ 30, 60 }, "MIT License Copyright(c)", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
+	App->gui->CreateLabel({ 30, 70 }, "David Varela Hernandez, David Valdivia Martínez", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
+	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
 }
 
 void j1Scene::DebugKeys(){
