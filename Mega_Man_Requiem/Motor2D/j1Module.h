@@ -79,10 +79,9 @@ public:
 
 	//On the case of UI triggering elements
 
-	virtual void UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
+	virtual void UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state) 
 	{}
 
-	
 public:
 
 	p2SString	name;

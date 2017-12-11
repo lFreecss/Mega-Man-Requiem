@@ -2,6 +2,9 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+class Image;
+class Label;
+class Button;
 
 struct SDL_Texture;
 
@@ -93,6 +96,15 @@ private:
 	iPoint ground_enem_2_1 = { 0,0 };
 	iPoint air_enem_2_2 = { 0,0 };
 	iPoint ground_enem_2_2 = { 0,0 };
+
+	SDL_Texture* title_bg;
+	SDL_Texture* buttons;
+
+	Image* title_img;
+	Button* start_bttn;
+	Button* load_bttn;
+	Button* settings_bttn;
+	Button* quit_bttn;
 };
 
 #endif // __j1SCENE_H__

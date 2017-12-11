@@ -66,7 +66,15 @@ bool j1Scene::Start()
 	App->map->active = false;
 	App->enemies->active = false;
 	App->audio->PlayMusic("audio/music/title.ogg", 0.0f);
-	
+
+	title_bg = App->tex->Load("textures/title2.png");
+	buttons = App->tex->Load("textures/buttons.png");
+
+	title_img = App->gui->CreateImage({ 50,0 }, { 0, 0, 329, 287 }, title_bg, false, this);
+	start_bttn = App->gui->CreateButton({ 80,180 }, { 6, 10, 38, 7 }, { 49, 10, 38, 8 }, { 6, 10, 38, 7 }, buttons, false, this);
+	load_bttn = App->gui->CreateButton({ 80,200 }, { 9, 28, 30, 7 }, { 50, 27, 30, 8 }, { 9, 28, 30, 7 }, buttons, false, this);
+	settings_bttn = App->gui->CreateButton({ 80,220 }, { 7, 43, 60, 7 }, { 76, 43, 60, 8 }, { 7, 43, 60, 7 }, buttons, false, this);
+	quit_bttn = App->gui->CreateButton({ 80,240 }, { 7, 57, 28, 7 }, { 42, 57, 28, 8 }, { 7, 57, 28, 7 }, buttons, false, this);
 	//StartPlaying();
 
 	//Trying stuff
@@ -81,6 +89,7 @@ bool j1Scene::Start()
 
 void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 {
+	bool ret = true;
 	if (UI_elem->GetType() == BUTTON) {
 		Button* bttn = (Button*)UI_elem;
 		switch (UI_state)
@@ -95,6 +104,10 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 			break;
 		case LEFT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
+			if(bttn == start_bttn)
+				StartPlaying();
+			if (bttn == quit_bttn)
+				//PostUpdate();
 			break;
 		case RIGHT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
@@ -122,7 +135,6 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 			break;
 		}
 	}
-
 }
 
 
@@ -140,10 +152,6 @@ bool j1Scene::Update(float dt)
 		App->map->Draw();
 		DebugKeys();
 	}
-	
-	//DEBUG!!!!! TO DELETE LATER!!!11
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-		StartPlaying();
 
 	//Scroll
 	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - scroll_limit)
@@ -164,6 +172,7 @@ bool j1Scene::Update(float dt)
 			MapStart();
 		}
 	}
+
 	return true;
 }
 
