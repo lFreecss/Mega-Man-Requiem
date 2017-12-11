@@ -66,11 +66,15 @@ bool j1Scene::Start()
 	App->map->active = false;
 	App->enemies->active = false;
 	App->audio->PlayMusic("audio/music/title.ogg", 0.0f);
+	App->audio->LoadFx("audio/fx/mega_man_landing.wav"); //1
+	App->audio->LoadFx("audio/fx/mega_man_defeat.wav"); //2
+	App->audio->LoadFx("audio/fx/game_start.wav"); //3
+	App->audio->LoadFx("audio/fx/menu_select.wav"); //4
 
-	title_bg = App->tex->Load("textures/title2.png");
+	title_bg = App->tex->Load("textures/title.png");
 	buttons = App->tex->Load("textures/buttons.png");
 
-	title_img = App->gui->CreateImage({ 50,0 }, { 0, 0, 329, 287 }, title_bg, false, this);
+	title_img = App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, title_bg, false, this);
 	start_bttn = App->gui->CreateButton({ 80,180 }, { 6, 10, 38, 7 }, { 49, 10, 38, 8 }, { 6, 10, 38, 7 }, buttons, false, this);
 	load_bttn = App->gui->CreateButton({ 80,200 }, { 9, 28, 30, 7 }, { 50, 27, 30, 8 }, { 9, 28, 30, 7 }, buttons, false, this);
 	settings_bttn = App->gui->CreateButton({ 80,220 }, { 7, 43, 60, 7 }, { 76, 43, 60, 8 }, { 7, 43, 60, 7 }, buttons, false, this);
@@ -89,7 +93,6 @@ bool j1Scene::Start()
 
 void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 {
-	bool ret = true;
 	if (UI_elem->GetType() == BUTTON) {
 		Button* bttn = (Button*)UI_elem;
 		switch (UI_state)
@@ -98,16 +101,19 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 			break;
 		case MOUSE_ENTER:
 			bttn->ChangeToHoverImg();
+				App->audio->PlayFx(4, 0);
 			break;
 		case MOUSE_LEAVE:
 			bttn->ChangeToNormalImg();
 			break;
 		case LEFT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
-			if(bttn == start_bttn)
+			if (bttn == start_bttn) {
 				StartPlaying();
+				App->audio->PlayFx(3, 0);
+			}
 			if (bttn == quit_bttn)
-				//PostUpdate();
+				quit_pressed = true;
 			break;
 		case RIGHT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
@@ -181,7 +187,7 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || quit_pressed)
 		ret = false;
 
 	return ret;

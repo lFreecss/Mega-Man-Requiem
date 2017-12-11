@@ -123,8 +123,7 @@ bool j1Player::Start() {
 	if (graphics == nullptr)
 		ret = false;
 
-	App->audio->LoadFx("audio/fx/mega_man_landing.wav"); //1
-	App->audio->LoadFx("audio/fx/mega_man_defeat.wav"); //2
+	
 	Init();
 
 	return ret;

@@ -105,6 +105,7 @@ private:
 	Button* load_bttn;
 	Button* settings_bttn;
 	Button* quit_bttn;
+	bool quit_pressed = false;
 };
 
 #endif // __j1SCENE_H__
