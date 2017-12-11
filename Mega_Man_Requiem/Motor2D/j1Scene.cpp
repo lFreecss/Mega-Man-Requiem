@@ -109,6 +109,7 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 		case LEFT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
 			if (bttn == start_bttn) {
+				App->gui->CleanUp();
 				StartPlaying();
 				App->audio->PlayFx(3, 0);
 			}

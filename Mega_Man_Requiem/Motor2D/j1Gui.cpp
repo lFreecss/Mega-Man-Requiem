@@ -29,7 +29,10 @@ bool j1Gui::Start()
 {
 	Mega_Man_2 = App->font->Load("fonts/Mega_Man_2.ttf", 10);
 	Mega_Man_10 = App->font->Load("fonts/Mega_Man_10.ttf");
-
+	p2List_item<UI*>* elem = UIElements.start;
+	while (elem != nullptr) {
+		elem = nullptr;
+	}
 
 	return true;
 }

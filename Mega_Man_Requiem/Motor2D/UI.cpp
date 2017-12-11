@@ -9,8 +9,10 @@ UI::UI()
 UI:: ~UI() {}
 
 void UI::Update(float dt) {
-	Draw();
-	HandleInput();
+	if (this != nullptr) {
+		Draw();
+		HandleInput();
+	}
 }
 
 void UI::Draw() {}
