@@ -75,7 +75,8 @@ bool j1Scene::Start()
 	buttons = App->tex->Load("textures/buttons.png");
 
 	StartScreen();
-
+	//Mix_VolumeChunk(chunk,0);
+	//Mix_VolumeMusic(0);
 	return true;
 }
 
@@ -100,6 +101,12 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 			if (bttn == start_bttn  && bttn != back_bttn) {
 				StartPlaying();
 				App->audio->PlayFx(3, 0);
+			}
+
+			if (bttn == load_bttn && bttn != back_bttn) {
+				App->gui->CleanUp();
+				StartPlaying();
+				App->LoadGame();
 			}
 
 			if (bttn == settings_bttn)
@@ -239,6 +246,14 @@ void j1Scene::CreditsScreen() {
 void j1Scene::SettingsScreen() {
 	App->gui->CleanUp();
 	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
+	
+	App->gui->CreateLabel({ 170, 20 }, "SETTINGS", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
+	App->gui->CreateLabel({ 120, 80 }, "MUSIC OFF", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
+	App->gui->CreateButton({ 250,70 }, { 160, 26, 22, 24 }, { 160, 26, 22, 24 }, { 188, 26, 24, 24 }, buttons, false, this); //Checkbox
+	
+	App->gui->CreateLabel({ 120, 130 }, "MUSIC VOLUME", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
+	App->gui->CreateButton({ 150,150 }, { 164, 59, 16, 16 }, { 164, 59, 16, 16 }, { 205, 59, 16, 16 }, buttons, false, this); //Plus button
+	App->gui->CreateButton({ 230,150 }, { 183, 59, 16, 16 }, { 183, 59, 16, 16 }, { 224, 59, 16, 16 }, buttons, false, this); //Minus button
 
 	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
 }
