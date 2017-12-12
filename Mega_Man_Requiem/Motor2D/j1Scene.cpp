@@ -97,18 +97,18 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 			break;
 		case LEFT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
-			if (bttn == start_bttn) {
+			if (bttn == start_bttn  && bttn != back_bttn) {
 				App->gui->CleanUp();
 				StartPlaying();
 				App->audio->PlayFx(3, 0);
 			}
-			if (bttn == credits_bttn) 
+			if (bttn == credits_bttn)
 				CreditsScreen();
 
 			if (bttn == back_bttn)
 				StartScreen();
 
-			if (bttn == quit_bttn)
+			if (bttn == quit_bttn && bttn != back_bttn)
 				quit_pressed = true;
 			break;
 		case RIGHT_MOUSE_PRESS:
