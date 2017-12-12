@@ -30,12 +30,17 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	bool ret = true;
 	LOG("Loading Scene");
 
-	music_path.create(config.child("file").attribute("music_name").as_string());
 	scroll_speed = config.child("scroll").attribute("speed").as_float();
 	scroll_limit = config.child("scroll").attribute("limit").as_uint();
 	map_limit = config.child("map").attribute("limit").as_uint();
 	rock_level.create(config.child("levels").child("first_level").attribute("name").as_string());
 	jail_level.create(config.child("levels").child("second_level").attribute("name").as_string());
+	
+	LOG("Charging all audio");
+	music_title.create(config.child("music").child("menus").attribute("title").as_string());
+	music_settings.create(config.child("music").child("menus").attribute("setttings").as_string());
+	music_1st_lvl.create(config.child("music").child("level").attribute("guts_man").as_string());
+	music_2nd_lvl.create(config.child("music").child("level").attribute("cut_man").as_string());
 
 	LOG("Charging all enemy positions");
 	pugi::xml_node enemy_pos = config.child("enemy_pos");
@@ -103,12 +108,12 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 		case LEFT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
 			if (bttn == start_bttn  && bttn) {
-				StartPlaying();
 				App->audio->PlayFx(3, 0);
+				StartPlaying();
 			}
 
 			if (bttn == load_bttn && bttn) {
-				App->gui->CleanUp();
+				App->audio->PlayFx(3, 0);
 				StartPlaying();
 				App->LoadGame();
 			}
@@ -120,14 +125,17 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 				CreditsScreen();
 
 			if (bttn == plus_volume) {
+				music_off_vol = true;
 				volume++;
 				Mix_VolumeMusic(volume);
 			}
 
 			if (bttn == minus_volume) {
 				volume--;
-				if (volume < 0)
+				if (volume < 0) {
 					volume = 0;
+					music_off_vol = false;
+				}
 				Mix_VolumeMusic(volume);
 			}
 
@@ -148,47 +156,26 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 		Button* bttn = (Button*)UI_elem;
 		switch (UI_state) {
 		case NONE:
-			break;
-		case LEFT_MOUSE_PRESS:
-			if (music_off_pressed == false) {
-				music_off_pressed = true;
-				bttn->ChangeToPressedImg();
-			}
-			else {
-				music_off_pressed = false;
+			if (music_off_vol) {
 				bttn->ChangeToNormalImg();
 			}
+			else if (music_off_vol == false) {
+				bttn->ChangeToPressedImg();
+			}
+			break;
+		case LEFT_MOUSE_PRESS:
 			if (music_off_vol) {
 				music_off_vol = false;
 				volume = 0;
 				Mix_VolumeMusic(0);
+				bttn->ChangeToPressedImg();
 			}
-			else {
+			else if (music_off_vol == false) {
 				music_off_vol = true;
 				volume = 128;
 				Mix_VolumeMusic(128);
+				bttn->ChangeToNormalImg();
 			}
-			break;
-		}
-	}
-
-	if (UI_elem->GetType() == LABEL) {
-		Label* labl = (Label*)UI_elem;
-		switch (UI_state)
-		{
-		case NONE:
-			break;
-		case MOUSE_ENTER:
-			//labl->ChangeText("A");
-			break;
-		case MOUSE_LEAVE:
-			//labl->ChangeText("B");
-			break;
-		case LEFT_MOUSE_PRESS:
-			//labl->ChangeText("C");
-			break;
-		case RIGHT_MOUSE_PRESS:
-			//labl->ChangeText("D");
 			break;
 		}
 	}
@@ -278,7 +265,7 @@ void j1Scene::StartPlaying() {
 	current_map = rock_level.GetString();
 	App->map->Load(first_map.GetString());
 	InitializeMap();
-	App->audio->PlayMusic(music_path.GetString(), 0.0f);
+	App->audio->PlayMusic("audio/music/guts_man.ogg", 0.0f);
 
 	EnemySpawn();
 }
@@ -378,7 +365,7 @@ void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	if (level_name == ROCK) {
 		App->map->Load(rock_level.GetString());
 		current_map = rock_level.GetString();
-		App->audio->PlayMusic(music_path.GetString(), 0.0f);
+		App->audio->PlayMusic("audio/music/guts_man.ogg", 0.0f);
 	}
 	if (level_name == JAIL) {
 		App->map->Load(jail_level.GetString());

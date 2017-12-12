@@ -27,14 +27,23 @@
   </map>
 
   <scene>
-    <file music_name = "audio/music/guts_man.ogg"/>
     <scroll speed = "2.5" limit ="64" />
     <map limit="30"/>
     <levels>
       <first_level id= "1" loaded= "1" name = "rock_level.tmx"/>
       <second_level id= "2" loaded= "0" name = "JAIL.tmx"/>
     </levels>
-
+    
+    <music>
+      <menus title = "audio/music/title.ogg" settings = "audio/music/password.ogg"/>
+      <level guts_man = "audio/music/guts_man.ogg" cut_man =" audio/music/cut_man.ogg"/>
+    </music>
+    
+    <sounds>
+      <player landing = "audio/fx/mega_man_landing.wav" defeat = "audio/fx/mega_man_defeat.wav"/>
+      <buttons game_start = "audio/fx/game_start.wav" button_select = "audio/fx/menu_select.wav"/>
+    </sounds>
+    
     <enemy_pos>
       <Air1-1 x ="260" y="170"/>
       <Ground1-1 x ="550" y="170"/>
