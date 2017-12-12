@@ -84,27 +84,30 @@ bool j1Scene::Start()
 
 void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 {
-	if (UI_elem->GetType() == BUTTON) {
+	if (UI_elem->GetType() == BUTTON && UI_elem != music_off) {
 		Button* bttn = (Button*)UI_elem;
 		switch (UI_state)
 		{
 		case NONE:
 			break;
 		case MOUSE_ENTER:
-			bttn->ChangeToHoverImg();
+			if(bttn != music_off && bttn != plus_volume && bttn != minus_volume)
 			App->audio->PlayFx(4, 0);
+			break;
+		case MOUSE_INSIDE:
+			bttn->ChangeToHoverImg();
 			break;
 		case MOUSE_LEAVE:
 			bttn->ChangeToNormalImg();
 			break;
 		case LEFT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
-			if (bttn == start_bttn  && bttn != back_bttn) {
+			if (bttn == start_bttn  && bttn) {
 				StartPlaying();
 				App->audio->PlayFx(3, 0);
 			}
 
-			if (bttn == load_bttn && bttn != back_bttn) {
+			if (bttn == load_bttn && bttn) {
 				App->gui->CleanUp();
 				StartPlaying();
 				App->LoadGame();
@@ -116,14 +119,55 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 			if (bttn == credits_bttn)
 				CreditsScreen();
 
+			if (bttn == plus_volume) {
+				volume++;
+				Mix_VolumeMusic(volume);
+			}
+
+			if (bttn == minus_volume) {
+				volume--;
+				if (volume < 0)
+					volume = 0;
+				Mix_VolumeMusic(volume);
+			}
+
 			if (bttn == back_bttn)
 				StartScreen();
-
+			
 			if (bttn == quit_bttn && bttn != back_bttn)
 				quit_pressed = true;
 			break;
 		case RIGHT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
+			break;
+		}
+	}
+
+	//Checkbox for turning on/off the music
+	if (UI_elem == music_off) {
+		Button* bttn = (Button*)UI_elem;
+		switch (UI_state) {
+		case NONE:
+			break;
+		case LEFT_MOUSE_PRESS:
+			if (music_off_pressed == false) {
+				music_off_pressed = true;
+				bttn->ChangeToPressedImg();
+			}
+			else {
+				music_off_pressed = false;
+				bttn->ChangeToNormalImg();
+			}
+			if (music_off_vol) {
+				music_off_vol = false;
+				volume = 0;
+				Mix_VolumeMusic(0);
+			}
+			else {
+				music_off_vol = true;
+				volume = 128;
+				Mix_VolumeMusic(128);
+			}
 			break;
 		}
 	}
@@ -209,10 +253,14 @@ bool j1Scene::CleanUp()
 }
 
 void j1Scene::StartScreen() {
+	music_off = nullptr;
+	plus_volume = nullptr;
+	minus_volume = nullptr;
+
 	App->gui->CleanUp();
 	App->audio->PlayMusic("audio/music/title.ogg", 0.0f);
 
-	title_img = App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, title_bg, false, this);
+	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, title_bg, false, this); //Title image
 	start_bttn = App->gui->CreateButton({ 60,170 }, { 6, 10, 38, 7 }, { 49, 10, 38, 8 }, { 6, 10, 38, 7 }, buttons, false, this);
 	load_bttn = App->gui->CreateButton({ 60,190 }, { 9, 28, 30, 7 }, { 50, 27, 30, 8 }, { 9, 28, 30, 7 }, buttons, false, this);
 	settings_bttn = App->gui->CreateButton({ 60,210 }, { 7, 43, 60, 7 }, { 76, 43, 60, 8 }, { 7, 43, 60, 7 }, buttons, false, this);
@@ -236,10 +284,16 @@ void j1Scene::StartPlaying() {
 }
 
 void j1Scene::CreditsScreen() {
+	start_bttn = nullptr;
+	load_bttn = nullptr;
+	settings_bttn = nullptr;
+	credits_bttn = nullptr;
+	quit_bttn = nullptr;
+
 	App->gui->CleanUp();
 	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
-	title_img = App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this);
-	App->gui->CreateImage({ 30,40 }, { 0, 0, 368, 206 }, settings_scrn, false, this);
+	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
+	App->gui->CreateImage({ 30,40 }, { 0, 0, 368, 206 }, settings_scrn, false, this); //Settings/Credits black screen
 	
 	App->gui->CreateLabel({ 50, 20 }, "Licence:", App->gui->GetFont(MEGA_MAN_10), { 255,255,255,255 }, false, this);
 	App->gui->CreateLabel({ 40, 50 }, "MIT License Copyright(c)", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
@@ -248,19 +302,25 @@ void j1Scene::CreditsScreen() {
 }
 
 void j1Scene::SettingsScreen() {
+	start_bttn = nullptr;
+	load_bttn = nullptr;
+	settings_bttn = nullptr;
+	credits_bttn = nullptr;
+	quit_bttn = nullptr;
+
 	App->gui->CleanUp();
 	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
 	
-	title_img = App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this);
-	App->gui->CreateImage({ 110,60 }, { 0, 0, 184, 123 }, settings_scrn, false, this);
+	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
+	App->gui->CreateImage({ 110,60 }, { 0, 0, 184, 123 }, settings_scrn, false, this); //Settings/Credits black screen
 	
 	App->gui->CreateLabel({ 170, 20 }, "SETTINGS", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
 	App->gui->CreateLabel({ 120, 80 }, "MUSIC OFF", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
-	App->gui->CreateButton({ 250,70 }, { 160, 26, 22, 24 }, { 160, 26, 22, 24 }, { 188, 26, 24, 24 }, buttons, false, this); //Checkbox
+	music_off = App->gui->CreateButton({ 250,70 }, { 160, 26, 22, 24 }, { 160, 26, 22, 24 }, { 188, 26, 24, 24 }, buttons, false, this); //Checkbox
 	
 	App->gui->CreateLabel({ 120, 130 }, "MUSIC VOLUME", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
-	App->gui->CreateButton({ 150,150 }, { 164, 59, 16, 16 }, { 164, 59, 16, 16 }, { 205, 59, 16, 16 }, buttons, false, this); //Plus button
-	App->gui->CreateButton({ 230,150 }, { 183, 59, 16, 16 }, { 183, 59, 16, 16 }, { 224, 59, 16, 16 }, buttons, false, this); //Minus button
+	plus_volume = App->gui->CreateButton({ 150,150 }, { 164, 59, 16, 16 }, { 164, 59, 16, 16 }, { 205, 59, 16, 16 }, buttons, false, this); //Plus button
+	minus_volume = App->gui->CreateButton({ 230,150 }, { 183, 59, 16, 16 }, { 183, 59, 16, 16 }, { 224, 59, 16, 16 }, buttons, false, this); //Minus button
 
 	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
 }

@@ -14,10 +14,12 @@ enum BUTTON_EVENTS {
 
 	NONE,
 	MOUSE_ENTER,
+	MOUSE_INSIDE,
 	MOUSE_LEAVE,
 	LEFT_MOUSE_PRESS,
+	LEFT_MOUSE_REPEAT,
 	RIGHT_MOUSE_PRESS,
-
+	MOUSE_UNPRESS,
 };
 
 
@@ -44,6 +46,7 @@ private:
 
 	BUTTON_EVENTS state = NONE;
 	iPoint aux_mouse = { 0, 0 };
+	bool has_entered = false;
 
 };
 

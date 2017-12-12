@@ -111,14 +111,20 @@ private:
 	SDL_Texture* settings_bg;
 	SDL_Texture* settings_scrn;
 
-	Image* title_img;
-	Button* start_bttn;
-	Button* load_bttn;
-	Button* settings_bttn;
-	Button* credits_bttn;
-	Button* quit_bttn;
-	Button* back_bttn;
+	Button* start_bttn = nullptr;
+	Button* load_bttn = nullptr;
+	Button* settings_bttn = nullptr;
+	Button* credits_bttn = nullptr;
+	Button* quit_bttn = nullptr;
+	Button* back_bttn = nullptr;
+	Button* music_off = nullptr;
+	Button* plus_volume = nullptr;
+	Button* minus_volume = nullptr;
 	bool quit_pressed = false;
+
+	char volume = 128;
+	bool music_off_vol = true;
+	bool music_off_pressed = false;
 };
 
 #endif // __j1SCENE_H__
