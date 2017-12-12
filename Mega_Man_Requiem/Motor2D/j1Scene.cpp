@@ -73,7 +73,8 @@ bool j1Scene::Start()
 
 	title_bg = App->tex->Load("textures/title.png");
 	buttons = App->tex->Load("textures/buttons.png");
-
+	settings_bg = App->tex->Load("textures/settings_bg.png");
+	settings_scrn = App->tex->Load("textures/settings_screen.png");
 	StartScreen();
 	//Mix_VolumeChunk(chunk,0);
 	//Mix_VolumeMusic(0);
@@ -237,15 +238,21 @@ void j1Scene::StartPlaying() {
 void j1Scene::CreditsScreen() {
 	App->gui->CleanUp();
 	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
-	App->gui->CreateLabel({ 90, 40 }, "Licence:", App->gui->GetFont(MEGA_MAN_10), { 255,255,255,255 }, false, this);
-	App->gui->CreateLabel({ 30, 60 }, "MIT License Copyright(c)", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
-	App->gui->CreateLabel({ 30, 70 }, "David Varela Hernandez, David Valdivia Martínez", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
+	title_img = App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this);
+	App->gui->CreateImage({ 30,40 }, { 0, 0, 368, 206 }, settings_scrn, false, this);
+	
+	App->gui->CreateLabel({ 50, 20 }, "Licence:", App->gui->GetFont(MEGA_MAN_10), { 255,255,255,255 }, false, this);
+	App->gui->CreateLabel({ 40, 50 }, "MIT License Copyright(c)", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
+	App->gui->CreateLabel({ 40, 60 }, "David Varela Hernandez, David Valdivia Martínez", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
 	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
 }
 
 void j1Scene::SettingsScreen() {
 	App->gui->CleanUp();
 	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
+	
+	title_img = App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this);
+	App->gui->CreateImage({ 110,60 }, { 0, 0, 184, 123 }, settings_scrn, false, this);
 	
 	App->gui->CreateLabel({ 170, 20 }, "SETTINGS", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
 	App->gui->CreateLabel({ 120, 80 }, "MUSIC OFF", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);

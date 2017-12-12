@@ -108,6 +108,8 @@ private:
 
 	SDL_Texture* title_bg;
 	SDL_Texture* buttons;
+	SDL_Texture* settings_bg;
+	SDL_Texture* settings_scrn;
 
 	Image* title_img;
 	Button* start_bttn;
