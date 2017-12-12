@@ -47,6 +47,9 @@ public:
 	//Starts the playable game part
 	void StartPlaying();
 
+	//Goes to the Settings screen
+	void SettingsScreen();
+
 	//Goes to the Credits screen
 	void CreditsScreen();
 

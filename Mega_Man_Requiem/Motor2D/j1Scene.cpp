@@ -98,10 +98,13 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 		case LEFT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
 			if (bttn == start_bttn  && bttn != back_bttn) {
-				App->gui->CleanUp();
 				StartPlaying();
 				App->audio->PlayFx(3, 0);
 			}
+
+			if (bttn == settings_bttn)
+				SettingsScreen();
+
 			if (bttn == credits_bttn)
 				CreditsScreen();
 
@@ -210,6 +213,7 @@ void j1Scene::StartScreen() {
 }
 
 void j1Scene::StartPlaying() {
+	App->gui->CleanUp();
 	App->player->active = true;
 	App->map->active = true;
 	App->enemies->active = true;
@@ -229,6 +233,13 @@ void j1Scene::CreditsScreen() {
 	App->gui->CreateLabel({ 90, 40 }, "Licence:", App->gui->GetFont(MEGA_MAN_10), { 255,255,255,255 }, false, this);
 	App->gui->CreateLabel({ 30, 60 }, "MIT License Copyright(c)", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
 	App->gui->CreateLabel({ 30, 70 }, "David Varela Hernandez, David Valdivia Martínez", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
+	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
+}
+
+void j1Scene::SettingsScreen() {
+	App->gui->CleanUp();
+	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
+
 	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
 }
 
