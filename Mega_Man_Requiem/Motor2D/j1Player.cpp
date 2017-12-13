@@ -155,8 +155,8 @@ void j1Player::updateAnim(float dt) {
 bool j1Player::Update(float dt) {
 	bool ret = true;
 	
-	//if (lifes == 0)
-	//	App->scene->CreditsScreen();
+	if (lives == 0)
+		App->scene->GameOverScreen();
 
 		current_animation = &idle;
 
@@ -283,9 +283,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (c2->type == COLLIDER_TYPE::COLLIDER_ENEMY && GodMode() == false) {
 		App->collision->EraseCollider(collider);
 		collider = nullptr;
-		lifes--;
-		App->audio->PlayFx(2, 0);
-		App->scene->MapStart();
+		if (lives >= 0) {
+			lives--;
+			App->audio->PlayFx(2, 0);
+			App->scene->MapStart();
+		}
 	}
 }
 
@@ -300,6 +302,10 @@ bool j1Player::GodMode() {
 		}
 
 	return ret;
+}
+
+uint j1Player::GetLives() {
+	return lives;
 }
 
 // Load player position

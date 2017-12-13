@@ -70,6 +70,7 @@ bool j1Scene::Start()
 	App->player->active = false;
 	App->map->active = false;
 	App->enemies->active = false;
+	App->collision->active = false;
 
 	App->audio->LoadFx("audio/fx/mega_man_landing.wav"); //1
 	App->audio->LoadFx("audio/fx/mega_man_defeat.wav"); //2
@@ -84,7 +85,6 @@ bool j1Scene::Start()
 
 	StartScreen();
 	//Mix_VolumeChunk(chunk,0);
-	//Mix_VolumeMusic(0);
 	return true;
 }
 
@@ -265,6 +265,7 @@ void j1Scene::StartPlaying() {
 	App->player->active = true;
 	App->map->active = true;
 	App->enemies->active = true;
+	App->collision->active = true;
 
 	first_map = rock_level;
 	current_map = rock_level.GetString();
@@ -329,6 +330,21 @@ void j1Scene::SettingsScreen() {
 	minus_volume = App->gui->CreateButton({ 230,150 }, { 183, 59, 16, 16 }, { 183, 59, 16, 16 }, { 224, 59, 16, 16 }, buttons, false, this); //Minus button
 
 	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
+}
+
+void j1Scene::GameOverScreen() {
+	App->gui->CleanUp();
+	App->player->active = false;
+	App->map->active = false;
+	App->enemies->active = false;
+	App->collision->active = false;
+	App->player->CleanUp();
+	App->enemies->CleanUp();
+	App->collision->CleanUp();
+	//App->map->CleanUp();
+	//App->audio->CleanUp();
+	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
+
 }
 
 void j1Scene::DebugKeys(){

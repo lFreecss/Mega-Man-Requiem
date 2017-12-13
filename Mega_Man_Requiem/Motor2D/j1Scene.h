@@ -53,6 +53,9 @@ public:
 	//Goes to the Credits screen
 	void CreditsScreen();
 
+	//Goes to the Game Over screen
+	void GameOverScreen();
+
 	//Checks if it is the correct map in case of applying a save state
 	void CheckMap();
 
