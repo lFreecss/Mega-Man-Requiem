@@ -21,8 +21,6 @@ void UI::HandleInput()
 {
 	iPoint mouse_pos = { 0,0 };
 	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
-	mouse_pos.x = mouse_pos.x - App->render->camera.x;
-	mouse_pos.y = mouse_pos.y - App->render->camera.y;
 
 	if ((mouse_pos.x > screen_area.x && mouse_pos.x < screen_area.x + UI_logic_rect.w) && (mouse_pos.y > screen_area.y && mouse_pos.y < screen_area.y + UI_logic_rect.h) && state != LEFT_MOUSE_PRESS && state != RIGHT_MOUSE_PRESS && has_entered == false) {
 		state = MOUSE_ENTER;

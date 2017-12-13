@@ -155,8 +155,10 @@ void j1Player::updateAnim(float dt) {
 bool j1Player::Update(float dt) {
 	bool ret = true;
 	
-	if (lives == 0)
+	if (lives == 0) {
 		App->scene->GameOverScreen();
+		lives = 3;
+	}
 
 		current_animation = &idle;
 

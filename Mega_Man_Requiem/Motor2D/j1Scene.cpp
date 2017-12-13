@@ -82,7 +82,7 @@ bool j1Scene::Start()
 	settings_bg = App->tex->Load("textures/settings_bg.png");
 	settings_scrn = App->tex->Load("textures/settings_screen.png");
 	items = App->tex->Load("textures/items.png");
-
+	
 	StartScreen();
 	//Mix_VolumeChunk(chunk,0);
 	return true;
@@ -266,9 +266,21 @@ void j1Scene::StartPlaying() {
 	App->map->active = true;
 	App->enemies->active = true;
 	App->collision->active = true;
+	start_bttn = nullptr;
+	start_bttn = nullptr;
+	load_bttn = nullptr;
+	settings_bttn = nullptr;
+	credits_bttn = nullptr;
+	quit_bttn = nullptr;
+	back_bttn = nullptr;
+	music_off = nullptr;
+	plus_volume = nullptr;
+	minus_volume = nullptr;
 
+	
 	first_map = rock_level;
 	current_map = rock_level.GetString();
+	App->map->CleanUp();
 	App->map->Load(first_map.GetString());
 	InitializeMap();
 	App->audio->PlayMusic("audio/music/guts_man.ogg", 0.0f);
@@ -338,13 +350,11 @@ void j1Scene::GameOverScreen() {
 	App->map->active = false;
 	App->enemies->active = false;
 	App->collision->active = false;
-	App->player->CleanUp();
-	App->enemies->CleanUp();
-	App->collision->CleanUp();
-	//App->map->CleanUp();
-	//App->audio->CleanUp();
-	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
+	
+	App->enemies->DeleteEnemy();
 
+	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
+	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
 }
 
 void j1Scene::DebugKeys(){
