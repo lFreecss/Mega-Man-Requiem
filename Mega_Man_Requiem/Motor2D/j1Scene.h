@@ -101,8 +101,8 @@ private:
 	p2SString music_2nd_lvl;
 	p2SString sound_landing;
 	p2SString sound_defeat;
-	p2SString sound_button_select;
 	p2SString sound_start;
+	p2SString sound_button_select;
 
 	p2SString rock_level;
 	p2SString jail_level;
@@ -122,6 +122,11 @@ private:
 	SDL_Texture* settings_bg;
 	SDL_Texture* settings_scrn;
 	SDL_Texture* items;
+	p2SString title_bg_path;
+	p2SString buttons_path;
+	p2SString settings_bg_path;
+	p2SString settings_scrn_path;
+	p2SString items_path;
 
 	Button* start_bttn = nullptr;
 	Button* load_bttn = nullptr;

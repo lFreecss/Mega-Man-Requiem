@@ -36,11 +36,23 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	rock_level.create(config.child("levels").child("first_level").attribute("name").as_string());
 	jail_level.create(config.child("levels").child("second_level").attribute("name").as_string());
 	
+	LOG("Charging textures");
+	title_bg_path.create(config.child("textures").child("bg").attribute("title").as_string());
+	buttons_path.create(config.child("textures").child("ui").attribute("buttons").as_string());
+	settings_bg_path.create(config.child("textures").child("bg").attribute("settings").as_string());
+	settings_scrn_path.create(config.child("textures").child("ui").attribute("set_scrn").as_string());
+	items_path.create(config.child("textures").child("ui").attribute("items").as_string());
+
 	LOG("Charging all audio");
 	music_title.create(config.child("music").child("menus").attribute("title").as_string());
-	music_settings.create(config.child("music").child("menus").attribute("setttings").as_string());
+	music_settings.create(config.child("music").child("menus").attribute("settings").as_string());
 	music_1st_lvl.create(config.child("music").child("level").attribute("guts_man").as_string());
 	music_2nd_lvl.create(config.child("music").child("level").attribute("cut_man").as_string());
+	sound_landing.create(config.child("sounds").child("player").attribute("landing").as_string());
+	sound_defeat.create(config.child("sounds").child("player").attribute("defeat").as_string());
+	sound_start.create(config.child("sounds").child("buttons").attribute("game_start").as_string());
+	sound_button_select.create(config.child("sounds").child("buttons").attribute("button_select").as_string());
+	
 
 	LOG("Charging all enemy positions");
 	pugi::xml_node enemy_pos = config.child("enemy_pos");
@@ -72,16 +84,16 @@ bool j1Scene::Start()
 	App->enemies->active = false;
 	App->collision->active = false;
 
-	App->audio->LoadFx("audio/fx/mega_man_landing.wav"); //1
-	App->audio->LoadFx("audio/fx/mega_man_defeat.wav"); //2
-	App->audio->LoadFx("audio/fx/game_start.wav"); //3
-	App->audio->LoadFx("audio/fx/menu_select.wav"); //4
+	App->audio->LoadFx(sound_landing.GetString()); //1
+	App->audio->LoadFx(sound_defeat.GetString()); //2
+	App->audio->LoadFx(sound_start.GetString()); //3
+	App->audio->LoadFx(sound_button_select.GetString()); //4
 
-	title_bg = App->tex->Load("textures/title.png");
-	buttons = App->tex->Load("textures/buttons.png");
-	settings_bg = App->tex->Load("textures/settings_bg.png");
-	settings_scrn = App->tex->Load("textures/settings_screen.png");
-	items = App->tex->Load("textures/items.png");
+	title_bg = App->tex->Load(title_bg_path.GetString());
+	buttons = App->tex->Load(buttons_path.GetString());
+	settings_bg = App->tex->Load(settings_bg_path.GetString());
+	settings_scrn = App->tex->Load(settings_scrn_path.GetString());
+	items = App->tex->Load(items_path.GetString());
 	
 	StartScreen();
 	//Mix_VolumeChunk(chunk,0);
@@ -150,7 +162,6 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 
 			break;
 		case RIGHT_MOUSE_PRESS:
-			bttn->ChangeToPressedImg();
 			break;
 		}
 	}
@@ -244,13 +255,13 @@ bool j1Scene::CleanUp()
 }
 
 void j1Scene::StartScreen() {
+	App->gui->CleanUp();
 	music_off = nullptr;
 	plus_volume = nullptr;
 	minus_volume = nullptr;
 	back_bttn = nullptr;
 
-	App->gui->CleanUp();
-	App->audio->PlayMusic("audio/music/title.ogg", 0.0f);
+	App->audio->PlayMusic(music_title.GetString(), 0.0f);
 
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, title_bg, false, this); //Title image
 	start_bttn = App->gui->CreateButton({ 60,170 }, { 6, 10, 38, 7 }, { 49, 10, 38, 8 }, { 6, 10, 38, 7 }, buttons, false, this);
@@ -262,10 +273,12 @@ void j1Scene::StartScreen() {
 
 void j1Scene::StartPlaying() {
 	App->gui->CleanUp();
+
 	App->player->active = true;
 	App->map->active = true;
 	App->enemies->active = true;
 	App->collision->active = true;
+
 	start_bttn = nullptr;
 	start_bttn = nullptr;
 	load_bttn = nullptr;
@@ -277,14 +290,16 @@ void j1Scene::StartPlaying() {
 	plus_volume = nullptr;
 	minus_volume = nullptr;
 
-	
+	//Initializing map and positions
 	first_map = rock_level;
 	current_map = rock_level.GetString();
 	App->map->CleanUp();
 	App->map->Load(first_map.GetString());
+	App->player->pos = App->player->startPos;
 	InitializeMap();
-	App->audio->PlayMusic("audio/music/guts_man.ogg", 0.0f);
-
+	App->audio->PlayMusic(music_1st_lvl.GetString(), 0.0f);
+	
+	//gUI
 	App->gui->CreateImage({ 5,255 }, { 4, 85, 19, 18 }, items, false, this); //Lives
 	App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
 	App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
@@ -309,7 +324,7 @@ void j1Scene::CreditsScreen() {
 	quit_bttn = nullptr;
 
 	
-	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
+	App->audio->PlayMusic(music_settings.GetString(), 0.0f);
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
 	App->gui->CreateImage({ 30,40 }, { 0, 0, 368, 206 }, settings_scrn, false, this); //Settings/Credits black screen
 	
@@ -328,7 +343,7 @@ void j1Scene::SettingsScreen() {
 	quit_bttn = nullptr;
 
 	
-	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
+	App->audio->PlayMusic(music_settings.GetString(), 0.0f);
 	
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
 	App->gui->CreateImage({ 110,60 }, { 0, 0, 184, 123 }, settings_scrn, false, this); //Settings/Credits black screen
@@ -410,12 +425,12 @@ void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	if (level_name == ROCK) {
 		App->map->Load(rock_level.GetString());
 		current_map = rock_level.GetString();
-		App->audio->PlayMusic("audio/music/guts_man.ogg", 0.0f);
+		App->audio->PlayMusic(music_1st_lvl.GetString(), 0.0f);
 	}
 	if (level_name == JAIL) {
 		App->map->Load(jail_level.GetString());
 		current_map = jail_level.GetString();
-		App->audio->PlayMusic("audio/music/cut_man.ogg", 0.0f);
+		App->audio->PlayMusic(music_2nd_lvl.GetString(), 0.0f);
 	}
 	InitializeMap();
 }

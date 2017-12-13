@@ -34,9 +34,14 @@
       <second_level id= "2" loaded= "0" name = "JAIL.tmx"/>
     </levels>
     
+    <textures>
+      <bg title = "textures/title.png" settings = "textures/settings_bg.png"/>
+      <ui buttons = "textures/buttons.png" set_scrn = "textures/settings_screen.png" items = "textures/items.png"/>
+    </textures>
+    
     <music>
       <menus title = "audio/music/title.ogg" settings = "audio/music/password.ogg"/>
-      <level guts_man = "audio/music/guts_man.ogg" cut_man =" audio/music/cut_man.ogg"/>
+      <level guts_man = "audio/music/guts_man.ogg" cut_man = "audio/music/cut_man.ogg"/>
     </music>
     
     <sounds>
