@@ -137,6 +137,8 @@ private:
 	Button* music_off = nullptr;
 	Button* plus_volume = nullptr;
 	Button* minus_volume = nullptr;
+	Label* life_count = nullptr;
+	Label* punctuation = nullptr;
 	bool quit_pressed = false;
 
 	char volume = 128;

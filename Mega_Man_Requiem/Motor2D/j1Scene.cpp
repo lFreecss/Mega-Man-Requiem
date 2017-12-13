@@ -14,7 +14,6 @@
 #include "j1Gui.h"
 #include "j1Textures.h"
 
-
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
@@ -210,6 +209,18 @@ bool j1Scene::Update(float dt)
 		CheckMap();
 		App->map->Draw();
 		DebugKeys();
+		if(App->player->GetLives() == 2)
+			life_count->ChangeText("X2");
+		if (App->player->GetLives() == 1)
+			life_count->ChangeText("X1");
+		//Trying stuff with string conversion (TO DELETE WHEN DONE)
+
+		//lifecount = (const char*)App->player->lives;
+		//uint* b = (uint*)App->player->lives;
+	 //  char* lifecount = (char*)("&u", b);
+	 // // std::to_string(App->player->lives);
+		//p2SString a = lifecount;
+		//life_count->ChangeText(a);
 	}
 
 	//Scroll
@@ -301,8 +312,8 @@ void j1Scene::StartPlaying() {
 	
 	//gUI
 	App->gui->CreateImage({ 5,255 }, { 4, 85, 19, 18 }, items, false, this); //Lives
-	App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
-	App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
+	life_count = App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
+	punctuation = App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
 	
 	App->gui->CreateImage({ 130,30 }, { 5, 31, 16, 16 }, items, false, this); //M
 	App->gui->CreateImage({ 150,30 }, { 24, 31, 16, 16 }, items, false, this); //E

@@ -315,6 +315,7 @@ bool j1Player::Load(pugi::xml_node& data)
 {
 	pos.x = data.child("position").attribute("x").as_float();
 	pos.y = data.child("position").attribute("y").as_float();
+	lives = data.child("lives").attribute("quantity").as_uint();
 
 	return true;
 }
@@ -326,6 +327,9 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	position.append_attribute("x") = pos.x;
 	position.append_attribute("y") = pos.y;
+
+	pugi::xml_node life = data.append_child("lives");
+	life.append_attribute("quantity") = lives;
 
 	return true;
 }

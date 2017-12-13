@@ -11,12 +11,13 @@
 	</scene>
 	<enemies />
 	<player>
-		<position x="81.25" y="233.800186" />
+		<position x="146.199982" y="215.800232" />
+		<lives quantity="2" />
 	</player>
-	<:anonymous />
+	<collision />
 	<fonts />
 	<gui />
 	<renderer>
-		<camera x="-203" y="0" />
+		<camera x="-365" y="0" />
 	</renderer>
 </game_state>
