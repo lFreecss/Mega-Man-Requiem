@@ -107,30 +107,31 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 			break;
 		case LEFT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
-			if (bttn == start_bttn  && bttn) {
+
+			if (bttn == start_bttn) {
 				App->audio->PlayFx(3, 0);
 				StartPlaying();
 			}
 
-			if (bttn == load_bttn && bttn) {
+			else if (bttn == load_bttn) {
 				App->audio->PlayFx(3, 0);
 				StartPlaying();
 				App->LoadGame();
 			}
 
-			if (bttn == settings_bttn)
+			else if (bttn == settings_bttn)
 				SettingsScreen();
 
-			if (bttn == credits_bttn)
+			else if (bttn == credits_bttn)
 				CreditsScreen();
 
-			if (bttn == plus_volume) {
+			else if (bttn == plus_volume) {
 				music_off_vol = true;
 				volume++;
 				Mix_VolumeMusic(volume);
 			}
 
-			if (bttn == minus_volume) {
+			else if (bttn == minus_volume) {
 				volume--;
 				if (volume < 0) {
 					volume = 0;
@@ -139,11 +140,12 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 				Mix_VolumeMusic(volume);
 			}
 
-			if (bttn == back_bttn)
+			else if (bttn == back_bttn)
 				StartScreen();
 			
-			if (bttn == quit_bttn && bttn != back_bttn)
-				quit_pressed = true;
+			else if (bttn == quit_bttn)
+					quit_pressed = true;
+
 			break;
 		case RIGHT_MOUSE_PRESS:
 			bttn->ChangeToPressedImg();
@@ -243,6 +245,7 @@ void j1Scene::StartScreen() {
 	music_off = nullptr;
 	plus_volume = nullptr;
 	minus_volume = nullptr;
+	back_bttn = nullptr;
 
 	App->gui->CleanUp();
 	App->audio->PlayMusic("audio/music/title.ogg", 0.0f);
@@ -271,13 +274,14 @@ void j1Scene::StartPlaying() {
 }
 
 void j1Scene::CreditsScreen() {
+	App->gui->CleanUp();
 	start_bttn = nullptr;
 	load_bttn = nullptr;
 	settings_bttn = nullptr;
 	credits_bttn = nullptr;
 	quit_bttn = nullptr;
 
-	App->gui->CleanUp();
+	
 	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
 	App->gui->CreateImage({ 30,40 }, { 0, 0, 368, 206 }, settings_scrn, false, this); //Settings/Credits black screen
@@ -289,13 +293,14 @@ void j1Scene::CreditsScreen() {
 }
 
 void j1Scene::SettingsScreen() {
+	App->gui->CleanUp();
 	start_bttn = nullptr;
 	load_bttn = nullptr;
 	settings_bttn = nullptr;
 	credits_bttn = nullptr;
 	quit_bttn = nullptr;
 
-	App->gui->CleanUp();
+	
 	App->audio->PlayMusic("audio/music/password.ogg", 0.0f);
 	
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
