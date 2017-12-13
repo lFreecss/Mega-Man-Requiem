@@ -13,7 +13,8 @@
 enum FONT_TYPE {
 	NO_FONT,
 	MEGA_MAN_2,
-	MEGA_MAN_10
+	MEGA_MAN_10_SIZE_8,
+	MEGA_MAN_10_SIZE_12,
 };
 
 
@@ -63,7 +64,8 @@ private:
 	p2List<j1Module*> ModulesList;
 
 	_TTF_Font* Mega_Man_2;
-	_TTF_Font* Mega_Man_10;
+	_TTF_Font* Mega_Man_10_sz8;
+	_TTF_Font* Mega_Man_10_sz12;
 	bool isCalled = false;
 };
 

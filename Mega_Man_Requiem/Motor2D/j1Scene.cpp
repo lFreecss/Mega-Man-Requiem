@@ -80,6 +80,8 @@ bool j1Scene::Start()
 	buttons = App->tex->Load("textures/buttons.png");
 	settings_bg = App->tex->Load("textures/settings_bg.png");
 	settings_scrn = App->tex->Load("textures/settings_screen.png");
+	items = App->tex->Load("textures/items.png");
+
 	StartScreen();
 	//Mix_VolumeChunk(chunk,0);
 	//Mix_VolumeMusic(0);
@@ -270,6 +272,18 @@ void j1Scene::StartPlaying() {
 	InitializeMap();
 	App->audio->PlayMusic("audio/music/guts_man.ogg", 0.0f);
 
+	App->gui->CreateImage({ 5,255 }, { 4, 85, 19, 18 }, items, false, this); //Lives
+	App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
+	App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
+	
+	App->gui->CreateImage({ 130,30 }, { 5, 31, 16, 16 }, items, false, this); //M
+	App->gui->CreateImage({ 150,30 }, { 24, 31, 16, 16 }, items, false, this); //E
+	App->gui->CreateImage({ 170,30 }, { 43, 31, 16, 16 }, items, false, this); //G
+	App->gui->CreateImage({ 190,30 }, { 62, 31, 16, 16 }, items, false, this); //A
+	App->gui->CreateImage({ 210,30 }, { 5, 31, 16, 16 }, items, false, this); //M 2
+	App->gui->CreateImage({ 230,30 }, { 62, 31, 16, 16 }, items, false, this); //A 2
+	App->gui->CreateImage({ 250,30 }, { 81, 31, 16, 16 }, items, false, this); //N
+	App->gui->CreateImage({ 270,30 }, { 100, 31, 16, 16 }, items, false, this); //R
 	EnemySpawn();
 }
 
@@ -286,9 +300,9 @@ void j1Scene::CreditsScreen() {
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
 	App->gui->CreateImage({ 30,40 }, { 0, 0, 368, 206 }, settings_scrn, false, this); //Settings/Credits black screen
 	
-	App->gui->CreateLabel({ 50, 20 }, "Licence:", App->gui->GetFont(MEGA_MAN_10), { 255,255,255,255 }, false, this);
-	App->gui->CreateLabel({ 40, 50 }, "MIT License Copyright(c)", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
-	App->gui->CreateLabel({ 40, 60 }, "David Varela Hernandez, David Valdivia Martínez", App->gui->GetFont(MEGA_MAN_10), { 0,255,0,255 }, false, this);
+	App->gui->CreateLabel({ 50, 20 }, "Licence:", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this);
+	App->gui->CreateLabel({ 40, 50 }, "MIT License Copyright(c)", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 0,255,0,255 }, false, this);
+	App->gui->CreateLabel({ 40, 60 }, "David Varela Hernandez, David Valdivia Martínez", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 0,255,0,255 }, false, this);
 	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
 }
 

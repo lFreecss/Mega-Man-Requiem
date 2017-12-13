@@ -118,6 +118,7 @@ private:
 	SDL_Texture* buttons;
 	SDL_Texture* settings_bg;
 	SDL_Texture* settings_scrn;
+	SDL_Texture* items;
 
 	Button* start_bttn = nullptr;
 	Button* load_bttn = nullptr;
