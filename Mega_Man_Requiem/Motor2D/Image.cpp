@@ -16,3 +16,9 @@ void Image::Draw() {
 	App->render->Blit(tex, screen_area.x, screen_area.y, &UI_logic_rect, 0.0f);
 
 }
+
+void Image::ChangeImage(SDL_Rect new_image) {
+
+	UI_logic_rect = new_image;
+
+}

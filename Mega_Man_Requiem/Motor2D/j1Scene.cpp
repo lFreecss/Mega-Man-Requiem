@@ -87,6 +87,7 @@ bool j1Scene::Start()
 	App->audio->LoadFx(sound_defeat.GetString()); //2
 	App->audio->LoadFx(sound_start.GetString()); //3
 	App->audio->LoadFx(sound_button_select.GetString()); //4
+	App->audio->LoadFx("audio/fx/game_over.wav"); //5
 
 	title_bg = App->tex->Load(title_bg_path.GetString());
 	buttons = App->tex->Load(buttons_path.GetString());
@@ -315,14 +316,14 @@ void j1Scene::StartPlaying() {
 	life_count = App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
 	punctuation = App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
 	
-	App->gui->CreateImage({ 130,30 }, { 5, 31, 16, 16 }, items, false, this); //M
-	App->gui->CreateImage({ 150,30 }, { 24, 31, 16, 16 }, items, false, this); //E
-	App->gui->CreateImage({ 170,30 }, { 43, 31, 16, 16 }, items, false, this); //G
-	App->gui->CreateImage({ 190,30 }, { 62, 31, 16, 16 }, items, false, this); //A
-	App->gui->CreateImage({ 210,30 }, { 5, 31, 16, 16 }, items, false, this); //M 2
-	App->gui->CreateImage({ 230,30 }, { 62, 31, 16, 16 }, items, false, this); //A 2
-	App->gui->CreateImage({ 250,30 }, { 81, 31, 16, 16 }, items, false, this); //N
-	App->gui->CreateImage({ 270,30 }, { 100, 31, 16, 16 }, items, false, this); //R
+	App->gui->CreateImage({ 132,30 }, { 5, 31, 16, 16 }, items, false, this); //M
+	App->gui->CreateImage({ 152,30 }, { 24, 31, 16, 16 }, items, false, this); //E
+	App->gui->CreateImage({ 172,30 }, { 43, 31, 16, 16 }, items, false, this); //G
+	App->gui->CreateImage({ 192,30 }, { 62, 31, 16, 16 }, items, false, this); //A
+	App->gui->CreateImage({ 212,30 }, { 5, 31, 16, 16 }, items, false, this); //M 2
+	App->gui->CreateImage({ 232,30 }, { 62, 31, 16, 16 }, items, false, this); //A 2
+	App->gui->CreateImage({ 252,30 }, { 81, 31, 16, 16 }, items, false, this); //N
+	App->gui->CreateImage({ 272,30 }, { 100, 31, 16, 16 }, items, false, this); //R
 	EnemySpawn();
 }
 
@@ -379,8 +380,13 @@ void j1Scene::GameOverScreen() {
 	
 	App->enemies->DeleteEnemy();
 
+	Mix_HaltMusic();
+	App->audio->PlayFx(5, 0);
+
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
-	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
+	App->gui->CreateImage({ 140,92 }, { 101, 68, 132, 70 }, items, false, this);
+	App->gui->CreateLabel({ 150, 120 }, "GAME OVER", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this);
+	back_bttn = App->gui->CreateButton({ 180,180 }, { 6, 97, 48, 7 }, { 65, 97, 48, 8 }, { 6, 97, 48, 7 }, buttons, false, this);
 }
 
 void j1Scene::DebugKeys(){
