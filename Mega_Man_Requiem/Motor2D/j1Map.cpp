@@ -470,6 +470,7 @@ bool j1Map::CollisionY(uint x_left, uint x_right, uint y)
 	if (y < 0) 
 		return true;
 	if (y >= data.height) {
+		App->player->lifes--;
 		App->audio->PlayFx(2, 0);
 		App->scene->MapStart();
 		return true;

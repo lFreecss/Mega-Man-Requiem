@@ -19,7 +19,7 @@ Button::Button(iPoint screen_area, SDL_Rect normal_img, SDL_Rect hover_img, SDL_
 }
 
 void Button::Draw() {
-	App->render->Blit(tex, screen_area.x, screen_area.y, &UI_logic_rect);
+	App->render->Blit(tex, screen_area.x, screen_area.y, &UI_logic_rect, 0.0f);
 }
 
 void Button::ChangeToNormalImg() {

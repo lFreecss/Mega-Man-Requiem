@@ -19,7 +19,7 @@ Label::Label(iPoint screen_area, p2SString text, _TTF_Font* font, SDL_Color colo
 }
 
 void Label::Draw() {
-	App->render->Blit(tex, screen_area.x, screen_area.y);
+	App->render->Blit(tex, screen_area.x, screen_area.y, &UI_logic_rect, 0.0f);
 }
 
 void Label::ChangeText(p2SString text) {

@@ -39,6 +39,7 @@ public:
 	bool GodMode();
 	bool is_invincible = false;
 
+	uint lifes = 3;
 private:
 	
 	Animation* current_animation;

@@ -13,6 +13,6 @@ Image::Image(iPoint screen_area, SDL_Rect image, const SDL_Texture* tex, bool is
 
 void Image::Draw() {
 
-	App->render->Blit(tex, screen_area.x, screen_area.y, &UI_logic_rect);
+	App->render->Blit(tex, screen_area.x, screen_area.y, &UI_logic_rect, 0.0f);
 
 }

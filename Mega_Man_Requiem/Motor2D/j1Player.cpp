@@ -155,6 +155,9 @@ void j1Player::updateAnim(float dt) {
 bool j1Player::Update(float dt) {
 	bool ret = true;
 	
+	//if (lifes == 0)
+	//	App->scene->CreditsScreen();
+
 		current_animation = &idle;
 
 		if (GodMode())
@@ -280,6 +283,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (c2->type == COLLIDER_TYPE::COLLIDER_ENEMY && GodMode() == false) {
 		App->collision->EraseCollider(collider);
 		collider = nullptr;
+		lifes--;
 		App->audio->PlayFx(2, 0);
 		App->scene->MapStart();
 	}
