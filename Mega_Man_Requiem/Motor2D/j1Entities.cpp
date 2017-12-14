@@ -14,6 +14,7 @@
 #include "Letter.h"
 #include "j1Collision.h"
 #include "j1Audio.h"
+#include "j1Scene.h"
 
 j1Entities::j1Entities() : j1Module()
 {
@@ -198,6 +199,20 @@ void j1Entities::DeleteEnemy() {
 	}
 }
 
+void j1Entities::DeleteLetters() {
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			if (entities[i]->type == LETTER) {
+				delete entities[i];
+				entities[i] = nullptr;
+			}
+		}
+	}
+}
+
 void j1Entities::OnCollision(Collider* c1, Collider* c2)
 {
 	//Collision with the letter
@@ -208,6 +223,7 @@ void j1Entities::OnCollision(Collider* c1, Collider* c2)
 			c2 = App->player->GetCollider();
 			if (entities[i]->type == ENTITY_TYPES::LETTER) {
 				App->audio->PlayFx(6, 0);
+				App->scene->punctuation_count += 500;
 				delete entities[i];
 				entities[i] = nullptr;
 			}

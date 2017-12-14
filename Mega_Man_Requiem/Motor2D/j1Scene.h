@@ -77,6 +77,9 @@ public:
 	//Change enemies from level to level
 	void EnemyInitialation();
 
+	//Initialize the letters item
+	void LetterInitialation();
+
 	//Function for the debug keys
 	void DebugKeys();
 
@@ -89,6 +92,8 @@ public:
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
+
+	int punctuation_count = 0;
 
 private:
 	p2SString first_map;

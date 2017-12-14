@@ -375,6 +375,7 @@ void j1Scene::GameOverScreen() {
 	App->collision->active = false;
 	
 	App->entities->DeleteEnemy();
+	punctuation_count = 0;
 
 	Mix_HaltMusic();
 	App->audio->PlayFx(5, 0);
@@ -388,8 +389,14 @@ void j1Scene::GameOverScreen() {
 void j1Scene::ManageStageUI() {
 	//Update for punctuation when done
 	life_count->ChangeText(p2SString("X%u", (App->player->GetLives())));
-	//int a = 3000;
-	//punctuation->ChangeText((p2SString("00%i", (a))));
+
+	if (punctuation_count == 500) {
+		punctuation->ChangeText((p2SString("0000%i", (punctuation_count))));
+	}
+
+	if (punctuation_count > 500) {
+		punctuation->ChangeText((p2SString("000%i", (punctuation_count))));
+	}
 }
 
 void j1Scene::DebugKeys(){
@@ -441,7 +448,6 @@ void j1Scene::CheckMap() {
 //Change from one map to the other, TODO Valdivia
 void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	App->map->CleanUp();
-	
 	if (level_name == ROCK) {
 		App->map->Load(rock_level.GetString());
 		current_map = rock_level.GetString();
@@ -460,13 +466,12 @@ void j1Scene::InitializeMap() {
 	if (current_map == rock_level.GetString()) {
 		current_level = ROCK;
 		map_num = 0;
-		App->entities->AddEnemy(LETTER, 70, 120); //REMEMBER THIS FOR LATER
-		App->entities->AddEnemy(LETTER, 60, 190);
 	}
 	if (current_map == jail_level.GetString()) {
 		current_level = JAIL;
 		map_num = 1;
 	}
+	LetterInitialation();
 }
 
 //To Start form the very first level, TODO Varela
@@ -495,6 +500,23 @@ void j1Scene::EnemyInitialation() {
 		App->entities->AddEnemy(GROUND, ground_enem_2_1.x, ground_enem_2_1.y);
 		App->entities->AddEnemy(AIR, air_enem_2_2.x, air_enem_2_2.y);
 		App->entities->AddEnemy(GROUND, ground_enem_2_2.x, ground_enem_2_2.y);
+	}
+
+}
+
+void j1Scene::LetterInitialation() {
+	App->entities->DeleteLetters();
+	if (current_level == ROCK) {
+		App->entities->AddEnemy(LETTER, 424, 217); //REMEMBER THIS FOR LATER
+		App->entities->AddEnemy(LETTER, 1085, 150);
+		App->entities->AddEnemy(LETTER, 1325, 40);
+		App->entities->AddEnemy(LETTER, 1536, 240);
+	}
+	if (current_level == JAIL) {
+		App->entities->AddEnemy(LETTER, 292, 100);
+		App->entities->AddEnemy(LETTER, 700, 100);
+		App->entities->AddEnemy(LETTER, 1110, 200);
+		App->entities->AddEnemy(LETTER, 1920, 10);
 	}
 
 }
