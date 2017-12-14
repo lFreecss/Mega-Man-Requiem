@@ -236,7 +236,9 @@ bool j1Scene::Update(float dt)
 
 		else {
 			ChangeMaps(ROCK);
+			//current_level == ROCK;
 			MapStart();
+			EndScreen();
 		}
 	}
 
@@ -375,6 +377,7 @@ void j1Scene::GameOverScreen() {
 	App->collision->active = false;
 	
 	App->entities->DeleteEnemy();
+	App->entities->DeleteLetters();
 	punctuation_count = 0;
 
 	Mix_HaltMusic();
@@ -384,6 +387,27 @@ void j1Scene::GameOverScreen() {
 	App->gui->CreateImage({ 140,92 }, { 101, 68, 132, 70 }, items, false, this);
 	App->gui->CreateLabel({ 150, 120 }, "GAME OVER", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this);
 	back_bttn = App->gui->CreateButton({ 180,180 }, { 6, 97, 48, 7 }, { 65, 97, 48, 8 }, { 6, 97, 48, 7 }, buttons, false, this);
+}
+
+
+void j1Scene::EndScreen() {
+	App->gui->CleanUp();
+	App->player->active = false;
+	App->map->active = false;
+	App->entities->active = false;
+	App->collision->active = false;
+
+	App->entities->DeleteEnemy();
+	App->entities->DeleteLetters();
+	punctuation_count = 0;
+
+	Mix_HaltMusic();
+
+	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
+	App->gui->CreateImage({ 140,92 }, { 101, 68, 132, 70 }, items, false, this);
+	App->gui->CreateLabel({ 150, 120 }, "THANKS FOR PLAYING", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this);
+	back_bttn = App->gui->CreateButton({ 180,180 }, { 6, 97, 48, 7 }, { 65, 97, 48, 8 }, { 6, 97, 48, 7 }, buttons, false, this);
+
 }
 
 void j1Scene::ManageStageUI() {

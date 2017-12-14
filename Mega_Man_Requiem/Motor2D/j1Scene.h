@@ -56,6 +56,9 @@ public:
 	//Goes to the Game Over screen
 	void GameOverScreen();
 
+	//Goes to the end screen
+	void EndScreen();
+
 	//Checks if it is the correct map in case of applying a save state
 	void CheckMap();
 
