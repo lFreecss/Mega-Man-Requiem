@@ -210,18 +210,11 @@ bool j1Scene::Update(float dt)
 		CheckMap();
 		App->map->Draw();
 		DebugKeys();
-		if(App->player->GetLives() == 2)
-			life_count->ChangeText("X2");
-		if (App->player->GetLives() == 1)
-			life_count->ChangeText("X1");
-		//Trying stuff with string conversion (TO DELETE WHEN DONE)
-
-		//lifecount = (const char*)App->player->lives;
-		//uint* b = (uint*)App->player->lives;
-	 //  char* lifecount = (char*)("&u", b);
-	 // // std::to_string(App->player->lives);
-		//p2SString a = lifecount;
-		//life_count->ChangeText(a);
+		
+		//Update for punctuation when done
+		life_count->ChangeText(p2SString("X%u",(App->player->GetLives())));
+		//int a = 3000;
+		//punctuation->ChangeText((p2SString("00%i", (a))));
 	}
 
 	//Scroll
