@@ -6,10 +6,10 @@
 #include "j1Map.h"
 #include "j1Input.h"
 
-Crazy_Razy::Crazy_Razy(int x, int y) : Enemy(x, y)
+Crazy_Razy::Crazy_Razy(int x, int y) : Entity(x, y)
 {
 	
-	cr = App->enemies->CRInfo();
+	cr = App->entities->CRInfo();
 	
 	path = nullptr;
 
@@ -26,7 +26,7 @@ Crazy_Razy::Crazy_Razy(int x, int y) : Enemy(x, y)
 	original_pos.y = y;
 	original_pos.x = x;
 
-	collider = App->collision->AddCollider({ 0, 0, cr.size.x, cr.size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->enemies);
+	collider = App->collision->AddCollider({ 0, 0, cr.size.x, cr.size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->entities);
 }
 
 void Crazy_Razy::UpdateAnim(float dt) {
@@ -49,7 +49,7 @@ void Crazy_Razy::Move(float dt) {
 		pos.y -= cr.gravity * dt;
 	}
 	
-	//It creates some kind of radar with barriers that the enemy cannot cross in case the player is outside this barriers. 
+	//It creates some kind of radar with barriers that the Entity cannot cross in case the player is outside this barriers. 
 	//If the player is in this barriers creates a path.
 	if (iteration == 0 && player_pos.x < original_pos.x + cr.ending_radar_limit) {
 		if (player_pos.x < cr.positioning_barrier && player_pos.x > original_pos.x - player_pos.x + cr.radar_limit_1)

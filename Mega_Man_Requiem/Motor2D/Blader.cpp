@@ -7,9 +7,9 @@
 #include "j1Map.h"
 
 
-Blader::Blader(int x, int y) : Enemy(x, y)
+Blader::Blader(int x, int y) : Entity(x, y)
 {
-	b = App->enemies->BInfo();
+	b = App->entities->BInfo();
 
 	path = nullptr;
 
@@ -21,7 +21,7 @@ Blader::Blader(int x, int y) : Enemy(x, y)
 	original_pos.y = y;
 	original_pos.x = x;
 
-	collider = App->collision->AddCollider({ 0, 0, b.size.x, b.size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->enemies);
+	collider = App->collision->AddCollider({ 0, 0, b.size.x, b.size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (j1Module*)App->entities);
 }
 
 void Blader::UpdateAnim(float dt) {
@@ -37,7 +37,7 @@ void Blader::Move(float dt) {
 	if (pos == original_pos)
 		iteration = 0;
 
-	//It creates some kind of radar with barriers that the enemy cannot cross in case the player is outside this barriers. 
+	//It creates some kind of radar with barriers that the Entity cannot cross in case the player is outside this barriers. 
 	//If the player is in this barriers creates a path.
 	if (iteration == 0 && player_pos.x < original_pos.x + b.ending_radar_limit) {
 		if (player_pos.x < b.positioning_barrier && player_pos.x > original_pos.x - player_pos.x + b.radar_limit_1 )
@@ -51,9 +51,6 @@ void Blader::Move(float dt) {
 }
 
 void Blader::OnCollision(Collider* collider) {
-
-
-
 }
 
 void Blader::CreatePath() {

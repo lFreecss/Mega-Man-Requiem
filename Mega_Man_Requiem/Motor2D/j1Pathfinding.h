@@ -4,7 +4,7 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "p2DynArray.h"
-#include "j1Enemies.h"
+#include "j1Entities.h"
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 364
@@ -31,7 +31,7 @@ public:
 	void SetMap(uint width, uint height, uint* data);
 
 	// Main function to request a path from A to B
-	int CreatePath(const iPoint& origin, const iPoint& destination, ENEMY_TYPES type);
+	int CreatePath(const iPoint& origin, const iPoint& destination, ENTITY_TYPES type);
 
 	// To request all tiles involved in the last generated path
 	const p2DynArray<iPoint>* GetLastPath() const;
@@ -70,7 +70,7 @@ struct PathNode
 	PathNode(const PathNode& node);
 
 	// Fills a list (PathList) of all valid adjacent pathnodes
-	uint FindWalkableAdjacents(PathList& list_to_fill, ENEMY_TYPES type) const;
+	uint FindWalkableAdjacents(PathList& list_to_fill, ENTITY_TYPES type) const;
 	// Calculates this tile score
 	int Score() const;
 	// Calculate the F for a specific destination tile

@@ -117,14 +117,14 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 // PathNode -------------------------------------------------------------------------
 // Fills a list (PathList) of all valid adjacent pathnodes
 // ----------------------------------------------------------------------------------
-uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, ENEMY_TYPES type) const
+uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, ENTITY_TYPES type) const
 {
 	BROFILER_CATEGORY("Pathfinding_Walkable_Adjacents", Profiler::Color::DeepPink);
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 	uint i = 0;
 	switch (type) {
-	case ENEMY_TYPES::AIR:
+	case ENTITY_TYPES::AIR:
 		// north
 		cell.create(pos.x, pos.y + 1);
 		if (App->pathfinding->IsWalkable(cell))
@@ -165,7 +165,7 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, ENEMY_TYPES type) c
 		if (App->pathfinding->IsWalkable(cell))
 			list_to_fill.list.add(PathNode(-1, -1, cell, this));
 		break;
-	case ENEMY_TYPES::GROUND:
+	case ENTITY_TYPES::GROUND:
 		// north
 		cell.create(pos.x, pos.y + 1);
 		if (App->pathfinding->IsWalkable(cell))
@@ -212,7 +212,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, ENEMY_TYPES type)
+int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, ENTITY_TYPES type)
 {
 	BROFILER_CATEGORY("Pathfinding_Create_Path", Profiler::Color::DeepPink);
 	last_path.Clear();

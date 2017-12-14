@@ -1,5 +1,5 @@
-#ifndef __ENEMY_H__
-#define __ENEMY_H__
+#ifndef __ENTITY_H__
+#define __ENTITY_H__
 
 #include "Animation.h"
 #include "p2Point.h"
@@ -7,7 +7,7 @@
 
 struct SDL_Texture;
 
-class Enemy
+class Entity
 {
 protected:
 	Animation* animation = nullptr;
@@ -21,8 +21,8 @@ public:
 	int id;
 
 public:
-	Enemy(int x, int y);
-	virtual ~Enemy();
+	Entity(int x, int y);
+	virtual ~Entity();
 
 	const Collider* GetCollider() const;
 	virtual void Awake(pugi::xml_node& config);

@@ -1,12 +1,12 @@
 #ifndef __CRAZY_RAZY_H__
 #define __CRAZY_RAZY_H__
 
-#include "Enemy.h"
+#include "Entity.h"
 #include "p2DynArray.h"
 #include "p2Point.h"
-#include "j1Enemies.h"
+#include "j1Entities.h"
 
-class Crazy_Razy : public Enemy
+class Crazy_Razy : public Entity
 {
 private:
 
@@ -16,7 +16,7 @@ private:
 	iPoint player_pos = { 0,0 };
 	int iteration = 0;
 	int destination = 0;
-	EnemyTypeInfo cr;
+	EntityTypeInfo cr;
 
 public:
 

@@ -7,24 +7,24 @@
 #include "j1Player.h"
 #include "j1Input.h"
 #include "j1map.h"
-#include "j1Enemies.h"
-#include "Enemy.h"
+#include "j1Entities.h"
+#include "Entity.h"
 #include "Blader.h"
 #include "Crazy_Razy.h"
 
-j1Enemies::j1Enemies() : j1Module()
+j1Entities::j1Entities() : j1Module()
 {
-	name.create("enemies");
-	for (uint i = 0; i < MAX_ENEMIES; ++i) {
+	name.create("entities");
+	for (uint i = 0; i < MAX_ENTITIES; ++i) {
 		enemies[i] = nullptr;
 	}
 
 }
-j1Enemies::~j1Enemies() {
+j1Entities::~j1Entities() {
 
 }
 
-bool j1Enemies::Awake(pugi::xml_node& config) {
+bool j1Entities::Awake(pugi::xml_node& config) {
 	bool ret = true;
 	path.create(config.child("file").attribute("name").as_string());
 	
@@ -55,7 +55,7 @@ bool j1Enemies::Awake(pugi::xml_node& config) {
 	return ret;
 }
 
-bool j1Enemies::Start() {
+bool j1Entities::Start() {
 	bool ret = true;
 
 	sprites = App->tex->Load(path.GetString());
@@ -69,16 +69,16 @@ bool j1Enemies::Start() {
 	return ret;
 }
 
-bool j1Enemies::PreUpdate() {
+bool j1Entities::PreUpdate() {
 	bool ret = true;
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
-		if (queue[i].type != ENEMY_TYPES::NO_TYPE)
+		if (queue[i].type != ENTITY_TYPES::NO_TYPE)
 		{
 			if (queue[i].y >(abs(App->render->camera.y) / screen_size)) //-SPAWN_MARGIN
 			{
 				SpawnEnemy(queue[i]);
-				queue[i].type = ENEMY_TYPES::NO_TYPE;
+				queue[i].type = ENTITY_TYPES::NO_TYPE;
 				LOG("Spawning enemy at %d", queue[i].y);
 			}
 		}
@@ -86,25 +86,25 @@ bool j1Enemies::PreUpdate() {
 	return ret;
 }
 
-bool j1Enemies::Update(float dt) {
+bool j1Entities::Update(float dt) {
 	bool ret = true;
 
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 		if (enemies[i] != nullptr) {
 			enemies[i]->UpdateAnim(dt);
 			enemies[i]->Move(dt);
 		}
 
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 		if (enemies[i] != nullptr) 
 			enemies[i]->Draw(sprites);
 
 	return ret;
 }
 
-bool j1Enemies::PostUpdate() {
+bool j1Entities::PostUpdate() {
 	bool ret = true;
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (enemies[i] != nullptr)
 		{
@@ -119,14 +119,14 @@ bool j1Enemies::PostUpdate() {
 	return ret;
 }
 
-bool j1Enemies::CleanUp() {
+bool j1Entities::CleanUp() {
 	bool ret = true;
 
 	LOG("Freeing all enemies");
 
 	App->tex->UnLoad(sprites);
 
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (enemies[i] != nullptr)
 		{
@@ -138,13 +138,13 @@ bool j1Enemies::CleanUp() {
 	return ret;
 }
 
-bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y)
+bool j1Entities::AddEnemy(ENTITY_TYPES type, int x, int y)
 {
 	bool ret = false;
 
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
-		if (queue[i].type == ENEMY_TYPES::NO_TYPE)
+		if (queue[i].type == ENTITY_TYPES::NO_TYPE)
 		{
 			queue[i].type = type;
 			queue[i].x = x;
@@ -158,31 +158,31 @@ bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y)
 	return ret;
 }
 
-void j1Enemies::SpawnEnemy(const EnemyInfo& info) {
+void j1Entities::SpawnEnemy(const EntityInfo& info) {
 	uint i = 0;
-	for (; enemies[i] != nullptr && i < MAX_ENEMIES; ++i);
+	for (; enemies[i] != nullptr && i < MAX_ENTITIES; ++i);
 
-	if (i != MAX_ENEMIES)
+	if (i != MAX_ENTITIES)
 	{
 		switch (info.type)
 		{
-		case ENEMY_TYPES::GROUND:
+		case ENTITY_TYPES::GROUND:
 			enemies[i] = new Crazy_Razy(info.x, info.y);
-			enemies[i]->type = ENEMY_TYPES::GROUND;
+			enemies[i]->type = ENTITY_TYPES::GROUND;
 			enemies[i]->id = info.id;
 			break;
-		case ENEMY_TYPES::AIR:
+		case ENTITY_TYPES::AIR:
 			enemies[i] = new Blader(info.x, info.y);
-			enemies[i]->type = ENEMY_TYPES::AIR;
+			enemies[i]->type = ENTITY_TYPES::AIR;
 			enemies[i]->id = info.id;
 			break;
 		}
 	}
 }
 
-void j1Enemies::DeleteEnemy() {
+void j1Entities::DeleteEnemy() {
 
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (enemies[i] != nullptr)
 		{
@@ -193,9 +193,9 @@ void j1Enemies::DeleteEnemy() {
 
 }
 
-void j1Enemies::OnCollision(Collider* c1, Collider* c2)
+void j1Entities::OnCollision(Collider* c1, Collider* c2)
 {
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 	}
 }

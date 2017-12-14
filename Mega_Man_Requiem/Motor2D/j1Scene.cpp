@@ -10,7 +10,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Collision.h"
-#include "j1Enemies.h"
+#include "j1Entities.h"
 #include "j1Gui.h"
 #include "j1Textures.h"
 
@@ -80,7 +80,7 @@ bool j1Scene::Start()
 {
 	App->player->active = false;
 	App->map->active = false;
-	App->enemies->active = false;
+	App->entities->active = false;
 	App->collision->active = false;
 
 	App->audio->LoadFx(sound_landing.GetString()); //1
@@ -283,7 +283,7 @@ void j1Scene::StartPlaying() {
 
 	App->player->active = true;
 	App->map->active = true;
-	App->enemies->active = true;
+	App->entities->active = true;
 	App->collision->active = true;
 
 	start_bttn = nullptr;
@@ -370,10 +370,10 @@ void j1Scene::GameOverScreen() {
 	App->gui->CleanUp();
 	App->player->active = false;
 	App->map->active = false;
-	App->enemies->active = false;
+	App->entities->active = false;
 	App->collision->active = false;
 	
-	App->enemies->DeleteEnemy();
+	App->entities->DeleteEnemy();
 
 	Mix_HaltMusic();
 	App->audio->PlayFx(5, 0);
@@ -487,22 +487,22 @@ void j1Scene::EnemyInitialation() {
 		EnemySpawn();
 	}
 	if (current_level == JAIL) {
-		App->enemies->DeleteEnemy();
-		App->enemies->AddEnemy(AIR, air_enem_2_1.x, air_enem_2_1.y);
-		App->enemies->AddEnemy(GROUND, ground_enem_2_1.x, ground_enem_2_1.y);
-		App->enemies->AddEnemy(AIR, air_enem_2_2.x, air_enem_2_2.y);
-		App->enemies->AddEnemy(GROUND, ground_enem_2_2.x, ground_enem_2_2.y);
+		App->entities->DeleteEnemy();
+		App->entities->AddEnemy(AIR, air_enem_2_1.x, air_enem_2_1.y);
+		App->entities->AddEnemy(GROUND, ground_enem_2_1.x, ground_enem_2_1.y);
+		App->entities->AddEnemy(AIR, air_enem_2_2.x, air_enem_2_2.y);
+		App->entities->AddEnemy(GROUND, ground_enem_2_2.x, ground_enem_2_2.y);
 	}
 
 }
 
 //Enemies for the first level
 void j1Scene::EnemySpawn() {
-	App->enemies->DeleteEnemy();
-	App->enemies->AddEnemy(AIR, air_enem_1_1.x, air_enem_1_1.y);
-	App->enemies->AddEnemy(GROUND, ground_enem_1_1.x, ground_enem_1_1.y);
-	App->enemies->AddEnemy(AIR, air_enem_1_2.x, air_enem_1_2.y);
-	App->enemies->AddEnemy(GROUND, ground_enem_1_2.x, ground_enem_1_2.y);
+	App->entities->DeleteEnemy();
+	App->entities->AddEnemy(AIR, air_enem_1_1.x, air_enem_1_1.y);
+	App->entities->AddEnemy(GROUND, ground_enem_1_1.x, ground_enem_1_1.y);
+	App->entities->AddEnemy(AIR, air_enem_1_2.x, air_enem_1_2.y);
+	App->entities->AddEnemy(GROUND, ground_enem_1_2.x, ground_enem_1_2.y);
 }
 
 //Load map

@@ -71,7 +71,7 @@
                idle_inv_speed="10" right_inv_speed="15" left_inv_speed="15" jumpR_inv_speed="15" sJump_inv_speed="15"/>
   </player>
 
-  <enemies>
+  <entities>
     <file name = "textures/enemies.png" />
 
     <blader>
@@ -88,6 +88,6 @@
       <animation speed1="8.0" speed2="8.0"/>
     </crazy_razy>
  
- </enemies>
+ </entities>
 
 </config>

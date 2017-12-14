@@ -1,12 +1,12 @@
 #ifndef __BALDER_H__
 #define __BLADER_H__
 
-#include "Enemy.h"
+#include "Entity.h"
 #include "p2DynArray.h"
 #include "p2Point.h"
-#include "j1Enemies.h"
+#include "j1Entities.h"
 
-class Blader : public Enemy
+class Blader : public Entity
 {
 private:
 
@@ -15,7 +15,7 @@ private:
 	iPoint player_pos = { 0,0 };
 	int iteration = 0;
 	int destination = 0;
-	EnemyTypeInfo b;
+	EntityTypeInfo b;
 
 public:
 

@@ -5,24 +5,25 @@
 #include "p2Point.h"
 #include "j1Module.h"
 #include "Animation.h"
-#include "Enemy.h"
+#include "Entity.h"
 
-#define MAX_ENEMIES 100
+#define MAX_ENTITIES 100
 
-enum ENEMY_TYPES
+enum ENTITY_TYPES
 {
 	NO_TYPE,
 	GROUND,
+	LETTER,
 	AIR
 };
 
-struct EnemyInfo
+struct EntityInfo
 {
-	ENEMY_TYPES type = ENEMY_TYPES::NO_TYPE;
+	ENTITY_TYPES type = ENTITY_TYPES::NO_TYPE;
 	int x, y;
 	int id;
 };
-struct EnemyTypeInfo {
+struct EntityTypeInfo {
 	iPoint size;
 	float speed;
 	float gravity;
@@ -35,10 +36,10 @@ struct EnemyTypeInfo {
 };
 
 
-class j1Enemies : public j1Module {
+class j1Entities : public j1Module {
 public:
-	j1Enemies();
-	~j1Enemies();
+	j1Entities();
+	~j1Entities();
 
 	bool Awake(pugi::xml_node&);
 	bool Start();
@@ -48,28 +49,28 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
-	bool AddEnemy(ENEMY_TYPES type, int x, int y);
-	EnemyTypeInfo& BInfo() { return blader_info; }
-	EnemyTypeInfo& CRInfo() { return crazy_razy_info; }
+	bool AddEnemy(ENTITY_TYPES type, int x, int y);
+	EntityTypeInfo& BInfo() { return blader_info; }
+	EntityTypeInfo& CRInfo() { return crazy_razy_info; }
 	//Like CleanUp, deletes all enemies, but doesn't clear up the spritesheet
 	void DeleteEnemy();
 
-	Enemy* enemies[MAX_ENEMIES];
+	Entity* enemies[MAX_ENTITIES];
 
 private:
 
-	void SpawnEnemy(const EnemyInfo&);
+	void SpawnEnemy(const EntityInfo&);
 
 	SDL_Texture* sprites;
 	p2SString path;
-	EnemyInfo queue[MAX_ENEMIES];
+	EntityInfo queue[MAX_ENTITIES];
 
 	int screen_width = 0;
 	int screen_height = 0;
 	int screen_size = 0;
 
-	EnemyTypeInfo blader_info;
-	EnemyTypeInfo crazy_razy_info;
+	EntityTypeInfo blader_info;
+	EntityTypeInfo crazy_razy_info;
 };
 
 #endif

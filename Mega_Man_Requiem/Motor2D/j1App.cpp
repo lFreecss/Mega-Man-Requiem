@@ -12,7 +12,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Player.h"
-#include "j1Enemies.h"
+#include "j1Entities.h"
 #include "j1Pathfinding.h"
 #include "j1Collision.h"
 #include "j1Fonts.h"
@@ -33,7 +33,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	player = new j1Player();
-	enemies = new j1Enemies();
+	entities = new j1Entities();
 	pathfinding = new j1PathFinding();
 	collision = new j1Collision();
 	font = new j1Fonts();
@@ -48,7 +48,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(scene);
-	AddModule(enemies);
+	AddModule(entities);
 	AddModule(player);
 	AddModule(collision);
 	AddModule(font);
