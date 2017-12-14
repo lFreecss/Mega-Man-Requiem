@@ -312,14 +312,14 @@ void j1Scene::StartPlaying() {
 	life_count = App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
 	punctuation = App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
 	
-	App->gui->CreateImage({ 132,30 }, { 5, 31, 16, 16 }, items, false, this); //M
-	App->gui->CreateImage({ 152,30 }, { 24, 31, 16, 16 }, items, false, this); //E
-	App->gui->CreateImage({ 172,30 }, { 43, 31, 16, 16 }, items, false, this); //G
-	App->gui->CreateImage({ 192,30 }, { 62, 31, 16, 16 }, items, false, this); //A
-	App->gui->CreateImage({ 212,30 }, { 5, 31, 16, 16 }, items, false, this); //M 2
-	App->gui->CreateImage({ 232,30 }, { 62, 31, 16, 16 }, items, false, this); //A 2
-	App->gui->CreateImage({ 252,30 }, { 81, 31, 16, 16 }, items, false, this); //N
-	App->gui->CreateImage({ 272,30 }, { 100, 31, 16, 16 }, items, false, this); //R
+	letter_M_1 = App->gui->CreateImage({ 132,30 }, { 5, 31, 16, 16 }, items, false, this); //M
+	letter_E = App->gui->CreateImage({ 152,30 }, { 24, 31, 16, 16 }, items, false, this); //E
+	letter_G = App->gui->CreateImage({ 172,30 }, { 43, 31, 16, 16 }, items, false, this); //G
+	letter_A_1 = App->gui->CreateImage({ 192,30 }, { 62, 31, 16, 16 }, items, false, this); //A
+	letter_M_2 = App->gui->CreateImage({ 212,30 }, { 5, 31, 16, 16 }, items, false, this); //M 2
+	letter_A_2 = App->gui->CreateImage({ 232,30 }, { 62, 31, 16, 16 }, items, false, this); //A 2
+	letter_N = App->gui->CreateImage({ 252,30 }, { 81, 31, 16, 16 }, items, false, this); //N
+	letter_R = App->gui->CreateImage({ 272,30 }, { 100, 31, 16, 16 }, items, false, this); //R
 	EnemySpawn();
 }
 
@@ -387,15 +387,29 @@ void j1Scene::GameOverScreen() {
 }
 
 void j1Scene::ManageStageUI() {
-	//Update for punctuation when done
 	life_count->ChangeText(p2SString("X%u", (App->player->GetLives())));
 
 	if (punctuation_count == 500) {
 		punctuation->ChangeText((p2SString("0000%i", (punctuation_count))));
+		letter_M_1->ChangeImage({ 135,31,16,16 });
 	}
 
 	if (punctuation_count > 500) {
 		punctuation->ChangeText((p2SString("000%i", (punctuation_count))));
+		if(punctuation_count == 1000)
+			letter_E->ChangeImage({ 154,31,16,16 });
+		else if (punctuation_count == 1500)
+			letter_G->ChangeImage({ 173,31,16,16 });
+		else if (punctuation_count == 2000)
+			letter_A_1->ChangeImage({ 192,31,16,16 });
+		else if (punctuation_count == 2500)
+			letter_M_2->ChangeImage({ 135,31,16,16 });
+		else if (punctuation_count == 3000)
+			letter_A_2->ChangeImage({ 192,31,16,16 });
+		else if (punctuation_count == 3500)
+			letter_N->ChangeImage({ 211,31,16,16 });
+		else if (punctuation_count == 4000)
+			letter_R->ChangeImage({ 230,31,16,16 });
 	}
 }
 

@@ -145,8 +145,19 @@ private:
 	Button* music_off = nullptr;
 	Button* plus_volume = nullptr;
 	Button* minus_volume = nullptr;
+
 	Label* life_count = nullptr;
 	Label* punctuation = nullptr;
+
+	Image* letter_M_1 = nullptr;
+	Image* letter_E = nullptr;
+	Image* letter_G = nullptr;
+	Image* letter_A_1 = nullptr;
+	Image* letter_M_2 = nullptr;
+	Image* letter_A_2 = nullptr;
+	Image* letter_N = nullptr;
+	Image* letter_R = nullptr;
+
 	bool quit_pressed = false;
 
 	char volume = 128;
