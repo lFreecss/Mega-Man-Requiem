@@ -12,7 +12,7 @@ Entity::~Entity()
 		collider->to_delete = true;
 }
 
-const Collider* Entity::GetCollider() const
+Collider* Entity::GetCollider() const
 {
 	return collider;
 }

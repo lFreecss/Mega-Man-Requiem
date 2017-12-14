@@ -12,12 +12,14 @@
 #include "Blader.h"
 #include "Crazy_Razy.h"
 #include "Letter.h"
+#include "j1Collision.h"
+#include "j1Audio.h"
 
 j1Entities::j1Entities() : j1Module()
 {
 	name.create("entities");
 	for (uint i = 0; i < MAX_ENTITIES; ++i) {
-		enemies[i] = nullptr;
+		entities[i] = nullptr;
 	}
 
 }
@@ -91,17 +93,11 @@ bool j1Entities::Update(float dt) {
 	bool ret = true;
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
-		if (enemies[i] != nullptr) {
-			enemies[i]->UpdateAnim(dt);
-			enemies[i]->Move(dt);
-			enemies[i]->Draw(sprites);
+		if (entities[i] != nullptr) {
+			entities[i]->UpdateAnim(dt);
+			entities[i]->Move(dt);
+			entities[i]->Draw(sprites);
 		}
-	p2List_item<Letter*>* elem = letter_list.start;
-	while (elem != nullptr) {
-		if(elem->data != nullptr)
-			elem->data->Draw(sprites);
-		elem = elem->next;
-	}		
 
 	return ret;
 }
@@ -110,13 +106,13 @@ bool j1Entities::PostUpdate() {
 	bool ret = true;
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
-		if (enemies[i] != nullptr)
+		if (entities[i] != nullptr)
 		{
-			if (enemies[i]->pos.y >((abs(App->render->camera.y) + screen_height) / screen_width) + 240)
+			if (entities[i]->pos.y >((abs(App->render->camera.y) + screen_height) / screen_width) + 240)
 			{
-				LOG("DeSpawning enemy at %d", enemies[i]->pos.y);
-				delete enemies[i];
-				enemies[i] = nullptr;
+				LOG("DeSpawning enemy at %d", entities[i]->pos.y);
+				delete entities[i];
+				entities[i] = nullptr;
 			}
 		}
 	}
@@ -132,17 +128,11 @@ bool j1Entities::CleanUp() {
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
-		if (enemies[i] != nullptr)
+		if (entities[i] != nullptr)
 		{
-			delete enemies[i];
-			enemies[i] = nullptr;
+			delete entities[i];
+			entities[i] = nullptr;
 		}
-	}
-
-	p2List_item<Letter*>* elem = letter_list.start;
-	while (elem != nullptr) {
-		RELEASE(elem->data);
-		elem = elem->next;
 	}
 
 	return ret;
@@ -170,22 +160,26 @@ bool j1Entities::AddEnemy(ENTITY_TYPES type, int x, int y)
 
 void j1Entities::SpawnEnemy(const EntityInfo& info) {
 	uint i = 0;
-	for (; enemies[i] != nullptr && i < MAX_ENTITIES; ++i);
+	for (; entities[i] != nullptr && i < MAX_ENTITIES; ++i);
 
 	if (i != MAX_ENTITIES)
 	{
 		switch (info.type)
 		{
 		case ENTITY_TYPES::GROUND:
-			enemies[i] = new Crazy_Razy(info.x, info.y);
-			enemies[i]->type = ENTITY_TYPES::GROUND;
-			enemies[i]->id = info.id;
+			entities[i] = new Crazy_Razy(info.x, info.y);
+			entities[i]->type = ENTITY_TYPES::GROUND;
+			entities[i]->id = info.id;
 			break;
 		case ENTITY_TYPES::AIR:
-			enemies[i] = new Blader(info.x, info.y);
-			enemies[i]->type = ENTITY_TYPES::AIR;
-			enemies[i]->id = info.id;
+			entities[i] = new Blader(info.x, info.y);
+			entities[i]->type = ENTITY_TYPES::AIR;
+			entities[i]->id = info.id;
 			break;
+		case ENTITY_TYPES::LETTER:
+			entities[i] = new Letter(info.x, info.y);
+			entities[i]->type = ENTITY_TYPES::LETTER;
+			entities[i]->id = info.id;
 		}
 	}
 }
@@ -194,29 +188,29 @@ void j1Entities::DeleteEnemy() {
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
-		if (enemies[i] != nullptr)
+		if (entities[i] != nullptr)
 		{
-			delete enemies[i];
-			enemies[i] = nullptr;
+			if (entities[i]->type != LETTER) {
+				delete entities[i];
+				entities[i] = nullptr;
+			}
 		}
 	}
-
-	p2List_item<Letter*>* elem = letter_list.start;
-	while (elem != nullptr) {
-		RELEASE(elem->data);
-		elem = elem->next;
-	}
-}
-
-Letter* j1Entities::AddLetter(iPoint pos, SDL_Rect letter) {
-	Letter* ret = new Letter(pos.x, pos.y, letter);
-	letter_list.add(ret);
-	return ret;
 }
 
 void j1Entities::OnCollision(Collider* c1, Collider* c2)
 {
+	//Collision with the letter
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
+		if (entities[i] != nullptr && entities[i]->GetCollider() == c1)
+		{
+			c2 = App->player->GetCollider();
+			if (entities[i]->type == ENTITY_TYPES::LETTER) {
+				App->audio->PlayFx(6, 0);
+				delete entities[i];
+				entities[i] = nullptr;
+			}
+		}
 	}
 }

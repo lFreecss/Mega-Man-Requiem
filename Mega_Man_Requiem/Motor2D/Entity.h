@@ -24,7 +24,7 @@ public:
 	Entity(int x, int y);
 	virtual ~Entity();
 
-	const Collider* GetCollider() const;
+	Collider* GetCollider() const;
 	virtual void Awake(pugi::xml_node& config);
 	virtual void UpdateAnim(float dt);
 	virtual void Move(float dt);

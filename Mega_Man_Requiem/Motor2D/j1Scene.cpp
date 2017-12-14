@@ -88,6 +88,7 @@ bool j1Scene::Start()
 	App->audio->LoadFx(sound_start.GetString()); //3
 	App->audio->LoadFx(sound_button_select.GetString()); //4
 	App->audio->LoadFx("audio/fx/game_over.wav"); //5
+	App->audio->LoadFx("audio/fx/get_item.wav"); //6
 
 	title_bg = App->tex->Load(title_bg_path.GetString());
 	buttons = App->tex->Load(buttons_path.GetString());
@@ -459,6 +460,8 @@ void j1Scene::InitializeMap() {
 	if (current_map == rock_level.GetString()) {
 		current_level = ROCK;
 		map_num = 0;
+		App->entities->AddEnemy(LETTER, 70, 120); //REMEMBER THIS FOR LATER
+		App->entities->AddEnemy(LETTER, 60, 190);
 	}
 	if (current_map == jail_level.GetString()) {
 		current_level = JAIL;
@@ -499,7 +502,6 @@ void j1Scene::EnemyInitialation() {
 //Enemies for the first level
 void j1Scene::EnemySpawn() {
 	App->entities->DeleteEnemy();
-	App->entities->AddLetter({ 70,120 }, { 6, 186, 16, 16 });
 	App->entities->AddEnemy(AIR, air_enem_1_1.x, air_enem_1_1.y);
 	App->entities->AddEnemy(GROUND, ground_enem_1_1.x, ground_enem_1_1.y);
 	App->entities->AddEnemy(AIR, air_enem_1_2.x, air_enem_1_2.y);

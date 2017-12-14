@@ -310,6 +310,10 @@ uint j1Player::GetLives() {
 	return lives;
 }
 
+Collider* j1Player::GetCollider() {
+	return collider;
+}
+
 // Load player position
 bool j1Player::Load(pugi::xml_node& data)
 {

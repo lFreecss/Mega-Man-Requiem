@@ -55,10 +55,8 @@ public:
 	EntityTypeInfo& CRInfo() { return crazy_razy_info; }
 	//Like CleanUp, deletes all enemies, but doesn't clear up the spritesheet
 	void DeleteEnemy();
-	Letter* AddLetter(iPoint pos, SDL_Rect letter);
 
-	Entity* enemies[MAX_ENTITIES];
-	p2List<Letter*> letter_list;
+	Entity* entities[MAX_ENTITIES];
 
 private:
 

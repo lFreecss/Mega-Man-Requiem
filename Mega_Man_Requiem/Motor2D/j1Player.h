@@ -39,6 +39,7 @@ public:
 	bool GodMode();
 	bool is_invincible = false;
 	uint GetLives();
+	Collider* GetCollider();
 
 	uint lives = 3;
 private:

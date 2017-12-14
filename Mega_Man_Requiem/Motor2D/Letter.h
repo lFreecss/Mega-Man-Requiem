@@ -7,7 +7,8 @@
 class Letter : public Entity {
 
 public:
-	Letter(int x, int y, SDL_Rect letr);
+	Letter(int x, int y);
+	void UpdateAnim(float dt);
 private:
 	Animation idle;
 	iPoint size = { 0,0 };
