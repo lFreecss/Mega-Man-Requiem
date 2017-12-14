@@ -210,12 +210,14 @@ bool j1Scene::Update(float dt)
 		CheckMap();
 		App->map->Draw();
 		DebugKeys();
-		
-		//Update for punctuation when done
-		life_count->ChangeText(p2SString("X%u",(App->player->GetLives())));
-		//int a = 3000;
-		//punctuation->ChangeText((p2SString("00%i", (a))));
+		ManageStageUI();
+		//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+			//App->dt = 0;  
 	}
+
+	//Debug for the UI elements
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		App->gui->debug_print = !App->gui->debug_print;
 
 	//Scroll
 	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - scroll_limit)
@@ -380,6 +382,13 @@ void j1Scene::GameOverScreen() {
 	App->gui->CreateImage({ 140,92 }, { 101, 68, 132, 70 }, items, false, this);
 	App->gui->CreateLabel({ 150, 120 }, "GAME OVER", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this);
 	back_bttn = App->gui->CreateButton({ 180,180 }, { 6, 97, 48, 7 }, { 65, 97, 48, 8 }, { 6, 97, 48, 7 }, buttons, false, this);
+}
+
+void j1Scene::ManageStageUI() {
+	//Update for punctuation when done
+	life_count->ChangeText(p2SString("X%u", (App->player->GetLives())));
+	//int a = 3000;
+	//punctuation->ChangeText((p2SString("00%i", (a))));
 }
 
 void j1Scene::DebugKeys(){

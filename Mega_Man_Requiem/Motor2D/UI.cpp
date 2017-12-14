@@ -1,6 +1,8 @@
 #include "UI.h"
 #include "j1App.h"
 #include "j1Input.h"
+#include "j1Window.h"
+#include "j1Gui.h"
 
 UI::UI()
 {
@@ -12,10 +14,17 @@ void UI::Update(float dt) {
 	if (this != nullptr) {
 		Draw();
 		HandleInput();
+
+		if (App->gui->debug_print) {
+			SDL_Rect debug_rect{ screen_area.x * App->win->GetScale(),screen_area.y * App->win->GetScale(),UI_logic_rect.w * App->win->GetScale(),UI_logic_rect.h * App->win->GetScale() };
+			App->render->DrawQuad(debug_rect, 255, 0, 0, 255, false, false); //red
+		}
+
 	}
 }
 
-void UI::Draw() {}
+void UI::Draw() {
+}
 
 void UI::HandleInput()
 {

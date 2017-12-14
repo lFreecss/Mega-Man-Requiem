@@ -58,6 +58,8 @@ public:
 
 	_TTF_Font* GetFont(FONT_TYPE font_name);
 
+	bool debug_print = false;
+
 private:
 
 	p2List<UI*> UIElements;

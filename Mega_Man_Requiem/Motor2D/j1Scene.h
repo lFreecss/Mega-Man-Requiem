@@ -83,6 +83,9 @@ public:
 	//UI interaction
 	void UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state);
 
+	//Manages the in game UI
+	void ManageStageUI();
+
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
