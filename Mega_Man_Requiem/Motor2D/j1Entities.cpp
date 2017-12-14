@@ -11,6 +11,7 @@
 #include "Entity.h"
 #include "Blader.h"
 #include "Crazy_Razy.h"
+#include "Letter.h"
 
 j1Entities::j1Entities() : j1Module()
 {
@@ -93,11 +94,14 @@ bool j1Entities::Update(float dt) {
 		if (enemies[i] != nullptr) {
 			enemies[i]->UpdateAnim(dt);
 			enemies[i]->Move(dt);
-		}
-
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
-		if (enemies[i] != nullptr) 
 			enemies[i]->Draw(sprites);
+		}
+	p2List_item<Letter*>* elem = letter_list.start;
+	while (elem != nullptr) {
+		if(elem->data != nullptr)
+			elem->data->Draw(sprites);
+		elem = elem->next;
+	}		
 
 	return ret;
 }
@@ -133,6 +137,12 @@ bool j1Entities::CleanUp() {
 			delete enemies[i];
 			enemies[i] = nullptr;
 		}
+	}
+
+	p2List_item<Letter*>* elem = letter_list.start;
+	while (elem != nullptr) {
+		RELEASE(elem->data);
+		elem = elem->next;
 	}
 
 	return ret;
@@ -191,6 +201,17 @@ void j1Entities::DeleteEnemy() {
 		}
 	}
 
+	p2List_item<Letter*>* elem = letter_list.start;
+	while (elem != nullptr) {
+		RELEASE(elem->data);
+		elem = elem->next;
+	}
+}
+
+Letter* j1Entities::AddLetter(iPoint pos, SDL_Rect letter) {
+	Letter* ret = new Letter(pos.x, pos.y, letter);
+	letter_list.add(ret);
+	return ret;
 }
 
 void j1Entities::OnCollision(Collider* c1, Collider* c2)

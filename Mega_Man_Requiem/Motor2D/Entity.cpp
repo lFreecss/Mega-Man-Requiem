@@ -19,11 +19,11 @@ const Collider* Entity::GetCollider() const
 
 void Entity::Draw(SDL_Texture* sprites)
 {
-	if (collider != nullptr)
-		collider->SetPos(pos.x, pos.y);
+		if (collider != nullptr)
+			collider->SetPos(pos.x, pos.y);
 
-	if (animation != nullptr)
-		App->render->Blit(sprites, pos.x, pos.y, &(animation->GetCurrentFrame()));
+		if (animation != nullptr)
+			App->render->Blit(sprites, pos.x, pos.y, &(animation->GetCurrentFrame()));
 }
 
 void Entity::UpdateAnim(float dt) {

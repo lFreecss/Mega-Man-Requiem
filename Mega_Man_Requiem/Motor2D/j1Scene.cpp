@@ -499,6 +499,7 @@ void j1Scene::EnemyInitialation() {
 //Enemies for the first level
 void j1Scene::EnemySpawn() {
 	App->entities->DeleteEnemy();
+	App->entities->AddLetter({ 70,120 }, { 6, 186, 16, 16 });
 	App->entities->AddEnemy(AIR, air_enem_1_1.x, air_enem_1_1.y);
 	App->entities->AddEnemy(GROUND, ground_enem_1_1.x, ground_enem_1_1.y);
 	App->entities->AddEnemy(AIR, air_enem_1_2.x, air_enem_1_2.y);

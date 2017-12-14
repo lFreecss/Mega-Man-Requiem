@@ -1,4 +1,4 @@
-#ifndef __BALDER_H__
+#ifndef __BLADER_H__
 #define __BLADER_H__
 
 #include "Entity.h"
