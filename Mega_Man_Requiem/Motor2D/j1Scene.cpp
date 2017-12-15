@@ -448,7 +448,7 @@ void j1Scene::DebugKeys(){
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->fade_to_black->IsFading() == false)
 	{
-		App->fade_to_black->FadeToBlack(this, this, 1);
+		//App->fade_to_black->FadeToBlack(this, this, 1);
 		Restart();
 	}
 
@@ -522,7 +522,7 @@ void j1Scene::InitializeMap() {
 }
 
 void j1Scene::Restart() {
-	//ChangeMaps(ROCK);
+	ChangeMaps(ROCK);
 	MapStart();
 	map_num = 0;
 }
