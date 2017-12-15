@@ -7,9 +7,6 @@
 #include "Image.h"
 #include "Button.h"
 
-#define CURSOR_WIDTH 2
-
-
 enum FONT_TYPE {
 	NO_FONT,
 	MEGA_MAN_2,
@@ -18,10 +15,6 @@ enum FONT_TYPE {
 };
 
 
-
-// TODO 1: Create your structure of classes
-
-// ---------------------------------------------------
 class j1Gui : public j1Module
 {
 public:
@@ -49,9 +42,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// TODO 2: Create the factory methods
-	// Gui creation functions
-
 	Image* CreateImage(iPoint pos, SDL_Rect image, const SDL_Texture* tex, bool is_draggable, j1Module* callback);
 	Label* CreateLabel(iPoint pos, p2SString text, _TTF_Font* font, SDL_Color colour, bool is_draggable, j1Module* callback);
 	Button* CreateButton(iPoint pos, SDL_Rect normal_img, SDL_Rect hover_img, SDL_Rect pressed_img, const SDL_Texture* tex, bool is_draggable, j1Module* callback);
@@ -63,12 +53,10 @@ public:
 private:
 
 	p2List<UI*> UIElements;
-	p2List<j1Module*> ModulesList;
 
 	_TTF_Font* Mega_Man_2;
 	_TTF_Font* Mega_Man_10_sz8;
 	_TTF_Font* Mega_Man_10_sz12;
-	bool isCalled = false;
 };
 
 #endif // __j1GUI_H__

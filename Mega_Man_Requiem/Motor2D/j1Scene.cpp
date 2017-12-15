@@ -99,8 +99,7 @@ bool j1Scene::Start()
 	items = App->tex->Load(items_path.GetString());
 	
 	StartScreen();
-	//Mix_VolumeChunk(chunk,0);
-	//Mix_Volume(-1, 0);
+
 	return true;
 }
 
@@ -572,7 +571,7 @@ void j1Scene::EnemyInitialation() {
 void j1Scene::LetterInitialation() {
 	App->entities->DeleteLetters();
 	if (current_level == ROCK) {
-		App->entities->AddEnemy(LETTER, 424, 217); //REMEMBER THIS FOR LATER
+		App->entities->AddEnemy(LETTER, 424, 217);
 		App->entities->AddEnemy(LETTER, 1085, 150);
 		App->entities->AddEnemy(LETTER, 1325, 40);
 		App->entities->AddEnemy(LETTER, 1536, 240);
