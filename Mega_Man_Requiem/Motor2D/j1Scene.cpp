@@ -418,26 +418,66 @@ void j1Scene::EndScreen() {
 void j1Scene::ManageStageUI() {
 	life_count->ChangeText(p2SString("X%u", (App->player->GetLives())));
 
-	if (punctuation_count == 500) {
+	if (punctuation_count >= 500) {
 		punctuation->ChangeText((p2SString("0000%i", (punctuation_count))));
 		letter_M_1->ChangeImage({ 135,31,16,16 });
+		letter_E->ChangeImage({ 24, 31, 16, 16 }); //
+		letter_G->ChangeImage({ 43, 31, 16, 16 }); //
+		letter_A_1->ChangeImage({ 62, 31, 16, 16 }); //
+		letter_M_2->ChangeImage({ 5, 31, 16, 16 }); //
+		letter_A_2->ChangeImage({ 62, 31, 16, 16 }); //
+		letter_N->ChangeImage({ 81, 31, 16, 16 }); //
+		letter_R->ChangeImage({ 100, 31, 16, 16 }); //
 	}
 
 	if (punctuation_count > 500) {
 		punctuation->ChangeText((p2SString("000%i", (punctuation_count))));
-		if(punctuation_count == 1000)
+		if (punctuation_count >= 1000) {
 			letter_E->ChangeImage({ 154,31,16,16 });
-		else if (punctuation_count == 1500)
+			letter_G->ChangeImage({ 43, 31, 16, 16 }); //
+			letter_A_1->ChangeImage({ 62, 31, 16, 16 }); //
+			letter_M_2->ChangeImage({ 5, 31, 16, 16 }); //
+			letter_A_2->ChangeImage({ 62, 31, 16, 16 }); //
+			letter_N->ChangeImage({ 81, 31, 16, 16 }); //
+			letter_R->ChangeImage({ 100, 31, 16, 16 }); //
+		}
+
+		if (punctuation_count >= 1500) {
 			letter_G->ChangeImage({ 173,31,16,16 });
-		else if (punctuation_count == 2000)
+			letter_A_1->ChangeImage({ 62, 31, 16, 16 }); //
+			letter_M_2->ChangeImage({ 5, 31, 16, 16 }); //
+			letter_A_2->ChangeImage({ 62, 31, 16, 16 }); //
+			letter_N->ChangeImage({ 81, 31, 16, 16 }); //
+			letter_R->ChangeImage({ 100, 31, 16, 16 }); //
+		}
+
+		if (punctuation_count >= 2000) {
 			letter_A_1->ChangeImage({ 192,31,16,16 });
-		else if (punctuation_count == 2500)
+			letter_M_2->ChangeImage({ 5, 31, 16, 16 }); //
+			letter_A_2->ChangeImage({ 62, 31, 16, 16 }); //
+			letter_N->ChangeImage({ 81, 31, 16, 16 }); //
+			letter_R->ChangeImage({ 100, 31, 16, 16 }); //
+		}
+	
+		if (punctuation_count >= 2500) {
 			letter_M_2->ChangeImage({ 135,31,16,16 });
-		else if (punctuation_count == 3000)
+			letter_A_2->ChangeImage({ 62, 31, 16, 16 }); //
+			letter_N->ChangeImage({ 81, 31, 16, 16 }); //
+			letter_R->ChangeImage({ 100, 31, 16, 16 }); //
+		}
+	
+		if (punctuation_count >= 3000) {
 			letter_A_2->ChangeImage({ 192,31,16,16 });
-		else if (punctuation_count == 3500)
+			letter_N->ChangeImage({ 81, 31, 16, 16 }); //
+			letter_R->ChangeImage({ 100, 31, 16, 16 }); //
+		}
+		
+		if (punctuation_count >= 3500) {
 			letter_N->ChangeImage({ 211,31,16,16 });
-		else if (punctuation_count == 4000)
+			letter_R->ChangeImage({ 100, 31, 16, 16 }); //
+		}
+
+		if (punctuation_count >= 4000)
 			letter_R->ChangeImage({ 230,31,16,16 });
 	}
 }
@@ -477,8 +517,9 @@ void j1Scene::DebugKeys(){
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
 		App->LoadGame();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN){
 		App->collision->view_collision = !App->collision->view_collision;
@@ -571,15 +612,23 @@ void j1Scene::EnemyInitialation() {
 void j1Scene::LetterInitialation() {
 	App->entities->DeleteLetters();
 	if (current_level == ROCK) {
+		if(punctuation_count < 500)
 		App->entities->AddEnemy(LETTER, 424, 217);
+		if (punctuation_count < 1000)
 		App->entities->AddEnemy(LETTER, 1085, 150);
+		if (punctuation_count < 1500)
 		App->entities->AddEnemy(LETTER, 1325, 40);
+		if (punctuation_count < 2000)
 		App->entities->AddEnemy(LETTER, 1536, 240);
 	}
 	if (current_level == JAIL) {
+		if (punctuation_count < 2500)
 		App->entities->AddEnemy(LETTER, 292, 100);
+		if (punctuation_count < 3000)
 		App->entities->AddEnemy(LETTER, 700, 100);
+		if (punctuation_count < 3500)
 		App->entities->AddEnemy(LETTER, 1110, 200);
+		if (punctuation_count < 4000)
 		App->entities->AddEnemy(LETTER, 1920, 10);
 	}
 
@@ -598,6 +647,9 @@ void j1Scene::EnemySpawn() {
 bool j1Scene::Load(pugi::xml_node& data)
 {
 	map_num = data.child("map").attribute("name").as_int();
+	punctuation_count = data.child("score").attribute("num").as_int();
+
+	LetterInitialation(); //
 	return true;
 }
 
@@ -607,6 +659,10 @@ bool j1Scene::Save(pugi::xml_node& data) const
 	pugi::xml_node map = data.append_child("map");
 
 	map.append_attribute("name") = map_num;
+
+	pugi::xml_node score = data.append_child("score");
+
+	score.append_attribute("num") = punctuation_count;
 
 	return true;
 }
