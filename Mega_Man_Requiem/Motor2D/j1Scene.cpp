@@ -208,6 +208,11 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+
+	//Debug for the UI elements
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		App->gui->debug_print = !App->gui->debug_print;
+
 	if (App->map->active) {
 		CheckMap();
 		App->map->Draw();
@@ -215,31 +220,28 @@ bool j1Scene::Update(float dt)
 		ManageStageUI();
 		//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 			//App->dt = 0;  
-	}
 
-	//Debug for the UI elements
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-		App->gui->debug_print = !App->gui->debug_print;
+		//Scroll
+		if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - scroll_limit)
+			App->render->camera.x = -(scroll_speed * App->player->pos.x);
 
-	//Scroll
-	if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - scroll_limit)
-		App->render->camera.x = -(scroll_speed * App->player->pos.x);
 
-	
-	//When player gets at the end of the level, change to the next
-	if (App->player->pos.x >= App->map->data.tile_width*App->map->data.width - map_limit) {
-		App->collision->EraseCollider(App->player->collider);
+		//When player gets at the end of the level, change to the next
+		if (App->player->pos.x >= App->map->data.tile_width*App->map->data.width - map_limit) {
+			App->collision->EraseCollider(App->player->collider);
 
-		if (current_level == ROCK) {
-			ChangeMaps(JAIL);
-			MapStart();
+			if (current_level == ROCK) {
+				ChangeMaps(JAIL);
+				MapStart();
+			}
+
+			else {
+				//ChangeMaps(ROCK);
+				//MapStart();
+				EndScreen();
+			}
 		}
 
-		else {
-			//ChangeMaps(ROCK);
-			//MapStart();
-			EndScreen();
-		}
 	}
 
 	return true;
@@ -396,18 +398,13 @@ void j1Scene::EndScreen() {
 	App->map->active = false;
 	App->entities->active = false;
 	App->collision->active = false;
-
 	App->entities->DeleteEnemy();
 	App->entities->DeleteLetters();
 
 	punctuation_count = 0;
-
-	current_map = rock_level.GetString();
-	current_level = ROCK;
-	map_num = 0;
-	App->player->Init();
 	App->player->lives = 3;
-
+	App->player->Init();
+	
 	Mix_HaltMusic();
 
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
