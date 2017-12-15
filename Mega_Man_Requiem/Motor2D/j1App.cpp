@@ -37,9 +37,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entities = new j1Entities();
 	pathfinding = new j1PathFinding();
 	collision = new j1Collision();
-	fade_to_black = new j1FadeToBlack();
 	font = new j1Fonts();
 	gui = new j1Gui();
+	fade_to_black = new j1FadeToBlack();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -53,9 +53,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entities);
 	AddModule(player);
 	AddModule(collision);
-	AddModule(fade_to_black);
 	AddModule(font);
 	AddModule(gui);
+	AddModule(fade_to_black);
 
 	// render last to swap buffer
 	AddModule(render);

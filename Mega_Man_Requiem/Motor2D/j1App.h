@@ -16,12 +16,12 @@ class j1Audio;
 class j1Scene;
 class j1Map;
 class j1Player;
-class j1FadeToBlack;
 class j1Entities;
 class j1PathFinding;
 class j1Collision;
 class j1Fonts;
 class j1Gui;
+class j1FadeToBlack;
 
 class j1App
 {
@@ -97,9 +97,9 @@ public:
 	j1Entities*			entities;
 	j1PathFinding*		pathfinding;
 	j1Collision*		collision;
-	j1FadeToBlack*		fade_to_black;
 	j1Fonts*			font;
 	j1Gui*				gui;
+	j1FadeToBlack*		fade_to_black;
 
 private:
 

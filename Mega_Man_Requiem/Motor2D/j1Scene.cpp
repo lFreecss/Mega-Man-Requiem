@@ -236,9 +236,8 @@ bool j1Scene::Update(float dt)
 		}
 
 		else {
-			ChangeMaps(ROCK);
-			//current_level == ROCK;
-			MapStart();
+			//ChangeMaps(ROCK);
+			//MapStart();
 			EndScreen();
 		}
 	}
@@ -400,7 +399,14 @@ void j1Scene::EndScreen() {
 
 	App->entities->DeleteEnemy();
 	App->entities->DeleteLetters();
+
 	punctuation_count = 0;
+
+	current_map = rock_level.GetString();
+	current_level = ROCK;
+	map_num = 0;
+	App->player->Init();
+	App->player->lives = 3;
 
 	Mix_HaltMusic();
 
@@ -441,11 +447,13 @@ void j1Scene::ManageStageUI() {
 void j1Scene::DebugKeys(){
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->fade_to_black->IsFading() == false)
+	{
+		App->fade_to_black->FadeToBlack(this, this, 1);
 		Restart();
-		//App->fade_to_black->FadeToBlack(2);
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		App->fade_to_black->FadeToBlack(2);
+		//App->fade_to_black->FadeToBlack(2);
 		MapStart();
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -486,7 +494,6 @@ void j1Scene::CheckMap() {
 
 }
 
-//Change from one map to the other, TODO Valdivia
 void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	App->map->CleanUp();
 	if (level_name == ROCK) {
@@ -502,7 +509,6 @@ void j1Scene::ChangeMaps(LEVEL_ID level_name) {
 	InitializeMap();
 }
 
-//For starting form the same map, TODO Varela
 void j1Scene::InitializeMap() {
 	if (current_map == rock_level.GetString()) {
 		current_level = ROCK;
@@ -515,9 +521,8 @@ void j1Scene::InitializeMap() {
 	LetterInitialation();
 }
 
-//To Start form the very first level, TODO Varela
 void j1Scene::Restart() {
-	ChangeMaps(ROCK);
+	//ChangeMaps(ROCK);
 	MapStart();
 	map_num = 0;
 }
