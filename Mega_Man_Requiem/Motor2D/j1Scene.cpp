@@ -90,6 +90,7 @@ bool j1Scene::Start()
 	App->audio->LoadFx(sound_button_select.GetString()); //4
 	App->audio->LoadFx("audio/fx/game_over.wav"); //5
 	App->audio->LoadFx("audio/fx/get_item.wav"); //6
+	App->audio->LoadFx("audio/fx/beat_boss.wav"); //7
 
 	title_bg = App->tex->Load(title_bg_path.GetString());
 	buttons = App->tex->Load(buttons_path.GetString());
@@ -272,6 +273,8 @@ void j1Scene::StartScreen() {
 	plus_volume = nullptr;
 	minus_volume = nullptr;
 	back_bttn = nullptr;
+	//For stopping every sound (of game over or ending screen)
+	Mix_HaltChannel(-1);
 
 	App->audio->PlayMusic(music_title.GetString(), 0.0f);
 
@@ -393,6 +396,7 @@ void j1Scene::GameOverScreen() {
 
 
 void j1Scene::EndScreen() {
+	//Disabiling and Cleaning up
 	App->gui->CleanUp();
 	App->player->active = false;
 	App->map->active = false;
@@ -400,18 +404,22 @@ void j1Scene::EndScreen() {
 	App->collision->active = false;
 	App->entities->DeleteEnemy();
 	App->entities->DeleteLetters();
+	
+	Mix_HaltMusic();
+	App->audio->PlayFx(7, 0); //Victory sound
+	
+	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
+	App->gui->CreateLabel({ 130, 30 }, "YOUR PUNCTUATION IS:", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this);
+	App->gui->CreateLabel({ 185, 50 }, (p2SString("%i", (punctuation_count))), App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
+	App->gui->CreateImage({ 140, 92 }, { 101, 68, 132, 70 }, items, false, this); //Text rect
+	App->gui->CreateLabel({ 165, 115 }, "THANKS FOR", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this);
+	App->gui->CreateLabel({ 175, 125 }, "PLAYING!", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this);
+	back_bttn = App->gui->CreateButton({ 180,180 }, { 6, 97, 48, 7 }, { 65, 97, 48, 8 }, { 6, 97, 48, 7 }, buttons, false, this);
 
+	//Initializing variables for the next game loop
 	punctuation_count = 0;
 	App->player->lives = 3;
 	App->player->Init();
-	
-	Mix_HaltMusic();
-
-	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
-	App->gui->CreateImage({ 140,92 }, { 101, 68, 132, 70 }, items, false, this);
-	App->gui->CreateLabel({ 150, 120 }, "THANKS FOR PLAYING", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this);
-	back_bttn = App->gui->CreateButton({ 180,180 }, { 6, 97, 48, 7 }, { 65, 97, 48, 8 }, { 6, 97, 48, 7 }, buttons, false, this);
-
 }
 
 void j1Scene::ManageStageUI() {
