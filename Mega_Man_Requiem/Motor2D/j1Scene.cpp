@@ -162,6 +162,7 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 				if (volume_sound >= 128)
 					volume_sound = 128;
 				Mix_Volume(-1, volume_sound);
+				App->audio->PlayFx(4, 0); //Button select sound
 			}
 
 			else if (bttn == minus_volume_sound) {
@@ -169,6 +170,7 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 				if (volume_sound > 128)
 					volume_sound = 0;
 				Mix_Volume(-1, volume_sound);
+				App->audio->PlayFx(4, 0); //Button select sound
 			}
 
 			else if (bttn == back_bttn)
@@ -194,31 +196,14 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-
 	//Debug for the UI elements
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		App->gui->debug_print = !App->gui->debug_print;
 
-	if (volume_music_text != nullptr && volume_sound_text != nullptr) {
-		if(volume_music > 99)
-			volume_music_text->ChangeText(p2SString("%u", (volume_music)));
-		else if(volume_music <= 99 && volume_music > 9)
-			volume_music_text->ChangeText(p2SString("0%u", (volume_music)));
-		else if(volume_music <= 9)
-			volume_music_text->ChangeText(p2SString("00%u", (volume_music)));
+	if (App->map->active == false)
+		ManageMenusUI();
 
-		if (volume_sound > 99)
-			volume_sound_text->ChangeText(p2SString("%u", (volume_sound)));
-		else if (volume_sound <= 99 && volume_sound > 9)
-			volume_sound_text->ChangeText(p2SString("0%u", (volume_sound)));
-		else if (volume_sound <= 9)
-			volume_sound_text->ChangeText(p2SString("00%u", (volume_sound)));
-	}
-
-	
-
-	
-	if (App->map->active) {
+	else if (App->map->active) {
 		CheckMap();
 		App->map->Draw();
 		DebugKeys();
@@ -456,6 +441,26 @@ void j1Scene::ManageStageUI() {
 		else if (punctuation_count == 4000)
 			letter_R->ChangeImage({ 230,31,16,16 });
 	}
+}
+
+void j1Scene::ManageMenusUI() {
+
+	if (volume_music_text != nullptr && volume_sound_text != nullptr) {
+		if (volume_music > 99)
+			volume_music_text->ChangeText(p2SString("%u", (volume_music)));
+		else if (volume_music <= 99 && volume_music > 9)
+			volume_music_text->ChangeText(p2SString("0%u", (volume_music)));
+		else if (volume_music <= 9)
+			volume_music_text->ChangeText(p2SString("00%u", (volume_music)));
+
+		if (volume_sound > 99)
+			volume_sound_text->ChangeText(p2SString("%u", (volume_sound)));
+		else if (volume_sound <= 99 && volume_sound > 9)
+			volume_sound_text->ChangeText(p2SString("0%u", (volume_sound)));
+		else if (volume_sound <= 9)
+			volume_sound_text->ChangeText(p2SString("00%u", (volume_sound)));
+	}
+
 }
 
 void j1Scene::DebugKeys(){
