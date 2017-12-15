@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Collision.h"
+#include "j1FadeToBlack.h"
 #include "j1Entities.h"
 #include "j1Gui.h"
 #include "j1Textures.h"
@@ -439,10 +440,12 @@ void j1Scene::ManageStageUI() {
 
 void j1Scene::DebugKeys(){
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->fade_to_black->IsFading() == false)
 		Restart();
+		//App->fade_to_black->FadeToBlack(2);
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		App->fade_to_black->FadeToBlack(2);
 		MapStart();
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)

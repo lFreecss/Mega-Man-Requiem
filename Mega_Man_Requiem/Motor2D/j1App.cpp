@@ -12,6 +12,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Player.h"
+#include "j1FadeToBlack.h"
 #include "j1Entities.h"
 #include "j1Pathfinding.h"
 #include "j1Collision.h"
@@ -36,6 +37,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entities = new j1Entities();
 	pathfinding = new j1PathFinding();
 	collision = new j1Collision();
+	fade_to_black = new j1FadeToBlack();
 	font = new j1Fonts();
 	gui = new j1Gui();
 
@@ -51,6 +53,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entities);
 	AddModule(player);
 	AddModule(collision);
+	AddModule(fade_to_black);
 	AddModule(font);
 	AddModule(gui);
 
