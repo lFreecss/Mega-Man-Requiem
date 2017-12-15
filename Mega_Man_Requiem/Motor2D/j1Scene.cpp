@@ -100,20 +100,21 @@ bool j1Scene::Start()
 	
 	StartScreen();
 	//Mix_VolumeChunk(chunk,0);
+	//Mix_Volume(-1, 0);
 	return true;
 }
 
 
 void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 {
-	if (UI_elem->GetType() == BUTTON && UI_elem != music_off) {
+	if (UI_elem->GetType() == BUTTON) {
 		Button* bttn = (Button*)UI_elem;
 		switch (UI_state)
 		{
 		case NONE:
 			break;
 		case MOUSE_ENTER:
-			if(bttn != music_off && bttn != plus_volume && bttn != minus_volume)
+			if(bttn != plus_volume_music && bttn != minus_volume_music && bttn != plus_volume_sound && bttn != minus_volume_sound)
 			App->audio->PlayFx(4, 0);
 			break;
 		case MOUSE_INSIDE:
@@ -142,19 +143,32 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 			else if (bttn == credits_bttn)
 				CreditsScreen();
 
-			else if (bttn == plus_volume) {
-				music_off_vol = true;
-				volume++;
-				Mix_VolumeMusic(volume);
+			else if (bttn == plus_volume_music) {
+				volume_music++;
+				if (volume_music >= 128)
+					volume_music = 128;
+				Mix_VolumeMusic(volume_music);
 			}
 
-			else if (bttn == minus_volume) {
-				volume--;
-				if (volume < 0) {
-					volume = 0;
-					music_off_vol = false;
-				}
-				Mix_VolumeMusic(volume);
+			else if (bttn == minus_volume_music) {
+				volume_music--;
+				if (volume_music > 128) 
+					volume_music = 0;
+				Mix_VolumeMusic(volume_music);
+			}
+
+			else if (bttn == plus_volume_sound) {
+				volume_sound++;
+				if (volume_sound >= 128)
+					volume_sound = 128;
+				Mix_Volume(-1, volume_sound);
+			}
+
+			else if (bttn == minus_volume_sound) {
+				volume_sound--;
+				if (volume_sound > 128)
+					volume_sound = 0;
+				Mix_Volume(-1, volume_sound);
 			}
 
 			else if (bttn == back_bttn)
@@ -165,35 +179,6 @@ void j1Scene::UIInteraction(UI* UI_elem, BUTTON_EVENTS UI_state)
 
 			break;
 		case RIGHT_MOUSE_PRESS:
-			break;
-		}
-	}
-
-	//Checkbox for turning on/off the music
-	if (UI_elem == music_off) {
-		Button* bttn = (Button*)UI_elem;
-		switch (UI_state) {
-		case NONE:
-			if (music_off_vol) {
-				bttn->ChangeToNormalImg();
-			}
-			else if (music_off_vol == false) {
-				bttn->ChangeToPressedImg();
-			}
-			break;
-		case LEFT_MOUSE_PRESS:
-			if (music_off_vol) {
-				music_off_vol = false;
-				volume = 0;
-				Mix_VolumeMusic(0);
-				bttn->ChangeToPressedImg();
-			}
-			else if (music_off_vol == false) {
-				music_off_vol = true;
-				volume = 128;
-				Mix_VolumeMusic(128);
-				bttn->ChangeToNormalImg();
-			}
 			break;
 		}
 	}
@@ -214,6 +199,25 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		App->gui->debug_print = !App->gui->debug_print;
 
+	if (volume_music_text != nullptr && volume_sound_text != nullptr) {
+		if(volume_music > 99)
+			volume_music_text->ChangeText(p2SString("%u", (volume_music)));
+		else if(volume_music <= 99 && volume_music > 9)
+			volume_music_text->ChangeText(p2SString("0%u", (volume_music)));
+		else if(volume_music <= 9)
+			volume_music_text->ChangeText(p2SString("00%u", (volume_music)));
+
+		if (volume_sound > 99)
+			volume_sound_text->ChangeText(p2SString("%u", (volume_sound)));
+		else if (volume_sound <= 99 && volume_sound > 9)
+			volume_sound_text->ChangeText(p2SString("0%u", (volume_sound)));
+		else if (volume_sound <= 9)
+			volume_sound_text->ChangeText(p2SString("00%u", (volume_sound)));
+	}
+
+	
+
+	
 	if (App->map->active) {
 		CheckMap();
 		App->map->Draw();
@@ -269,10 +273,14 @@ bool j1Scene::CleanUp()
 
 void j1Scene::StartScreen() {
 	App->gui->CleanUp();
-	music_off = nullptr;
-	plus_volume = nullptr;
-	minus_volume = nullptr;
+	plus_volume_music = nullptr;
+	minus_volume_music = nullptr;
+	plus_volume_sound = nullptr;
+	minus_volume_sound = nullptr;
 	back_bttn = nullptr;
+	volume_music_text = nullptr;
+	volume_sound_text = nullptr;
+
 	//For stopping every sound (of game over or ending screen)
 	Mix_HaltChannel(-1);
 
@@ -301,9 +309,6 @@ void j1Scene::StartPlaying() {
 	credits_bttn = nullptr;
 	quit_bttn = nullptr;
 	back_bttn = nullptr;
-	music_off = nullptr;
-	plus_volume = nullptr;
-	minus_volume = nullptr;
 
 	//Initializing map and positions
 	first_map = rock_level;
@@ -364,12 +369,16 @@ void j1Scene::SettingsScreen() {
 	App->gui->CreateImage({ 110,60 }, { 0, 0, 184, 123 }, settings_scrn, false, this); //Settings/Credits black screen
 	
 	App->gui->CreateLabel({ 170, 20 }, "SETTINGS", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
-	App->gui->CreateLabel({ 120, 80 }, "MUSIC OFF", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
-	music_off = App->gui->CreateButton({ 250,70 }, { 160, 26, 22, 24 }, { 160, 26, 22, 24 }, { 188, 26, 24, 24 }, buttons, false, this); //Checkbox
 	
-	App->gui->CreateLabel({ 120, 130 }, "MUSIC VOLUME", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
-	plus_volume = App->gui->CreateButton({ 150,150 }, { 164, 59, 16, 16 }, { 164, 59, 16, 16 }, { 205, 59, 16, 16 }, buttons, false, this); //Plus button
-	minus_volume = App->gui->CreateButton({ 230,150 }, { 183, 59, 16, 16 }, { 183, 59, 16, 16 }, { 224, 59, 16, 16 }, buttons, false, this); //Minus button
+	App->gui->CreateLabel({ 120, 70 }, "MUSIC VOLUME", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
+	plus_volume_music = App->gui->CreateButton({ 150,95 }, { 164, 59, 16, 16 }, { 164, 59, 16, 16 }, { 205, 59, 16, 16 }, buttons, false, this); //Plus button
+	volume_music_text = App->gui->CreateLabel({ 185, 97 }, (p2SString("%u", (volume_music))), App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
+	minus_volume_music = App->gui->CreateButton({ 230,95 }, { 183, 59, 16, 16 }, { 183, 59, 16, 16 }, { 224, 59, 16, 16 }, buttons, false, this); //Minus button
+
+	App->gui->CreateLabel({ 120, 130 }, "SOUND VOLUME", App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
+	plus_volume_sound = App->gui->CreateButton({ 150,150 }, { 164, 59, 16, 16 }, { 164, 59, 16, 16 }, { 205, 59, 16, 16 }, buttons, false, this); //Plus button
+	volume_sound_text = App->gui->CreateLabel({ 185, 150 }, (p2SString("%u", (volume_sound))), App->gui->GetFont(MEGA_MAN_2), { 255,255,255,255 }, false, this);
+	minus_volume_sound = App->gui->CreateButton({ 230,150 }, { 183, 59, 16, 16 }, { 183, 59, 16, 16 }, { 224, 59, 16, 16 }, buttons, false, this); //Minus button
 
 	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
 }

@@ -145,9 +145,10 @@ private:
 	Button* credits_bttn = nullptr;
 	Button* quit_bttn = nullptr;
 	Button* back_bttn = nullptr;
-	Button* music_off = nullptr;
-	Button* plus_volume = nullptr;
-	Button* minus_volume = nullptr;
+	Button* plus_volume_music = nullptr;
+	Button* minus_volume_music = nullptr;
+	Button* plus_volume_sound = nullptr;
+	Button* minus_volume_sound = nullptr;
 
 	Label* life_count = nullptr;
 	Label* punctuation = nullptr;
@@ -163,8 +164,10 @@ private:
 
 	bool quit_pressed = false;
 
-	char volume = 128;
-	bool music_off_vol = true;
+	uchar volume_music = 128;
+	uchar volume_sound = 128;
+	Label* volume_music_text = nullptr;
+	Label* volume_sound_text = nullptr;
 };
 
 #endif // __j1SCENE_H__
