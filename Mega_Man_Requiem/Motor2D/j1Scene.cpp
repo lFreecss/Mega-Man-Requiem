@@ -360,13 +360,18 @@ void j1Scene::CreditsScreen() {
 	
 	App->audio->PlayMusic(music_settings.GetString(), 0.0f);
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
-	App->gui->CreateImage({ 30,40 }, { 0, 0, 368, 206 }, settings_scrn, false, this); //Settings/Credits black screen
-	
+	App->gui->CreateImage({ 30,40 }, { 0, 0, 368, 106 }, settings_scrn, false, this); //Settings/Credits black screen
+
 	App->gui->CreateLabel({ 50, 20 }, "Licence:", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this);
 	App->gui->CreateLabel({ 40, 50 }, "MIT License Copyright(c)", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 0,255,0,255 }, false, this);
-	App->gui->CreateLabel({ 40, 60 }, "David Varela Hernandez, David Valdivia Martínez", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 0,255,0,255 }, false, this);
+	App->gui->CreateLabel({ 40, 65 }, "Created by David Varela Hernandez and", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 0,255,0,255 }, false, this);
+	App->gui->CreateLabel({ 40, 75 }, "David Valdivia Martínez", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 0,255,0,255 }, false, this);
+	App->gui->CreateLabel({ 40, 95 }, "You can find more information about the", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 0,255,0,255 }, false, this);
+	App->gui->CreateLabel({ 40, 105 }, "licence or about us in the README or in", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 0,255,0,255 }, false, this);
+	App->gui->CreateLabel({ 40, 115 }, "our game Web site.", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 0,255,0,255 }, false, this);
 	back_bttn = App->gui->CreateButton({ 10,250 }, { 7, 71, 31, 7 }, { 43, 71, 31, 8 }, { 7, 71, 31, 7 }, buttons, false, this);
 }
+
 
 void j1Scene::SettingsScreen() {
 	App->gui->CleanUp();
