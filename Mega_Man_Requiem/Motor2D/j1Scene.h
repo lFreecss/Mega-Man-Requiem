@@ -178,6 +178,8 @@ private:
 	uchar volume_sound = 128;
 	Label* volume_music_text = nullptr;
 	Label* volume_sound_text = nullptr;
+
+	bool is_loading = false;
 };
 
 #endif // __j1SCENE_H__

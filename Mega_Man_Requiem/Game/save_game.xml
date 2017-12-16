@@ -8,19 +8,19 @@
 	<pathfinding />
 	<scene>
 		<map name="0" />
-		<score num="0" />
-		<scene_time num="93.9929962" />
+		<score num="2000" />
+		<scene_time num="59.4280014" />
 	</scene>
 	<entities />
 	<player>
-		<position x="128.699982" y="233.240097" />
-		<lives quantity="3" />
+		<position x="2155.04419" y="212.721619" />
+		<lives quantity="2" />
 	</player>
 	<collision />
 	<fonts />
 	<gui />
 	<:anonymous />
 	<renderer>
-		<camera x="-321" y="0" />
+		<camera x="-5387" y="0" />
 	</renderer>
 </game_state>

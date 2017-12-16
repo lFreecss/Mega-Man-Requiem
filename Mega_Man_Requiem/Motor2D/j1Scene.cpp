@@ -199,6 +199,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+
 	//Debug for the UI elements
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		App->gui->debug_print = !App->gui->debug_print;
@@ -256,6 +257,8 @@ bool j1Scene::Update(float dt)
 		}
 
 	}
+
+	is_loading = false;
 
 	return true;
 }
@@ -635,7 +638,8 @@ void j1Scene::InitializeMap() {
 		map_num = 1;
 	}
 	LetterInitialation();
-	scene_timer->Start();
+	if (!is_loading)
+		scene_timer->Start();
 }
 
 void j1Scene::Restart() {
@@ -709,6 +713,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 	float transcurred_seconds = total_time_scene - data.child("scene_time").attribute("num").as_float();
 	scene_timer->SetLoadTime(transcurred_seconds);
 
+	is_loading = true;
 	LetterInitialation(); //
 	return true;
 }
