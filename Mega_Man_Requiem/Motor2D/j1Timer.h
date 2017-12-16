@@ -15,6 +15,7 @@ public:
 	float ReadSec() const;
 	void Pause();
 	void Continue();
+	void SetLoadTime(float transcurred_seconds);
 
 private:
 	uint32	started_at;

@@ -288,6 +288,7 @@ void j1Scene::StartScreen() {
 	back_bttn = nullptr;
 	volume_music_text = nullptr;
 	volume_sound_text = nullptr;
+	pause = nullptr;
 
 	//For stopping every sound (of game over or ending screen)
 	Mix_HaltChannel(-1);
@@ -334,7 +335,8 @@ void j1Scene::StartPlaying() {
 	App->gui->CreateImage({ 5,255 }, { 4, 85, 19, 18 }, items, false, this); //Lives
 	life_count = App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
 	punctuation = App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
-	time_game = App->gui->CreateLabel({ 400,10 }, "000", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this); //Limited Time
+	//time_game = App->gui->CreateLabel({ 400,10 }, "000", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this); //Limited Time
+	time_game = App->gui->CreateLabel({ 200,70 }, "000", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this); //Limited Time
 	pause = App->gui->CreateLabel({ 170,130 }, "     ", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); // PAUSE
 
 	
@@ -404,6 +406,7 @@ void j1Scene::SettingsScreen() {
 
 void j1Scene::GameOverScreen() {
 	App->fade_to_black->FadeToBlack(this, this, 1);
+	pause = nullptr;
 	App->gui->CleanUp();
 	App->player->active = false;
 	App->map->active = false;
@@ -427,6 +430,7 @@ void j1Scene::GameOverScreen() {
 void j1Scene::EndScreen() {
 	//Disabiling and Cleaning up
 	App->fade_to_black->FadeToBlack(this, this, 1);
+	pause = nullptr;
 	App->gui->CleanUp();
 	App->player->active = false;
 	App->map->active = false;
@@ -702,7 +706,8 @@ bool j1Scene::Load(pugi::xml_node& data)
 {
 	map_num = data.child("map").attribute("name").as_int();
 	punctuation_count = data.child("score").attribute("num").as_int();
-	//time_count
+	float transcurred_seconds = total_time_scene - data.child("scene_time").attribute("num").as_float();
+	scene_timer->SetLoadTime(transcurred_seconds);
 
 	LetterInitialation(); //
 	return true;
@@ -718,7 +723,10 @@ bool j1Scene::Save(pugi::xml_node& data) const
 	pugi::xml_node score = data.append_child("score");
 
 	score.append_attribute("num") = punctuation_count;
-	//time_count
+	
+	pugi::xml_node time_left = data.append_child("scene_time");
+
+	time_left.append_attribute("num") = scene_time;
 
 	return true;
 }

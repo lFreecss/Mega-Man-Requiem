@@ -21,6 +21,12 @@ void j1Timer::Start()
 	seconds_paused = 0;
 }
 
+// To Load Time
+void j1Timer::SetLoadTime(float transcurred_seconds) {
+	seconds_paused = 0;
+	started_at = SDL_GetTicks() - 1000.0f*transcurred_seconds;
+}
+
 // ---------------------------------------------
 uint32 j1Timer::Read() const
 {
@@ -33,6 +39,7 @@ float j1Timer::ReadSec() const
 	return ((SDL_GetTicks() - started_at) / 1000.0f) - seconds_paused;
 }
 
+// To Pause Game
 // ---------------------------------------------
 void j1Timer::Pause()
 {
