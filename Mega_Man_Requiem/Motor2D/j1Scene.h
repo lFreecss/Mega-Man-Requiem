@@ -5,6 +5,7 @@
 class Image;
 class Label;
 class Button;
+class j1Timer;
 
 struct SDL_Texture;
 
@@ -100,6 +101,8 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	int punctuation_count = 0;
+	int total_time_scene = 100;
+	float scene_time = 0.0f;
 
 private:
 	p2SString first_map;
@@ -155,6 +158,7 @@ private:
 
 	Label* life_count = nullptr;
 	Label* punctuation = nullptr;
+	Label* time_game = nullptr;
 
 	Image* letter_M_1 = nullptr;
 	Image* letter_E = nullptr;
@@ -164,6 +168,8 @@ private:
 	Image* letter_A_2 = nullptr;
 	Image* letter_N = nullptr;
 	Image* letter_R = nullptr;
+
+	j1Timer* scene_timer;
 
 	bool quit_pressed = false;
 

@@ -14,10 +14,13 @@
 #include "j1Entities.h"
 #include "j1Gui.h"
 #include "j1Textures.h"
+#include "j1Timer.h"
+
 
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
+	scene_timer = new j1Timer();
 }
 
 // Destructor
@@ -98,6 +101,7 @@ bool j1Scene::Start()
 	settings_scrn = App->tex->Load(settings_scrn_path.GetString());
 	items = App->tex->Load(items_path.GetString());
 	
+
 	StartScreen();
 
 	return true;
@@ -207,6 +211,10 @@ bool j1Scene::Update(float dt)
 		App->map->Draw();
 		DebugKeys();
 		ManageStageUI();
+		if (scene_time <= 0.0f)
+		{
+			GameOverScreen();
+		}
 		//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 			//App->dt = 0;  
 
@@ -303,11 +311,15 @@ void j1Scene::StartPlaying() {
 	App->player->pos = App->player->startPos;
 	InitializeMap();
 	App->audio->PlayMusic(music_1st_lvl.GetString(), 0.0f);
+
+
 	
 	//gUI
 	App->gui->CreateImage({ 5,255 }, { 4, 85, 19, 18 }, items, false, this); //Lives
 	life_count = App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
 	punctuation = App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
+	time_game = App->gui->CreateLabel({ 400,15 }, "100", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this); //Limited Time
+
 	
 	letter_M_1 = App->gui->CreateImage({ 132,30 }, { 5, 31, 16, 16 }, items, false, this); //M
 	letter_E = App->gui->CreateImage({ 152,30 }, { 24, 31, 16, 16 }, items, false, this); //E
@@ -420,6 +432,16 @@ void j1Scene::EndScreen() {
 
 void j1Scene::ManageStageUI() {
 	life_count->ChangeText(p2SString("X%u", (App->player->GetLives())));
+
+	scene_time = total_time_scene - scene_timer->ReadSec();
+	if (scene_time >= 10.f)
+	{
+		time_game->ChangeText((p2SString("%i", ((int)scene_time))));
+	}
+	else {
+		time_game->ChangeText((p2SString("0%f", (scene_time))));
+	}
+
 
 	if (punctuation_count >= 500) {
 		punctuation->ChangeText((p2SString("0000%i", (punctuation_count))));
@@ -585,6 +607,7 @@ void j1Scene::InitializeMap() {
 		map_num = 1;
 	}
 	LetterInitialation();
+	scene_timer->Start();
 }
 
 void j1Scene::Restart() {
@@ -655,6 +678,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 {
 	map_num = data.child("map").attribute("name").as_int();
 	punctuation_count = data.child("score").attribute("num").as_int();
+	//time_count
 
 	LetterInitialation(); //
 	return true;
@@ -670,6 +694,7 @@ bool j1Scene::Save(pugi::xml_node& data) const
 	pugi::xml_node score = data.append_child("score");
 
 	score.append_attribute("num") = punctuation_count;
+	//time_count
 
 	return true;
 }
