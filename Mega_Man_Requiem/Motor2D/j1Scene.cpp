@@ -318,7 +318,7 @@ void j1Scene::StartPlaying() {
 	App->gui->CreateImage({ 5,255 }, { 4, 85, 19, 18 }, items, false, this); //Lives
 	life_count = App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
 	punctuation = App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
-	time_game = App->gui->CreateLabel({ 400,15 }, "100", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this); //Limited Time
+	time_game = App->gui->CreateLabel({ 400,10 }, "100", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this); //Limited Time
 
 	
 	letter_M_1 = App->gui->CreateImage({ 132,30 }, { 5, 31, 16, 16 }, items, false, this); //M
@@ -439,7 +439,7 @@ void j1Scene::ManageStageUI() {
 		time_game->ChangeText((p2SString("%i", ((int)scene_time))));
 	}
 	else {
-		time_game->ChangeText((p2SString("0%f", (scene_time))));
+		time_game->ChangeText((p2SString("%f", (scene_time))));
 	}
 
 
