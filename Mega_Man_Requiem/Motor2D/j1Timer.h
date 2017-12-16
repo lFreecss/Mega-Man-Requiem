@@ -13,9 +13,13 @@ public:
 	void Start();
 	uint32 Read() const;
 	float ReadSec() const;
+	void Pause();
+	void Continue();
 
 private:
 	uint32	started_at;
+	uint32	stop_at;
+	float	seconds_paused;
 };
 
 #endif //__j1TIMER_H__

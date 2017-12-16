@@ -159,6 +159,7 @@ private:
 	Label* life_count = nullptr;
 	Label* punctuation = nullptr;
 	Label* time_game = nullptr;
+	Label* pause = nullptr;
 
 	Image* letter_M_1 = nullptr;
 	Image* letter_E = nullptr;

@@ -18,6 +18,7 @@ void j1Timer::Start()
 	// TODO 1: Fill Start(), Read(), ReadSec() methods
 	// they are simple, one line each!
 	started_at = SDL_GetTicks();
+	seconds_paused = 0;
 }
 
 // ---------------------------------------------
@@ -29,5 +30,18 @@ uint32 j1Timer::Read() const
 // ---------------------------------------------
 float j1Timer::ReadSec() const
 {
-	return (SDL_GetTicks() - started_at) / 1000.0f;
+	return ((SDL_GetTicks() - started_at) / 1000.0f) - seconds_paused;
+}
+
+// ---------------------------------------------
+void j1Timer::Pause()
+{
+	stop_at = SDL_GetTicks();
+}
+
+// ---------------------------------------------
+void j1Timer::Continue()
+{
+	seconds_paused += (SDL_GetTicks() - stop_at) / 1000.0f;
+
 }

@@ -156,19 +156,24 @@ void j1Player::updateAnim(float dt) {
 bool j1Player::Update(float dt) {
 	bool ret = true;
 	
+
 	if (lives == 0) {
 		App->scene->GameOverScreen();
 		lives = 3;
 	}
 
+	if (!App->isPaused) //Pause
+	{
 		current_animation = &idle;
 
 		if (GodMode())
 			current_animation = &idle_inv;
 
-		updateAnim(dt);
 		move(dt);
 		jump(dt);
+	}
+	updateAnim(dt);
+
 
 		if (jumping == 1) {
 			current_animation = &jumpR;

@@ -128,6 +128,8 @@ bool j1App::Awake()
 		}
 	}
 
+	isPaused = false; //Pause
+
 	PERF_PEEK(ptimer);
 
 	return ret;	
@@ -283,6 +285,10 @@ bool j1App::DoUpdate()
 	p2List_item<j1Module*>* item;
 	item = modules.start;
 	j1Module* pModule = NULL;
+
+	//Pause
+	if (isPaused)
+		dt = 0;
 	
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
 	{

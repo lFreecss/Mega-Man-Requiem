@@ -211,12 +211,28 @@ bool j1Scene::Update(float dt)
 		App->map->Draw();
 		DebugKeys();
 		ManageStageUI();
+
+		//Time Game Over
 		if (scene_time <= 0.0f)
 		{
 			GameOverScreen();
 		}
-		//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-			//App->dt = 0;  
+
+		//Pause Game
+		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		{
+			App->isPaused = !App->isPaused;
+
+			if (App->isPaused) {
+				pause->ChangeText("PAUSE");
+				scene_timer->Pause();
+			}
+			else {
+				pause->ChangeText(" ");
+				scene_timer->Continue();
+			}
+		
+		}
 
 		//Scroll
 		if (App->player->pos.x <= App->map->data.tile_width*App->map->data.width - scroll_limit)
@@ -318,7 +334,8 @@ void j1Scene::StartPlaying() {
 	App->gui->CreateImage({ 5,255 }, { 4, 85, 19, 18 }, items, false, this); //Lives
 	life_count = App->gui->CreateLabel({ 30,260 }, "X3", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Live count
 	punctuation = App->gui->CreateLabel({ 170,10 }, "0000000", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
-	time_game = App->gui->CreateLabel({ 400,10 }, "100", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this); //Limited Time
+	time_game = App->gui->CreateLabel({ 400,10 }, "000", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this); //Limited Time
+	pause = App->gui->CreateLabel({ 170,130 }, "     ", App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); // PAUSE
 
 	
 	letter_M_1 = App->gui->CreateImage({ 132,30 }, { 5, 31, 16, 16 }, items, false, this); //M
@@ -433,15 +450,17 @@ void j1Scene::EndScreen() {
 void j1Scene::ManageStageUI() {
 	life_count->ChangeText(p2SString("X%u", (App->player->GetLives())));
 
-	scene_time = total_time_scene - scene_timer->ReadSec();
-	if (scene_time >= 10.f)
+	if (!App->isPaused)
 	{
-		time_game->ChangeText((p2SString("%i", ((int)scene_time))));
+		scene_time = total_time_scene - scene_timer->ReadSec();
+		if (scene_time >= 10.f)
+		{
+			time_game->ChangeText((p2SString("%i", ((int)scene_time))));
+		}
+		else {
+			time_game->ChangeText((p2SString("%f", (scene_time))));
+		}
 	}
-	else {
-		time_game->ChangeText((p2SString("%f", (scene_time))));
-	}
-
 
 	if (punctuation_count >= 500) {
 		punctuation->ChangeText((p2SString("0000%i", (punctuation_count))));

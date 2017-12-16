@@ -101,6 +101,8 @@ public:
 	j1Gui*				gui;
 	j1FadeToBlack*		fade_to_black;
 
+	bool				isPaused;
+
 private:
 
 	p2List<j1Module*>	modules;
