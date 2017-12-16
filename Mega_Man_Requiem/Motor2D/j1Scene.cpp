@@ -220,7 +220,7 @@ bool j1Scene::Update(float dt)
 		}
 
 		//Pause Game
-		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && pause != nullptr)
 		{
 			App->isPaused = !App->isPaused;
 
@@ -409,8 +409,10 @@ void j1Scene::SettingsScreen() {
 
 void j1Scene::GameOverScreen() {
 	App->fade_to_black->FadeToBlack(this, this, 1);
-	pause = nullptr;
+	
 	App->gui->CleanUp();
+	pause = nullptr;
+	time_game = nullptr;
 	App->player->active = false;
 	App->map->active = false;
 	App->entities->active = false;
@@ -462,7 +464,7 @@ void j1Scene::EndScreen() {
 void j1Scene::ManageStageUI() {
 	life_count->ChangeText(p2SString("X%u", (App->player->GetLives())));
 
-	if (!App->isPaused)
+	if (!App->isPaused && time_game != nullptr)
 	{
 		scene_time = total_time_scene - scene_timer->ReadSec();
 		if (scene_time >= 10.f)
