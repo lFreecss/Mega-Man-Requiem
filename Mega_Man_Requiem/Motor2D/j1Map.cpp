@@ -8,6 +8,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Audio.h"
+#include "j1FadeToBlack.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -470,6 +471,7 @@ bool j1Map::CollisionY(uint x_left, uint x_right, uint y)
 	if (y < 0) 
 		return true;
 	if (y >= data.height && App->player->GetLives() >= 0) {
+		App->fade_to_black->FadeToBlack(this, this, 1);
 		App->player->lives--;
 		App->audio->PlayFx(2, 0);
 		App->scene->MapStart();

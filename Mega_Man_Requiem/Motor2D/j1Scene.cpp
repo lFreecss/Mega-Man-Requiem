@@ -279,6 +279,7 @@ void j1Scene::StartScreen() {
 }
 
 void j1Scene::StartPlaying() {
+	App->fade_to_black->FadeToBlack(this, this, 1);
 	App->gui->CleanUp();
 
 	App->player->active = true;
@@ -368,6 +369,7 @@ void j1Scene::SettingsScreen() {
 }
 
 void j1Scene::GameOverScreen() {
+	App->fade_to_black->FadeToBlack(this, this, 1);
 	App->gui->CleanUp();
 	App->player->active = false;
 	App->map->active = false;
@@ -390,6 +392,7 @@ void j1Scene::GameOverScreen() {
 
 void j1Scene::EndScreen() {
 	//Disabiling and Cleaning up
+	App->fade_to_black->FadeToBlack(this, this, 1);
 	App->gui->CleanUp();
 	App->player->active = false;
 	App->map->active = false;
@@ -506,18 +509,22 @@ void j1Scene::DebugKeys(){
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->fade_to_black->IsFading() == false)
 	{
-		//App->fade_to_black->FadeToBlack(this, this, 1);
+		App->fade_to_black->FadeToBlack(this, this, 1);
 		Restart();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		//App->fade_to_black->FadeToBlack(2);
+	{
+		App->fade_to_black->FadeToBlack(this, this, 1);
 		MapStart();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
+	{
+		App->fade_to_black->FadeToBlack(this, this, 1);
 		App->LoadGame();
 	}
 

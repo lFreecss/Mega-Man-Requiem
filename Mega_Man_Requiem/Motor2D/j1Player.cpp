@@ -9,6 +9,7 @@
 #include "j1Collision.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
+#include "j1FadeToBlack.h"
 #include "Brofiler\Brofiler.h"
 
 
@@ -286,6 +287,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		App->collision->EraseCollider(collider);
 		collider = nullptr;
 		if (lives >= 0) {
+			App->fade_to_black->FadeToBlack(this, this, 1);
 			lives--;
 			App->audio->PlayFx(2, 0);
 			App->scene->MapStart();

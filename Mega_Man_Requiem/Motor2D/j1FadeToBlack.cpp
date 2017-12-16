@@ -46,11 +46,11 @@ bool j1FadeToBlack::Update(float dt)
 	{
 		if (now >= total_time)
 		{
-			off->CleanUp();
+			off->active = false;
 			total_time += total_time;
 			start_time = SDL_GetTicks();
 			current_step = fade_step::fade_from_black;
-			on->Start();
+			on->active = true;
 		}
 	} break;
 
