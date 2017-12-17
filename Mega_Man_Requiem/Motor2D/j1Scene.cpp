@@ -656,9 +656,6 @@ void j1Scene::Restart() {
 }
 
 void j1Scene::MapStart() {
-	if (!is_loading) {
-		scene_timer->Start();
-	}
 	App->render->camera.x = 0;
 	App->render->camera.x = 0;
 	App->player->Init();
