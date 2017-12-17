@@ -106,21 +106,27 @@ Unzip the release folder and execute the .exe file to play.
 
 ## Sources
 
+### Player
 * [Player](http://www.sprites-inc.co.uk/sprite.php?local=/Classic/Megaman/MM8/)
 
+### Enemies
 * [Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM1/Enemy/)
 * [Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM2/Enemy/)
 * [Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM3/Enemy/)
 
+### UI Sprites
 * [UISprites](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM2/Misc/)
 * [UISprites](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM5/Misc/)
 * [UISprites](https://www.spriters-resource.com/nes/mm/sheet/45633/)
 
+### Tilesets
 * [Tilesets](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM1/Tiles/)
 
+### Music
 * [Music](https://downloads.khinsider.com/game-soundtracks/album/mega-man-nes)
 * [Music](https://downloads.khinsider.com/game-soundtracks/album/megaman-2-original-soundtrack)
 
+### Sound Effects
 * [SoundEffects](https://www.sounds-resource.com/nes/megaman/)
      
 ## License
