@@ -52,11 +52,11 @@ Awake charges everything from an XML file and Start starts the module. This two 
 game. The update modules are called every iteration of the game, and the cleanup module is called when the game closes. The structure of 
 the game counts with an entity system for the game objects and another one for the UI.
 
-The game is made with the extern C++ libraries SDL and PUGI XML.
+The game is made with the extern C++ libraries SDL and PUGI XML. We also use Brofiler and Tiled.
 
 ### Innovation
 
-We made a pause button for the third assignment.
+We made a pause button for the third assignment. Timer saves the time when the game is paused.
 
 ## Installation
 
@@ -106,22 +106,22 @@ Unzip the release folder and execute the .exe file to play.
 
 ## Sources
 
-[Player](http://www.sprites-inc.co.uk/sprite.php?local=/Classic/Megaman/MM8/)
+* [Player](http://www.sprites-inc.co.uk/sprite.php?local=/Classic/Megaman/MM8/)
 
-[Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM1/Enemy/)
-[Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM2/Enemy/)
-[Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM3/Enemy/)
+* [Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM1/Enemy/)
+* [Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM2/Enemy/)
+* [Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM3/Enemy/)
 
-[UISprites](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM2/Misc/)
-[UISprites](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM5/Misc/)
-[UISprites](https://www.spriters-resource.com/nes/mm/sheet/45633/)
+* [UISprites](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM2/Misc/)
+* [UISprites](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM5/Misc/)
+* [UISprites](https://www.spriters-resource.com/nes/mm/sheet/45633/)
 
-[Tilesets](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM1/Tiles/)
+* [Tilesets](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM1/Tiles/)
 
-[Music](https://downloads.khinsider.com/game-soundtracks/album/mega-man-nes)
-[Music](https://downloads.khinsider.com/game-soundtracks/album/megaman-2-original-soundtrack)
+* [Music](https://downloads.khinsider.com/game-soundtracks/album/mega-man-nes)
+* [Music](https://downloads.khinsider.com/game-soundtracks/album/megaman-2-original-soundtrack)
 
-[SoundEffects](https://www.sounds-resource.com/nes/megaman/)
+* [SoundEffects](https://www.sounds-resource.com/nes/megaman/)
      
 ## License
 
