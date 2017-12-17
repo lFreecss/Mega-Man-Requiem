@@ -54,9 +54,13 @@ private:
 
 	p2List<UI*> UIElements;
 
-	_TTF_Font* Mega_Man_2;
-	_TTF_Font* Mega_Man_10_sz8;
-	_TTF_Font* Mega_Man_10_sz12;
+	_TTF_Font* Mega_Man_2 = nullptr;
+	_TTF_Font* Mega_Man_10_sz8 = nullptr;
+	_TTF_Font* Mega_Man_10_sz12 = nullptr;
+
+	p2SString Mega_Man_2_font_path;
+	p2SString Mega_Man_10_font_path;
+
 };
 
 #endif // __j1GUI_H__

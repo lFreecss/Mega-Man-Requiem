@@ -122,6 +122,10 @@ private:
 	p2SString sound_defeat;
 	p2SString sound_start;
 	p2SString sound_button_select;
+	p2SString sound_game_over;
+	p2SString sound_get_item;
+	p2SString sound_victory;
+	p2SString sound_pause;
 
 	p2SString rock_level;
 	p2SString jail_level;

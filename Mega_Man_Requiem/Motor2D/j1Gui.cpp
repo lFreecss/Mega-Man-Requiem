@@ -20,16 +20,17 @@ j1Gui::~j1Gui()
 bool j1Gui::Awake(pugi::xml_node& conf)
 {
 	bool ret = true;
-
+	Mega_Man_2_font_path.create(conf.child("font_path").attribute("MM2").as_string());
+	Mega_Man_10_font_path.create(conf.child("font_path").attribute("MM10").as_string());
 	return ret;
 }
 
 // Called before the first frame
 bool j1Gui::Start()
 {
-	Mega_Man_2 = App->font->Load("fonts/Mega_Man_2.ttf", 10);
-	Mega_Man_10_sz8 = App->font->Load("fonts/Mega_Man_10.ttf", 8);
-	Mega_Man_10_sz12 = App->font->Load("fonts/Mega_Man_10.ttf", 12);
+	Mega_Man_2 = App->font->Load(Mega_Man_2_font_path.GetString(), 10);
+	Mega_Man_10_sz8 = App->font->Load(Mega_Man_10_font_path.GetString(), 8);
+	Mega_Man_10_sz12 = App->font->Load(Mega_Man_10_font_path.GetString(), 12);
 	p2List_item<UI*>* elem = UIElements.start;
 	while (elem != nullptr) {
 		elem = nullptr;

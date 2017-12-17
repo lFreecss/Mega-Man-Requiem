@@ -57,7 +57,10 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	sound_defeat.create(config.child("sounds").child("player").attribute("defeat").as_string());
 	sound_start.create(config.child("sounds").child("buttons").attribute("game_start").as_string());
 	sound_button_select.create(config.child("sounds").child("buttons").attribute("button_select").as_string());
-	
+	sound_game_over.create(config.child("sounds").child("player").attribute("game_over").as_string());
+	sound_get_item.create(config.child("sounds").child("player").attribute("get_item").as_string());
+	sound_victory.create(config.child("sounds").child("player").attribute("victory").as_string());
+	sound_pause.create(config.child("sounds").child("buttons").attribute("pause").as_string());
 
 	LOG("Charging all enemy positions");
 	pugi::xml_node enemy_pos = config.child("enemy_pos");
@@ -93,10 +96,10 @@ bool j1Scene::Start()
 	App->audio->LoadFx(sound_defeat.GetString()); //2
 	App->audio->LoadFx(sound_start.GetString()); //3
 	App->audio->LoadFx(sound_button_select.GetString()); //4
-	App->audio->LoadFx("audio/fx/game_over.wav"); //5
-	App->audio->LoadFx("audio/fx/get_item.wav"); //6
-	App->audio->LoadFx("audio/fx/beat_boss.wav"); //7
-	App->audio->LoadFx("audio/fx/pause.wav"); //8
+	App->audio->LoadFx(sound_game_over.GetString()); //5
+	App->audio->LoadFx(sound_get_item.GetString()); //6
+	App->audio->LoadFx(sound_victory.GetString()); //7
+	App->audio->LoadFx(sound_pause.GetString()); //8
 
 	title_bg = App->tex->Load(title_bg_path.GetString());
 	buttons = App->tex->Load(buttons_path.GetString());

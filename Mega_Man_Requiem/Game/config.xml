@@ -46,8 +46,10 @@
     </music>
     
     <sounds>
-      <player landing = "audio/fx/mega_man_landing.wav" defeat = "audio/fx/mega_man_defeat.wav"/>
-      <buttons game_start = "audio/fx/game_start.wav" button_select = "audio/fx/menu_select.wav"/>
+      <player landing = "audio/fx/mega_man_landing.wav" defeat = "audio/fx/mega_man_defeat.wav"
+              game_over = "audio/fx/game_over.wav" get_item = "audio/fx/get_item.wav" victory = "audio/fx/beat_boss.wav"/>
+      <buttons game_start = "audio/fx/game_start.wav" button_select = "audio/fx/menu_select.wav"
+               pause = "audio/fx/pause.wav"/>
     </sounds>
     
     <enemy_pos>
@@ -90,5 +92,13 @@
     </crazy_razy>
  
  </entities>
+
+
+  <gui>
+    
+    <font_path MM2 ="fonts/Mega_Man_2.ttf" MM10 ="fonts/Mega_Man_10.ttf"/>
+
+  </gui>
+
 
 </config>
