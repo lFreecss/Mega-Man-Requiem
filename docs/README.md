@@ -25,7 +25,8 @@ Unzip the release folder and execute the .exe file (Contain a changelist README)
 [Release](https://github.com/lFreecss/Gunbird/releases/tag/1.0)
 
 ## Gameplay
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=ICWjs-c_sjg" frameborder="0" allowfullscreen></iframe>
+
+(iframe width="560" height="315" src="https://www.youtube.com/watch?v=ICWjs-c_sjg" frameborder="0" allowfullscreen></iframe)
 
 ## Game Controls
 
@@ -44,6 +45,24 @@ Unzip the release folder and execute the .exe file (Contain a changelist README)
      * F9 ➲ To view colliders
      * F10 ➲ God Mode
      * F11 ➲ Enable/Disable FPS cap to 30   
+## Sources
+
+[Player](http://www.sprites-inc.co.uk/sprite.php?local=/Classic/Megaman/MM8/)
+
+[Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM1/Enemy/)
+[Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM2/Enemy/)
+[Enemies](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM3/Enemy/)
+
+[UISprites](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM2/Misc/)
+[UISprites](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM5/Misc/)
+[UISprites](https://www.spriters-resource.com/nes/mm/sheet/45633/)
+
+[Tilesets](http://www.sprites-inc.co.uk/sprite.php?local=Classic/MM1/Tiles/)
+
+[Music](https://downloads.khinsider.com/game-soundtracks/album/mega-man-nes)
+[Music](https://downloads.khinsider.com/game-soundtracks/album/megaman-2-original-soundtrack)
+
+[SoundEffects](https://www.sounds-resource.com/nes/megaman/)
      
 ## License
 
