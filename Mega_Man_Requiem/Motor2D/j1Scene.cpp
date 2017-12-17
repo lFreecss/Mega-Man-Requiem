@@ -15,6 +15,7 @@
 #include "j1Gui.h"
 #include "j1Textures.h"
 #include "j1Timer.h"
+#include "Brofiler\Brofiler.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -200,7 +201,6 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-
 	//Debug for the UI elements
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		App->gui->debug_print = !App->gui->debug_print;

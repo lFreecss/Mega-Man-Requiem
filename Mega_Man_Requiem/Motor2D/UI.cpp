@@ -3,6 +3,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Gui.h"
+#include "Brofiler\Brofiler.h"
 
 UI::UI()
 {
@@ -28,6 +29,7 @@ void UI::Draw() {
 
 void UI::HandleInput()
 {
+	BROFILER_CATEGORY("UI Handle Input", Profiler::Color::Yellow);
 	iPoint mouse_pos = { 0,0 };
 	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
 
