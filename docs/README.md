@@ -60,7 +60,11 @@ We made a pause button for the third assignment.
 
 ## Installation
 
-Unzip the release folder and execute the .exe file (Contain a changelist README)
+Link to the code repository of the game.
+
+[Code Repository](https://github.com/lFreecss/Mega-Man-Requiem)
+
+Unzip the release folder and execute the .exe file to play.
 
 [Release](https://github.com/lFreecss/Mega-Man-Requiem/releases/tag/1.0)
 
