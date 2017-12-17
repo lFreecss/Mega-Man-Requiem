@@ -1,6 +1,9 @@
 ## Presentation
 
-This project is a  The team is composed by two students of CITM Terrassa (Catalonia, Spain).
+Mega Man Requiem is a basic Mega Man platformer tribute of the classic Mega Man games from the NES, using 
+the sprites from the playable character and levels of Mega Man (1987).
+
+This tribute has been made by David Varela and David Valdivia, two students from the UPC videogames degree.
 
 ![Group](977152a3-fc96-4be5-8137-84fe3d451d3f.jpg)
 
@@ -16,13 +19,29 @@ _David Varela_
 
 ## Main Core Subsystems
 
+The game works with a module system. The main module is caled j1App. This module manages every other module. Each one of this modules 
+
+composes one necessary part for the game to work, like the window system, the rendering system, audio, etc.
+
+These modules have an awake, start, preupdate, update, postupdate and cleanup methods that are inherited by the j1Module base module.
+
+Awake charges everything from an XML file and Start starts the module. This two modules are called only one time during the loop of the 
+
+game. The update modules are called every iteration of the game, and the cleanup module is called when the game closes. The structure of 
+
+the game counts with an entity system for the game objects and another one for the UI.
+
+The game is made with the extern C++ libraries SDL and PUGI XML.
+
 ### Innovation
+
+Made a pause button for the third assignment
 
 ## Installation
 
 Unzip the release folder and execute the .exe file (Contain a changelist README)
 
-[Release](https://github.com/lFreecss/Gunbird/releases/tag/1.0)
+[Release](https://github.com/lFreecss/Mega-Man-Requiem/releases/tag/1.0)
 
 ## Gameplay
 
@@ -31,20 +50,35 @@ Unzip the release folder and execute the .exe file (Contain a changelist README)
 ## Game Controls
 
    Moves:
-     * ↑ ➲ Move player up (Player has double jump)
-     * ← ➲ Move player left
-     * → ➲ Move player right
+    
+       * ↑ ➲ Move player up (Player has double jump)
+     
+       * ← ➲ Move player left
+    
+       * → ➲ Move player right
+   
    Pause:
-     * P ➲ Pause Game
+   
+      * P ➲ Pause Game
+   
    Debug Keys:
-     * F1 ➲ Start from the very first level
-     * F2 ➲ Start from the beginning of the current level
-     * F5 ➲ Save the current state
-     * F6 ➲ Load the previous state (even across levels)
-     * F8 ➲ Debug UI
-     * F9 ➲ To view colliders
-     * F10 ➲ God Mode
-     * F11 ➲ Enable/Disable FPS cap to 30   
+   
+      * F1 ➲ Start from the very first level
+   
+      * F2 ➲ Start from the beginning of the current level
+   
+      * F5 ➲ Save the current state
+   
+      * F6 ➲ Load the previous state (even across levels)
+   
+      * F8 ➲ Debug UI
+   
+      * F9 ➲ To view colliders
+   
+      * F10 ➲ God Mode
+   
+      * F11 ➲ Enable/Disable FPS cap to 30   
+
 ## Sources
 
 [Player](http://www.sprites-inc.co.uk/sprite.php?local=/Classic/Megaman/MM8/)
