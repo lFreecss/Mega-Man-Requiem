@@ -26,7 +26,7 @@ Unzip the release folder and execute the .exe file (Contain a changelist README)
 
 ## Gameplay
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ICWjs-c_sjg" frameborder="0" allowfullscreen></iframe)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ICWjs-c_sjg" frameborder="0" allowfullscreen></iframe>
 
 ## Game Controls
 
