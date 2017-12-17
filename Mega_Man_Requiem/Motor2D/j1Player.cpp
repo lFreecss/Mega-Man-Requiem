@@ -292,7 +292,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		App->collision->EraseCollider(collider);
 		collider = nullptr;
 		if (lives >= 0) {
-			App->fade_to_black->FadeToBlack(this, this, 1);
+			App->fade_to_black->FadeToBlack(App->scene->time_fade_to_black);
 			lives--;
 			App->audio->PlayFx(2, 0);
 			App->scene->MapStart();

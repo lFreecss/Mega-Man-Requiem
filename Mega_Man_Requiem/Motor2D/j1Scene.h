@@ -101,8 +101,10 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	int punctuation_count = 0;
-	int total_time_scene = 100;
+	int total_time_scene = 102;
 	float scene_time = 0.0f;
+	float time_fade_to_black = 0.0f;
+
 
 private:
 	p2SString first_map;

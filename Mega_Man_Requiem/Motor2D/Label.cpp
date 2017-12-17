@@ -11,6 +11,7 @@ Label::Label(iPoint screen_area, p2SString text, _TTF_Font* font, SDL_Color colo
 	this->is_draggable = is_draggable;
 	this->callback = callback;
 
+	this->text = text;
 	tex = App->font->Print(text.GetString(), colour, font);
 	UI_logic_rect.x = 0;
 	UI_logic_rect.y = 0;
@@ -24,9 +25,14 @@ void Label::Draw() {
 
 void Label::ChangeText(p2SString text) {
 
+	this->text = text;
 	App->tex->UnLoad((SDL_Texture*)tex);
 	tex = App->font->Print(text.GetString(), colour, font);
 
+}
+
+p2SString Label::GetText() const {
+	return text;
 }
 
 void Label::ChangeColor(SDL_Color colour) {

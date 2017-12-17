@@ -452,7 +452,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, map_layer* layer)
 	}
 	return ret;
 }
-// Add collisions to the maps, TO DO Varela
+// Add collisions to the maps
 bool j1Map::CollisionX(uint x, uint y_up, uint y_down)
 {
 	if (x < 0 || x > data.width)
@@ -471,7 +471,7 @@ bool j1Map::CollisionY(uint x_left, uint x_right, uint y)
 	if (y < 0) 
 		return true;
 	if (y >= data.height && App->player->GetLives() > 0) {
-		App->fade_to_black->FadeToBlack(this, this, 1);
+		App->fade_to_black->FadeToBlack(App->scene->time_fade_to_black); 
 		App->player->lives--;
 		App->audio->PlayFx(2, 0);
 		App->scene->MapStart();

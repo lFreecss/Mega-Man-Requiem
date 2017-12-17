@@ -38,6 +38,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	map_limit = config.child("map").attribute("limit").as_uint();
 	rock_level.create(config.child("levels").child("first_level").attribute("name").as_string());
 	jail_level.create(config.child("levels").child("second_level").attribute("name").as_string());
+	time_fade_to_black = config.child("delay").attribute("delay_fade_to_black").as_float();
 	
 	LOG("Charging textures");
 	title_bg_path.create(config.child("textures").child("bg").attribute("title").as_string());
@@ -225,7 +226,8 @@ bool j1Scene::Update(float dt)
 			App->isPaused = !App->isPaused;
 
 			if (App->isPaused) {
-				pause->ChangeText("PAUSE");
+				if(!App->fade_to_black->IsFading())
+					pause->ChangeText("PAUSE");
 				scene_timer->Pause();
 			}
 			else {
@@ -307,7 +309,7 @@ void j1Scene::StartScreen() {
 }
 
 void j1Scene::StartPlaying() {
-	App->fade_to_black->FadeToBlack(this, this, 1);
+	App->fade_to_black->FadeToBlack(App->scene->time_fade_to_black);
 	App->gui->CleanUp();
 
 	App->player->active = true;
@@ -408,7 +410,7 @@ void j1Scene::SettingsScreen() {
 }
 
 void j1Scene::GameOverScreen() {
-	App->fade_to_black->FadeToBlack(this, this, 1);
+	App->fade_to_black->FadeToBlack(App->scene->time_fade_to_black);
 	
 	App->gui->CleanUp();
 	pause = nullptr;
@@ -434,7 +436,7 @@ void j1Scene::GameOverScreen() {
 
 void j1Scene::EndScreen() {
 	//Disabiling and Cleaning up
-	App->fade_to_black->FadeToBlack(this, this, 1);
+	App->fade_to_black->FadeToBlack(App->scene->time_fade_to_black);
 	pause = nullptr;
 	App->gui->CleanUp();
 	App->player->active = false;
@@ -464,9 +466,10 @@ void j1Scene::EndScreen() {
 void j1Scene::ManageStageUI() {
 	life_count->ChangeText(p2SString("X%u", (App->player->GetLives())));
 
+
+	scene_time = total_time_scene - scene_timer->ReadSec();
 	if (!App->isPaused && time_game != nullptr)
 	{
-		scene_time = total_time_scene - scene_timer->ReadSec();
 		if (scene_time >= 10.f)
 		{
 			time_game->ChangeText((p2SString("%i", ((int)scene_time))));
@@ -562,15 +565,15 @@ void j1Scene::ManageMenusUI() {
 
 void j1Scene::DebugKeys(){
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && App->fade_to_black->IsFading() == false)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		App->fade_to_black->FadeToBlack(this, this, 1);
+		App->fade_to_black->FadeToBlack(App->scene->time_fade_to_black);
 		Restart();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->fade_to_black->FadeToBlack(this, this, 1);
+		App->fade_to_black->FadeToBlack(App->scene->time_fade_to_black);
 		MapStart();
 	}
 
@@ -579,7 +582,7 @@ void j1Scene::DebugKeys(){
 
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
 	{
-		App->fade_to_black->FadeToBlack(this, this, 1);
+		App->fade_to_black->FadeToBlack(App->scene->time_fade_to_black);
 		App->LoadGame();
 	}
 
@@ -616,6 +619,7 @@ void j1Scene::CheckMap() {
 }
 
 void j1Scene::ChangeMaps(LEVEL_ID level_name) {
+	App->fade_to_black->FadeToBlack(App->scene->time_fade_to_black);
 	App->map->CleanUp();
 	if (level_name == ROCK) {
 		App->map->Load(rock_level.GetString());
@@ -640,8 +644,9 @@ void j1Scene::InitializeMap() {
 		map_num = 1;
 	}
 	LetterInitialation();
-	if (!is_loading)
+	if (!is_loading) {
 		scene_timer->Start();
+	}
 }
 
 void j1Scene::Restart() {
@@ -651,6 +656,9 @@ void j1Scene::Restart() {
 }
 
 void j1Scene::MapStart() {
+	if (!is_loading) {
+		scene_timer->Start();
+	}
 	App->render->camera.x = 0;
 	App->render->camera.x = 0;
 	App->player->Init();
@@ -713,10 +721,11 @@ bool j1Scene::Load(pugi::xml_node& data)
 	map_num = data.child("map").attribute("name").as_int();
 	punctuation_count = data.child("score").attribute("num").as_int();
 	float transcurred_seconds = total_time_scene - data.child("scene_time").attribute("num").as_float();
-	scene_timer->SetLoadTime(transcurred_seconds);
+	scene_timer->SetLoadTime(transcurred_seconds - time_fade_to_black*2);
 
 	is_loading = true;
-	LetterInitialation(); //
+	LetterInitialation(); 
+	pause->ChangeText(" ");
 	return true;
 }
 
@@ -732,8 +741,12 @@ bool j1Scene::Save(pugi::xml_node& data) const
 	score.append_attribute("num") = punctuation_count;
 	
 	pugi::xml_node time_left = data.append_child("scene_time");
-
-	time_left.append_attribute("num") = scene_time;
+	float time = scene_time;
+	if (App->isPaused) {
+		scene_timer->Continue();
+		time = atof(time_game->GetText().GetString()); //atof converts char* to float
+	}
+	time_left.append_attribute("num") = time;
 
 	return true;
 }

@@ -44,13 +44,12 @@ bool j1FadeToBlack::Update(float dt)
 	{
 	case fade_step::fade_to_black:
 	{
+		normalized = 1.0f;
 		if (now >= total_time)
 		{
-			off->active = false;
 			total_time += total_time;
 			start_time = SDL_GetTicks();
 			current_step = fade_step::fade_from_black;
-			on->active = true;
 		}
 	} break;
 
@@ -58,8 +57,10 @@ bool j1FadeToBlack::Update(float dt)
 	{
 		normalized = 1.0f - normalized;
 
-		if (now >= total_time)
+		if (now >= total_time) {
 			current_step = fade_step::none;
+			App->isPaused = false;
+		}
 	} break;
 	}
 
@@ -71,13 +72,12 @@ bool j1FadeToBlack::Update(float dt)
 }
 
 // Fade to black. 
-bool j1FadeToBlack::FadeToBlack(j1Module* module_off, j1Module* module_on, float time)
+bool j1FadeToBlack::FadeToBlack( float time)
 {
 	bool ret = false;
 	if (current_step == fade_step::none)
 	{
-		off = module_off;
-		on = module_on;
+		App->isPaused = true;
 		current_step = fade_step::fade_to_black;
 		start_time = SDL_GetTicks();
 		total_time = (Uint32)(time * 0.5f * 1000.0f);
