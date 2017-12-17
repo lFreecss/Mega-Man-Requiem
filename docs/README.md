@@ -11,31 +11,52 @@ This tribute has been made by David Varela and David Valdivia, two students from
 
 _David Valdivia_
 * **Github**: [AwesomeSuitGuy](https://github.com/AwesomeSuitGuy)
-### Work...
-
+### Work Done:
+   
+   * Character Jump
+   
+   * 1st Map
+  
+   * Pathfinding system
+   
+   * UI system
+   
+   * Menus
+   
 _David Varela_
 * **Github**: [lFreecss](https://github.com/lFreecss)
-### Work...
+### Work Done:
+
+   * Map logic and map colliders
+   
+   * 2nd map
+   
+   * Character double jump
+   
+   * FPS cap and dt normalizing 
+   
+   * Fade to black
+   
+   * Timer
+   
+   * Pause
 
 ## Main Core Subsystems
 
 The game works with a module system. The main module is caled j1App. This module manages every other module. Each one of this modules 
-
 composes one necessary part for the game to work, like the window system, the rendering system, audio, etc.
 
 These modules have an awake, start, preupdate, update, postupdate and cleanup methods that are inherited by the j1Module base module.
 
 Awake charges everything from an XML file and Start starts the module. This two modules are called only one time during the loop of the 
-
 game. The update modules are called every iteration of the game, and the cleanup module is called when the game closes. The structure of 
-
 the game counts with an entity system for the game objects and another one for the UI.
 
 The game is made with the extern C++ libraries SDL and PUGI XML.
 
 ### Innovation
 
-Made a pause button for the third assignment
+We made a pause button for the third assignment.
 
 ## Installation
 
