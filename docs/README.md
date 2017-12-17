@@ -25,6 +25,7 @@ Unzip the release folder and execute the .exe file (Contain a changelist README)
 [Release](https://github.com/lFreecss/Gunbird/releases/tag/1.0)
 
 ## Gameplay
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=ICWjs-c_sjg" frameborder="0" allowfullscreen></iframe>
 
 ## Game Controls
 
