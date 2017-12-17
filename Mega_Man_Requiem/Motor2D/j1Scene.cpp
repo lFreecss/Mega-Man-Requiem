@@ -96,6 +96,7 @@ bool j1Scene::Start()
 	App->audio->LoadFx("audio/fx/game_over.wav"); //5
 	App->audio->LoadFx("audio/fx/get_item.wav"); //6
 	App->audio->LoadFx("audio/fx/beat_boss.wav"); //7
+	App->audio->LoadFx("audio/fx/pause.wav"); //8
 
 	title_bg = App->tex->Load(title_bg_path.GetString());
 	buttons = App->tex->Load(buttons_path.GetString());
@@ -234,7 +235,7 @@ bool j1Scene::Update(float dt)
 				pause->ChangeText(" ");
 				scene_timer->Continue();
 			}
-		
+			App->audio->PlayFx(8, 0); //Pause sound
 		}
 
 		//Scroll
@@ -450,7 +451,7 @@ void j1Scene::EndScreen() {
 	App->audio->PlayFx(7, 0); //Victory sound
 	
 	App->gui->CreateImage({ 0,0 }, { 0, 0, 427, 287 }, settings_bg, false, this); //Settings/Credits BG
-	App->gui->CreateLabel({ 130, 30 }, "YOUR PUNCTUATION IS:", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this);
+	App->gui->CreateLabel({ 130, 30 }, "YOUR SCORE IS:", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this);
 	App->gui->CreateLabel({ 185, 50 }, (p2SString("%i", (punctuation_count))), App->gui->GetFont(MEGA_MAN_10_SIZE_12), { 255,255,255,255 }, false, this); //Punctuation
 	App->gui->CreateImage({ 140, 92 }, { 101, 68, 132, 70 }, items, false, this); //Text rect
 	App->gui->CreateLabel({ 165, 115 }, "THANKS FOR", App->gui->GetFont(MEGA_MAN_10_SIZE_8), { 255,255,255,255 }, false, this);
@@ -599,9 +600,8 @@ void j1Scene::DebugKeys(){
 	}
 	    
 	//Change the level
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		App->player->pos.x = App->map->data.tile_width*App->map->data.width - 30;
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
+		//App->player->pos.x = App->map->data.tile_width*App->map->data.width - 30;
 
 }
 
@@ -692,7 +692,7 @@ void j1Scene::LetterInitialation() {
 	}
 	if (current_level == JAIL) {
 		if (punctuation_count < 2500)
-		App->entities->AddEnemy(LETTER, 292, 100);
+		App->entities->AddEnemy(LETTER, 292, 115);
 		if (punctuation_count < 3000)
 		App->entities->AddEnemy(LETTER, 700, 100);
 		if (punctuation_count < 3500)
